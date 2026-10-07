@@ -192,7 +192,9 @@ src="https://www.facebook.com/tr?id=1007033764706317&ev=PageView&noscript=1"
     color:var(--ink);
     margin-bottom:7px;
   }
+  .field input[type="tel"]{text-align:right;}
   .field input[type="text"],
+  .field input[type="tel"],
   .field input[type="number"]{
     width:100%;
     font-family:'Rubik', sans-serif;
@@ -591,6 +593,11 @@ src="https://www.facebook.com/tr?id=1007033764706317&ev=PageView&noscript=1"
         </div>
 
         <div class="field">
+          <label class="field-label" for="lf-phone">טלפון *</label>
+          <input type="tel" id="lf-phone" name="phone" autocomplete="tel" inputmode="tel" dir="ltr" placeholder="050-1234567" required>
+        </div>
+
+        <div class="field">
           <label class="field-label" for="lf-address">כתובת הנכס *</label>
           <input type="text" id="lf-address" name="address" autocomplete="street-address" placeholder="עיר, רחוב ומספר" required>
         </div>
@@ -730,6 +737,7 @@ src="https://www.facebook.com/tr?id=1007033764706317&ev=PageView&noscript=1"
   var PHONE = "972557204242";
 
   var nameEl = document.getElementById("lf-name");
+  var phoneEl = document.getElementById("lf-phone");
   var addressEl = document.getElementById("lf-address");
   var unitsEl = document.getElementById("lf-units");
   var waBtn = document.getElementById("waBtn");
@@ -763,8 +771,14 @@ src="https://www.facebook.com/tr?id=1007033764706317&ev=PageView&noscript=1"
     return null;
   }
 
+  // Returns the phone as 05X-XXXXXXX (or 0X-XXXXXXX for landlines), "" when invalid.
+  function getPhone(){
+    var d = phoneEl.value.replace(/\D/g, "").replace(/^972/, "0");
+    return /^0\d{8,9}$/.test(d) ? d.slice(0, -7) + "-" + d.slice(-7) : "";
+  }
+
   function isValid(){
-    return !!(getRole() && nameEl.value.trim() && addressEl.value.trim() && unitsEl.value && Number(unitsEl.value) >= 1);
+    return !!(getRole() && nameEl.value.trim() && getPhone() && addressEl.value.trim() && unitsEl.value && Number(unitsEl.value) >= 1);
   }
 
   function updateState(){
@@ -794,10 +808,54 @@ src="https://www.facebook.com/tr?id=1007033764706317&ev=PageView&noscript=1"
 
   ["change", "input"].forEach(function(evt){
     nameEl.addEventListener(evt, updateState);
+    phoneEl.addEventListener(evt, updateState);
     addressEl.addEventListener(evt, updateState);
     unitsEl.addEventListener(evt, updateState);
     roleInputs.forEach(function(r){ r.addEventListener(evt, updateState); });
   });
+
+  var SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxqZvrlHOTzjhoNxzAoYUBDkkzgLbDnAxDW23Ppl0-sPs7O_1i0E8RWS39Z1LX1gmy8/exec';
+
+  function sendLeadToSheet(lead) {
+    var q = new URLSearchParams(location.search);
+    // randomUUID is missing on iOS < 15.4; the fallback keeps the row from being lost.
+    var event_id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(36).slice(2);
+
+    var payload = {
+      audience: lead.audience || '',            // ועד בית / דייר / יזם / קבלן
+      name: lead.name || '',
+      phone: lead.phone || '',
+      address: lead.address || '',
+      units: lead.units || '',
+      callback_time: lead.callback_time || '',
+      notes: lead.notes || '',
+      terms_consent: lead.terms ? 'כן' : 'לא',
+      marketing_consent: lead.marketing ? 'כן' : 'לא',
+      utm_source: q.get('utm_source') || '',
+      utm_medium: q.get('utm_medium') || '',
+      utm_campaign: q.get('utm_campaign') || '',
+      utm_content: q.get('utm_content') || '',
+      utm_term: q.get('utm_term') || '',
+      gclid: q.get('gclid') || '',
+      wbraid: q.get('wbraid') || '',
+      gbraid: q.get('gbraid') || '',
+      fbclid: q.get('fbclid') || '',
+      referrer: document.referrer,
+      landing_page: location.origin + location.pathname,
+      event_id: event_id,
+      company_website: lead.honeypot || ''
+    };
+
+    fetch(SHEETS_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      keepalive: true,
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    }).catch(function(){});
+
+    return event_id;
+  }
 
   var openingWhatsApp = false;
   document.getElementById("leadForm").addEventListener("submit", function(event){
@@ -815,9 +873,23 @@ src="https://www.facebook.com/tr?id=1007033764706317&ev=PageView&noscript=1"
       destination = null;
     }
 
+    // Never let the sheet write block the WhatsApp redirect.
+    var eventId;
+    try {
+      eventId = sendLeadToSheet({
+        audience: getRole(),
+        name: nameEl.value.trim(),
+        phone: getPhone(),
+        address: addressEl.value.trim(),
+        units: unitsEl.value
+      });
+    } catch (error) {
+      console.warn("Lead could not be sent to the sheet", error);
+    }
+
     try {
       if (typeof window.fbq === "function") {
-        window.fbq('trackCustom', 'lead_lp_rs');
+        window.fbq('trackCustom', 'lead_lp_rs', {}, eventId ? { eventID: eventId } : undefined);
       }
     } catch (error) {
       console.warn("Meta Pixel event could not be queued", error);
