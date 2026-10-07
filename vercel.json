@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/indexv15-pixel-fixed.html" },
+    { "source": "/indexv15-pixel-fixed", "destination": "/indexv15-pixel-fixed.html" }
+  ]
+}
