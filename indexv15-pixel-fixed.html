@@ -25,6 +25,10 @@ src="https://www.facebook.com/tr?id=1007033764706317&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
+<!-- OpenAI Ads Pixel Code -->
+<script>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"D96YQC3i18frnzJeKWqtM2"});</script>
+<!-- End OpenAI Ads Pixel Code -->
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;900&display=swap');
 
@@ -893,6 +897,14 @@ src="https://www.facebook.com/tr?id=1007033764706317&ev=PageView&noscript=1"
       }
     } catch (error) {
       console.warn("Meta Pixel event could not be queued", error);
+    }
+
+    try {
+      if (typeof window.oaiq === "function") {
+        window.oaiq("measure", "lead_created", { type: "customer_action" }, eventId ? { event_id: eventId } : undefined);
+      }
+    } catch (error) {
+      console.warn("OpenAI Ads event could not be queued", error);
     }
 
     if (destination) {
