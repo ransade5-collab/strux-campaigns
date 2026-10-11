@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- One landing page per campaign, each in a folder of its own (this one: /door-oct/); fonts and media are shared
+     from the root, so every address in the page starts with a slash. -->
+<!-- Not deployed yet (11.10.2026); `noindex` stays until it goes live. The form IS live, on localhost too:
+     a submit writes a real row to the Google Sheet and fires the real tags. GTM is the only tag in code. -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WPWMK3CL');</script>
+<!-- End Google Tag Manager -->
+<meta name="robots" content="noindex">
+<title>StruX | ניהול ואחזקת נכסים</title>
+<link rel="preload" href="/fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
+@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
+@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
+@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
+
+:root{
+  --c-base:#0E1A44; --c-brand:#1F3A93; --c-accent:#6F93F0; --c-light:#F4F6FB;
+  --c-ink:#0B0B0C; --c-muted:#5B6478; --c-err:#C62828;
+  --f-head:'Heebo Variable',system-ui,sans-serif; --f-body:'Assistant Variable',system-ui,sans-serif;
+  --shadow:0 2px 6px rgb(0 0 0/.06),0 12px 24px rgb(0 0 0/.08),0 32px 64px rgb(0 0 0/.08);
+  --ease:cubic-bezier(.65,.05,.25,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--f-body);color:var(--c-ink);background:var(--c-base);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+:focus-visible{outline:3px solid var(--c-accent);outline-offset:2px}
+
+/* ---------- the one screen ---------- */
+.lp{position:relative;min-height:100svh;display:grid;grid-template-rows:1fr auto;isolation:isolate}
+.lp__bg{position:absolute;inset:0;z-index:-1;overflow:hidden;background:var(--c-base)}
+.lp__bg img,.lp__bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lp__bg picture{display:contents}
+/* darker on the text side (the right, in RTL) so the white headline keeps its contrast */
+.lp__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(270deg,rgb(14 26 68/.82) 0%,rgb(14 26 68/.5) 48%,rgb(14 26 68/.18) 100%)}
+
+.lp__main{display:grid;align-items:center;gap:clamp(24px,4vw,72px);grid-template-columns:1fr auto;
+  width:100%;max-width:1320px;margin-inline:auto;padding:clamp(20px,4svh,48px) clamp(24px,5vw,64px)}
+
+.lp__text{color:var(--c-light);max-width:34em}
+.lp__eyebrow{font:600 14px/1 var(--f-body);letter-spacing:.12em;margin:0 0 20px;color:#fff}
+.lp__h1{font:800 clamp(38px,5.2vw,84px)/1.05 var(--f-head);letter-spacing:-.02em;margin:0;text-wrap:balance}
+.lp__sub{font:400 clamp(18px,1.6vw,24px)/1.5 var(--f-body);margin:24px 0 0;max-width:26em}
+
+/* ---------- the card: the logo's top-right tile, in its real proportions ----------
+   A quarter disc (its centre is the bottom-right corner) with the door notch: 20% of the side wide, 40% tall, 20% in from
+   the right. The rows above the notch end a little before the arc (the left side); the buttons stand to the notch's left.
+   --S is the tile's side and everything inside is sized in em, so the card scales as one piece:
+   from 1024px a square, 1em = S/35; below it as wide as the screen and as tall as the form needs. */
+.card{--S:clamp(500px,min(100svh - 130px,46vw),580px);position:relative;width:var(--S);font-size:calc(var(--S)/35);filter:drop-shadow(0 .8em 1.6em rgb(0 0 0/.22))}
+.card__shape{height:var(--S);background:#fff;padding:2.2em 2.2em 0;display:flex;flex-direction:column;border-radius:var(--S) 0 0 0;
+  clip-path:polygon(0 0,100% 0,100% 100%,80% 100%,80% calc(100% - var(--S)*.4),60% calc(100% - var(--S)*.4),60% 100%,0 100%)}
+.card__top{display:flex;flex-direction:column;justify-content:center;gap:.7em}
+.card__logo{display:block;width:9em}
+.card__title{font:700 1.65em/1.2 var(--f-head);margin:0;color:var(--c-brand)}
+.card__title span{display:block;color:var(--c-ink);font-weight:500}
+form{display:flex;flex-direction:column;margin-top:.9em}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.6em;margin-inline-end:8.2em}
+input[type=text],input[type=tel]{width:100%;height:2.85em;padding:0 .8em;border:1.5px solid #C9D0E0;border-radius:6px;
+  font:400 1.05em var(--f-body);color:var(--c-ink);background:#fff;transition:border-color .3s}
+input::placeholder{color:var(--c-muted)}
+input:focus{border-color:var(--c-brand);outline:0}
+input[aria-invalid=true]{border-color:var(--c-err)}
+input[type=tel],input[inputmode=numeric]{direction:rtl}
+.consent{display:flex;gap:.6em;align-items:flex-start;margin-top:.6em;margin-inline-end:4.6em;font:400 .8em/1.4 var(--f-body);color:var(--c-muted)}
+.consent input{width:1.35em;height:1.35em;margin:.1em 0 0;flex:none;accent-color:var(--c-brand)}
+.err{width:19em;margin-block:1.2em .3em;margin-inline:auto 1.4em;text-align:center;font:600 .85em/1.3 var(--f-body);color:var(--c-err);min-height:1.3em}
+.btns{display:grid;gap:.6em;width:16.2em;margin-inline:auto 1.2em}
+.btn{display:flex;align-items:center;justify-content:center;gap:.4em;height:2.9em;border:0;border-radius:6px;cursor:pointer;
+  font:700 1.1em var(--f-body);text-decoration:none;transition:background .3s,gap .3s;scale:1}
+.btn:active{scale:.97}
+.btn:disabled{opacity:.6;cursor:default}
+.btn--main{background:var(--c-brand);color:#fff}
+.btn--main:hover{background:var(--c-base);gap:.8em}
+.btn--ghost{background:transparent;color:var(--c-brand);box-shadow:inset 0 0 0 1.5px var(--c-brand)}
+.btn--ghost:hover{background:var(--c-light);gap:.8em}
+.card__tel{width:16.2em;margin-block:.7em 0;margin-inline:auto 1.2em;text-align:center;font:700 1em var(--f-body)}
+.card__tel a{text-decoration:none}
+/* The door in the notch (Ran's idea): a blue wooden leaf, hinged on the right and swung toward the visitor, so the opening
+   still shows on its left. Drawn in CSS, in the logo's blue; sized from --S, so it follows the notch at every width.
+   The script at the end of the page turns it through --a. It is a sibling of the clipped shape, or the clip would cut it. */
+.door{position:absolute;left:calc(var(--S)*.6);bottom:0;width:calc(var(--S)*.2);height:calc(var(--S)*.4);
+  perspective:calc(var(--S)*2.2);perspective-origin:50% 45%}
+.door__leaf{position:absolute;inset:0;transform-origin:100% 50%;transform:rotateY(var(--a,42deg));
+  background:linear-gradient(270deg,rgb(0 0 0/.34),rgb(0 0 0/0) 75%),
+    repeating-linear-gradient(90deg,rgb(255 255 255/.08) 0 1px,rgb(255 255 255/0) 1px 25%),var(--c-brand)}
+.door__leaf::before,.door__leaf::after{content:"";position:absolute;left:16%;right:16%;border:1.5px solid rgb(255 255 255/.24);border-radius:2px}
+.door__leaf::before{top:7%;height:38%}
+.door__leaf::after{top:52%;height:40%}
+.door__knob{position:absolute;left:7%;top:49%;width:9%;aspect-ratio:1;border-radius:50%;background:var(--c-light);box-shadow:0 1px 2px rgb(0 0 0/.45)}
+
+.lp__legal{padding:10px clamp(24px,5vw,64px) 14px;font:400 13px/1.4 var(--f-body);color:#D7DDF0;text-align:center}
+.lp__legal a{margin-inline:6px}
+
+/* ---------- phones and tablets: the photo on top, the card under it ---------- */
+@media (max-width:1023px){
+  .lp{display:block;background:var(--c-light)}
+  .lp__bg{position:absolute;inset:0 0 auto 0;height:58svh}
+  .lp__bg::after{background:linear-gradient(180deg,rgb(14 26 68/.35) 0%,rgb(14 26 68/.55) 55%,rgb(14 26 68/.9) 100%)}
+  .lp__main{display:block;padding:0 16px}
+  .lp__text{min-height:calc(58svh - 40px);display:flex;flex-direction:column;justify-content:flex-end;padding:72px 4px 28px;max-width:none}
+  .lp__sub{margin-top:14px}
+  /* Every size inside the card is in em of --S here too (16px on a 375px screen): the rows were placed against the arc and
+     the notch once, and a size in px would let the arc cut the fields on a wider phone (it did, at 440px). */
+  .card{--S:min(100vw - 32px,480px);margin-inline:auto;font-size:calc(var(--S)/21.44)}
+  .card__shape{height:auto;padding:2.5em 1.375em 3em} /* the bottom padding keeps the notch's top under the main button */
+  .card__logo{width:8.125em}
+  .card__title{font-size:1.4em}
+  .grid{gap:.625em;margin-inline-end:0}
+  .grid>:nth-child(-n+2){grid-column:1/-1} /* name and phone take a full row each... */
+  .grid>:first-child{margin-inline-end:2.125em} /* ...and still end before the arc */
+  .grid>:nth-child(2){margin-inline-end:.5em}
+  input[type=text],input[type=tel]{height:2.94em;font-size:1.0625em}
+  .consent{margin-inline-end:0}
+  .err{width:auto;margin-inline:0}
+  .btns{width:auto;margin-inline:0;gap:1.375em}
+  .btn{height:2.84em;font-size:1.1875em}
+  .btn--ghost{width:calc(var(--S)*.6 - 1.895em);justify-self:end;margin-inline:auto 0} /* beside the notch */
+  .card__tel{width:calc(var(--S)*.6 - 2.25em);margin-inline:auto 0}
+  .lp__legal{color:var(--c-muted);padding:18px 16px 28px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WPWMK3CL" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<main class="lp">
+  <div class="lp__bg" aria-hidden="true">
+    <picture>
+      <source media="(max-width:767px)" srcset="/media/hero_mobile_poster.webp">
+      <img src="/media/hero_desktop_poster.webp" alt="" fetchpriority="high">
+    </picture>
+    <!-- the video is attached by the script: desktop only, never with reduced motion -->
+  </div>
+
+  <div class="lp__main">
+    <div class="lp__text">
+      <p class="lp__eyebrow"><span dir="ltr">StruX</span> | ניהול ואחזקת נכסים</p>
+      <!-- PLACEHOLDER COPY: Ran writes the campaign headline -->
+      <h1 class="lp__h1">יש בניינים שנכנסים אליהם, ומרגישים שמישהו דואג.</h1>
+      <p class="lp__sub">ספרו לנו על הבניין שלכם, ונחזור אליכם עם הצעה שנתפרה בדיוק בשבילו.</p>
+    </div>
+
+    <section class="card" aria-labelledby="card-title"><div class="card__shape">
+      <div class="card__top">
+        <svg class="card__logo" viewBox="35 49.75 430 150.5" role="img" aria-label="StruX"><g fill="#1F3A93"><rect x="106.67" y="128.58" width="71.67" height="71.67"/> <path d="M100,128.58h6.67v71.67H35v-6.67c0-35.87,29.13-65,65-65Z" transform="translate(141.67 328.83) rotate(180)"/> <path d="M178.33,49.75c-39.58,0-71.67,32.09-71.67,71.67h0s43,0,43,0v-28.67h14.33v28.67h14.33V49.75h0Z"/> <path d="M35,49.75v71.67h71.67V49.75H35ZM63.67,78.42h-14.33v-14.33h14.33v14.33Z"/> </g><g fill="#0B0B0C"> <path d="M212.28,124.03h13.54c-1.3,15.76,3.13,21.23,10.29,21.23,6.77,0,10.16-3.78,10.03-11.2-.26-7.94-2.6-12.24-11.98-18.62-15.76-9.51-21.36-17.06-21.36-29.82,0-13.41,7.55-22.53,23.44-22.53,16.93,0,24.22,9.64,23.7,30.21h-13.15c.52-14.46-3.52-19.27-10.55-19.27-6.51,0-8.99,4.3-8.99,10.94,0,7.16,3.91,11.85,12.37,17.71,16.02,9.9,20.84,17.45,20.97,30.86.13,14.72-8.33,22.66-24.48,22.66s-25.65-7.29-23.83-32.17Z"/> <path d="M299.94,144.48v10.55h-6.51c-13.28,0-17.84-4.17-17.84-17.06v-44.8h-6.38v-9.77h6.38v-19.53h14.06v19.53h9.38v9.77h-9.38v43.75c0,5.86,1.43,7.55,6.51,7.55h3.78Z"/> <path d="M310.9,155.03v-71.62h13.41v16.02c2.21-9.38,6.64-16.02,17.32-16.02h1.3v13.28h-1.3c-10.55,0-16.67,5.86-16.67,23.44l.13,34.9h-14.19Z"/> <path d="M386.71,83.4h14.19v71.62h-14.19v-5.6c-3,4.04-7.42,6.38-13.67,6.38-12.76,0-19.14-7.29-19.14-26.18v-46.23h14.06v46.62c0,10.68,3.12,14.98,9.38,14.98,6.64,0,9.38-4.69,9.38-15.37v-46.23Z"/> <path d="M465,155.03h-16.15l-11.2-34.51-11.33,34.51h-16.15l19.14-47.01-17.58-44.15h16.15l9.77,30.6,9.64-30.6h16.15l-17.58,44.15,19.14,47.01Z"/> </g></svg>
+        <h2 class="card__title" id="card-title">השאירו פרטים <span>ונחזור אליכם עם הצעה</span></h2>
+      </div>
+      <form id="lead" novalidate>
+        <div class="grid">
+          <div><label class="sr" for="f-name">שם מלא</label>
+            <input id="f-name" name="name" type="text" placeholder="שם מלא" autocomplete="name" required></div>
+          <div><label class="sr" for="f-phone">טלפון נייד</label>
+            <input id="f-phone" name="phone" type="tel" placeholder="טלפון נייד" autocomplete="tel" inputmode="tel" required></div>
+          <div><label class="sr" for="f-address">כתובת הבניין</label>
+            <input id="f-address" name="address" type="text" placeholder="כתובת הבניין" autocomplete="street-address" required></div>
+          <div><label class="sr" for="f-units">כמה דירות בבניין?</label>
+            <input id="f-units" name="units" type="text" inputmode="numeric" placeholder="כמה דירות?" required></div>
+        </div>
+        <!-- the honeypot is clipped in place (never left:-9999px in RTL) -->
+        <div class="sr" aria-hidden="true"><input name="company_website" type="text" tabindex="-1" autocomplete="off"></div>
+        <label class="consent"><input type="checkbox" name="terms" required>
+          <span>קראתי ואני מסכים/ה ל<a href="https://strux-web.vercel.app/terms" target="_blank" rel="noopener">תקנון</a> ול<a href="https://strux-web.vercel.app/privacy" target="_blank" rel="noopener">מדיניות הפרטיות</a>, ולכך ש-StruX תיצור איתי קשר בנוגע לפנייה.*</span></label>
+        <p class="err" id="err" role="alert"></p>
+        <div class="btns">
+          <button class="btn btn--main" type="submit">תכינו לי הצעה <span aria-hidden="true">←</span></button>
+          <a class="btn btn--ghost" href="https://strux-web.vercel.app/">למעבר לאתר <span aria-hidden="true">←</span></a>
+        </div>
+      </form>
+      <p class="card__tel">או התקשרו: <a href="tel:+972557204242" dir="ltr">055-7204242</a></p>
+    </div>
+      <div class="door" aria-hidden="true"><div class="door__leaf"><span class="door__knob"></span></div></div>
+    </section>
+  </div>
+
+  <footer class="lp__legal">
+    © StruX
+    <a href="https://strux-web.vercel.app/terms">תקנון</a>·<a href="https://strux-web.vercel.app/privacy">מדיניות פרטיות</a>·<a href="https://strux-web.vercel.app/accessibility">הצהרת נגישות</a>
+  </footer>
+</main>
+
+<script>
+// Background video: desktop only, and never with reduced motion. It plays once and holds its last frame
+// (the clip does not end where it starts, so it is not looped).
+if (matchMedia('(min-width:1024px) and (prefers-reduced-motion:no-preference)').matches) {
+  const v = Object.assign(document.createElement('video'), { muted: true, playsInline: true, autoplay: true, preload: 'auto', src: '/media/hero_desktop.mp4' });
+  v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+  v.addEventListener('canplay', () => document.querySelector('.lp__bg').append(v), { once: true });
+}
+
+// The site's validators (site/src/scripts/validate.js), unchanged: Israeli mobile only; units a positive integer.
+const phone = (v) => {
+  const d = String(v).replace(/[\s\-().]/g, '').replace(/^\+?972/, '0');
+  if (!/^05\d{8}$/.test(d)) return null;
+  const tail = d.slice(3);
+  const steps = [...tail].slice(1).map((c, i) => c - tail[i]);
+  if (/^(\d)\1+$/.test(d.slice(2)) || /^(\d)\1+$/.test(tail)) return null;
+  if (steps.every((s) => s === 1) || steps.every((s) => s === -1)) return null;
+  return `${d.slice(0, 3)}-${tail}`;
+};
+const units = (v) => (/^[1-9]\d{0,5}$/.test(String(v).trim()) ? Number(v) : null);
+
+// ---------- tracking: the WebSite's helper (site/src/scripts/track.js), without the parts this page has no use for ----------
+// Same event names and parameters; `audience` is always '' here (the form does not ask). No new event names.
+const read = (store, key) => { try { return store.getItem(key); } catch (e) { return null; } };
+const write = (store, key, value) => { try { store.setItem(key, value); } catch (e) {} };
+const track = (event, button_location, extra = {}) => {
+  (window.dataLayer = window.dataLayer || []).push({ event, audience: '', button_location, ...extra });
+};
+// First touch, sent with the lead. A campaign touch (any UTM or click id) is kept forever; an organic one only until a
+// visit arrives with campaign parameters. Only raw URL values are stored, never a fallback label.
+const KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'wbraid', 'gbraid', 'fbclid'];
+const isCampaign = (touch) => KEYS.some((k) => touch[k]);
+const firstTouch = () => {
+  let saved = null;
+  try { saved = JSON.parse(read(localStorage, 'strux-first-touch')); } catch (e) {}
+  if (saved && isCampaign(saved)) return saved;
+  const q = new URLSearchParams(location.search);
+  const now = Object.fromEntries(KEYS.map((k) => [k, q.get(k) || '']));
+  if (saved && !isCampaign(now)) return saved; // organic stays as first seen
+  now.referrer = document.referrer;
+  now.landing_page = location.origin + location.pathname;
+  write(localStorage, 'strux-first-touch', JSON.stringify(now));
+  return now;
+};
+firstTouch();
+document.addEventListener('click', (e) => { if (e.target.closest?.('a[href^="tel:"]')) track('strux_web_phone_click_v1', 'form'); });
+
+// ---------- the form and the lead flow: the WebSite's (LeadForm.astro), with four fields ----------
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxqZvrlHOTzjhoNxzAoYUBDkkzgLbDnAxDW23Ppl0-sPs7O_1i0E8RWS39Z1LX1gmy8/exec';
+const WA = 'https://wa.me/972557204242';
+const THANKS = 'https://strux-web.vercel.app/thank-you'; // the WebSite's thank-you page
+const ORGANIC = 'אורגני'; // for people (Sheet, WhatsApp) when the visit carried no campaign source; never stored
+const f = document.getElementById('lead'), err = document.getElementById('err'), submit = f.querySelector('[type=submit]');
+const rules = [
+  ['name', (v) => v.trim().length >= 2, 'הכניסו שם מלא בבקשה'],
+  ['phone', phone, 'הכניסו מספר נייד תקין (05X-XXXXXXX)'],
+  ['address', (v) => v.trim().length >= 3, 'הכניסו את כתובת הבניין'],
+  ['units', units, 'כמה דירות יש בבניין? (מספר)'],
+];
+// The source as people read it (Ran, 11.10.2026): the UTM source; or the ad platform, when only its click id came;
+// or „אורגני”. A campaign lead lists every UTM value it carried. Every lead names the page it was sent from, and the
+// address the visitor first came from, so that leads from this page, from the WebSite and from other landing pages can be told apart.
+const sourceName = (touch) => touch.utm_source
+  || (touch.gclid || touch.wbraid || touch.gbraid ? 'google ads' : touch.fbclid ? 'facebook' : ORGANIC);
+const message = (l, touch) => [
+  'שלום StruX, אשמח לקבל הצעה מותאמת לבניין.',
+  `שם מלא: ${l.name}`,
+  `טלפון: ${l.phone}`,
+  `כתובת הנכס: ${l.address}`,
+  `מספר דירות: ${l.units}`,
+  `מקור: ${sourceName(touch)}`,
+  touch.utm_medium && `מדיום: ${touch.utm_medium}`,
+  touch.utm_campaign && `קמפיין: ${touch.utm_campaign}`,
+  touch.utm_content && `תוכן: ${touch.utm_content}`,
+  touch.utm_term && `מילת חיפוש: ${touch.utm_term}`,
+  `עמוד: ${location.origin + location.pathname}`,
+  touch.referrer && `הגיע מ: ${touch.referrer}`,
+].filter(Boolean).join('\n');
+
+let sent = false;
+f.addEventListener('focusin', () => track('strux_web_form_start_v1', 'form'), { once: true });
+f.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (sent) return;
+  const bad = rules.filter(([name, ok]) => {
+    const no = !ok(f[name].value);
+    f[name].setAttribute('aria-invalid', no);
+    return no;
+  });
+  if (!f.terms.checked) bad.push(['terms', null, 'יש לאשר את התקנון ואת מדיניות הפרטיות.']);
+  err.textContent = bad[0]?.[2] || '';
+  if (bad.length) {
+    f[bad[0][0]].focus();
+    return track('strux_web_form_error_v1', 'form', { error_fields: bad.map(([name]) => name).join(','), form_step: 1 });
+  }
+  if (f.company_website.value) return; // honeypot
+  sent = true;
+  submit.disabled = true; // no double lead, no double event
+
+  // The Sheet's keys, exactly (CLAUDE.md §6). The form has no audience, callback time or notes: they go out empty.
+  const lead = {
+    audience: '', name: f.name.value.trim(), phone: phone(f.phone.value), address: f.address.value.trim(),
+    units: units(f.units.value), callback_time: '', notes: '',
+  };
+  const touch = firstTouch();
+  const waUrl = `${WA}?text=${encodeURIComponent(message(lead, touch))}`;
+  const event_id = crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+  // Desktop: the new tab must open synchronously, inside this handler, or the browser blocks it.
+  const mobile = matchMedia('(max-width: 767px), (pointer: coarse)').matches;
+  const tab = mobile ? null : window.open(waUrl, '_blank');
+  if (tab) tab.opener = null;
+
+  // The Sheet: fire and forget. text/plain = no CORS preflight; a failure never blocks WhatsApp.
+  fetch(ENDPOINT, {
+    method: 'POST', mode: 'no-cors', keepalive: true,
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({
+      ...lead, terms_consent: 'כן', marketing_consent: 'לא',
+      ...touch, utm_source: sourceName(touch), event_id, company_website: '',
+    }),
+  }).catch(() => {});
+
+  // The one lead event. Leave once GTM has handled it, or after 0.8s if GTM is blocked or slow.
+  // Mobile, or a blocked desktop tab: this page goes to WhatsApp. Desktop: this page goes to the thank-you page.
+  let left = false;
+  const leave = () => {
+    if (left) return;
+    left = true;
+    location.href = tab ? THANKS : waUrl;
+  };
+  track('strux_web_lead_v1', 'form', { units: lead.units, event_id, ...touch, eventCallback: leave, eventTimeout: 2000 });
+  setTimeout(leave, 800);
+});
+// Back from WhatsApp (mobile): a clean form with a working button, and the door ajar again.
+addEventListener('pageshow', (e) => {
+  if (!e.persisted || !sent) return;
+  sent = false;
+  submit.disabled = false;
+  f.reset();
+  wake();
+});
+
+// The door. It behaves like the logo's tiles on the WebSite (HeroLight.astro): with a mouse it leans by the pointer's place
+// in the whole window, and opens more while the pointer is on it; on a touch screen it sways slowly by itself (a 9s cycle).
+// Each frame it closes part of the distance to its target, which gives it weight. Once the four fields are valid and the
+// consent is ticked it opens all the way. With reduced motion it only jumps between ajar and open.
+const leaf = document.querySelector('.door__leaf'), door = leaf.parentElement;
+const AJAR = 42, LEAN = 20, OVER = 16, FULL = 104, SWAY = 6; // degrees
+const still = matchMedia('(prefers-reduced-motion:reduce)'), touchOnly = matchMedia('(hover:none)');
+const complete = () => rules.every(([name, ok]) => ok(f[name].value)) && f.terms.checked;
+let lean = 0, over = false, angle = AJAR, last = 0, raf = 0, seen = true;
+const frame = (now) => {
+  raf = 0;
+  const open = complete();
+  const move = touchOnly.matches ? Math.sin(now / 9000 * 2 * Math.PI) * SWAY : lean + (over ? OVER : 0);
+  const to = (open ? FULL : AJAR) + move * (open ? 0.4 : 1);
+  angle += (to - angle) * Math.min(1, Math.min(40, now - last) * 0.009);
+  last = now;
+  leaf.style.setProperty('--a', angle.toFixed(2) + 'deg');
+  if (seen && (touchOnly.matches || Math.abs(to - angle) > 0.05)) raf = requestAnimationFrame(frame); // rests when it has arrived or is off screen
+};
+const wake = () => {
+  if (still.matches) leaf.style.setProperty('--a', (complete() ? FULL : AJAR) + 'deg');
+  else if (!raf) raf = requestAnimationFrame(frame);
+};
+addEventListener('pointermove', (e) => {
+  if (e.pointerType === 'touch') return; // a finger scrolls and taps, it doesn't move the door
+  lean = (0.5 - e.clientX / innerWidth) * 2 * LEAN; // toward the form's side of the screen it opens more
+  over = door.contains(e.target);
+  wake();
+});
+document.documentElement.addEventListener('pointerleave', () => { lean = 0; over = false; wake(); });
+f.addEventListener('input', wake);
+f.addEventListener('change', wake);
+new IntersectionObserver(([entry]) => { seen = entry.isIntersecting; wake(); }).observe(door);
+</script>
+</body>
+</html>

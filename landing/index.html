@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The bare address of the campaigns subdomain, and (at deploy) the page for any address that does not exist.
+     On purpose it always says "we are working here": the landing pages live in folders (/door-oct/ ...). No form, no tags. -->
+<meta name="robots" content="noindex">
+<title>StruX | עובדים פה</title>
+<link rel="preload" href="/fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
+@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
+@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
+@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
+:root{--c-base:#0E1A44;--c-brand:#1F3A93;--c-accent:#6F93F0;--c-light:#F4F6FB;--c-ink:#0B0B0C;--c-muted:#5B6478;--ease:cubic-bezier(.65,.05,.25,1)}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{min-height:100svh;display:grid;place-items:center;padding:32px 24px;background:var(--c-light);color:var(--c-ink);
+  font-family:'Assistant Variable',system-ui,sans-serif;text-align:center;-webkit-font-smoothing:antialiased}
+.logo{display:block;width:clamp(220px,34vw,360px);margin:0 auto clamp(32px,6svh,56px);overflow:visible}
+h1{font:800 clamp(40px,7vw,84px)/1.05 'Heebo Variable',system-ui,sans-serif;letter-spacing:-.02em;margin:0}
+p{font-size:clamp(18px,1.7vw,22px);line-height:1.6;color:var(--c-muted);margin:16px auto 0;max-width:24em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 32px;margin-top:32px;border:0;border-radius:6px;
+  background:var(--c-brand);color:#fff;font:700 19px 'Assistant Variable',system-ui,sans-serif;cursor:pointer;transition:background .3s,gap .3s;scale:1}
+.btn:hover{background:var(--c-base);gap:14px}
+.btn:active{scale:.97}
+:focus-visible{outline:3px solid var(--c-accent);outline-offset:2px}
+/* The logo at work: its four tiles are set in place one after the other, and then, for as long as the page is open,
+   one tile at a time is lifted a little and set down again (a 9s round: calm, and far from a 5s cycle). */
+.tile,.tile__in{transform-box:fill-box;transform-origin:50% 50%}
+@media (prefers-reduced-motion:no-preference){
+  .tile{animation:set .8s var(--ease) both;animation-delay:calc(var(--i)*.14s + .2s)}
+  .tile__in{animation:lift 9s var(--ease) infinite;animation-delay:calc(var(--i)*2.25s + 1.8s)}
+}
+@keyframes set{from{opacity:0;transform:translateY(-46%)}}
+@keyframes lift{0%,16%,100%{transform:none}8%{transform:translateY(-9%)}}
+</style>
+</head>
+<body>
+<main>
+  <svg class="logo" viewBox="35 49.75 430 150.5" role="img" aria-label="StruX"><g fill="#1F3A93"><g class="tile" style="--i:0"><g class="tile__in"><path d="M35,49.75v71.67h71.67V49.75H35ZM63.67,78.42h-14.33v-14.33h14.33v14.33Z"/></g></g><g class="tile" style="--i:1"><g class="tile__in"><path d="M178.33,49.75c-39.58,0-71.67,32.09-71.67,71.67h0s43,0,43,0v-28.67h14.33v28.67h14.33V49.75h0Z"/></g></g><g class="tile" style="--i:2"><g class="tile__in"><path d="M100,128.58h6.67v71.67H35v-6.67c0-35.87,29.13-65,65-65Z" transform="translate(141.67 328.83) rotate(180)"/></g></g><g class="tile" style="--i:3"><g class="tile__in"><rect x="106.67" y="128.58" width="71.67" height="71.67"/></g></g></g><g fill="#0B0B0C"><path d="M212.28,124.03h13.54c-1.3,15.76,3.13,21.23,10.29,21.23,6.77,0,10.16-3.78,10.03-11.2-.26-7.94-2.6-12.24-11.98-18.62-15.76-9.51-21.36-17.06-21.36-29.82,0-13.41,7.55-22.53,23.44-22.53,16.93,0,24.22,9.64,23.7,30.21h-13.15c.52-14.46-3.52-19.27-10.55-19.27-6.51,0-8.99,4.3-8.99,10.94,0,7.16,3.91,11.85,12.37,17.71,16.02,9.9,20.84,17.45,20.97,30.86.13,14.72-8.33,22.66-24.48,22.66s-25.65-7.29-23.83-32.17Z"/> <path d="M299.94,144.48v10.55h-6.51c-13.28,0-17.84-4.17-17.84-17.06v-44.8h-6.38v-9.77h6.38v-19.53h14.06v19.53h9.38v9.77h-9.38v43.75c0,5.86,1.43,7.55,6.51,7.55h3.78Z"/> <path d="M310.9,155.03v-71.62h13.41v16.02c2.21-9.38,6.64-16.02,17.32-16.02h1.3v13.28h-1.3c-10.55,0-16.67,5.86-16.67,23.44l.13,34.9h-14.19Z"/> <path d="M386.71,83.4h14.19v71.62h-14.19v-5.6c-3,4.04-7.42,6.38-13.67,6.38-12.76,0-19.14-7.29-19.14-26.18v-46.23h14.06v46.62c0,10.68,3.12,14.98,9.38,14.98,6.64,0,9.38-4.69,9.38-15.37v-46.23Z"/> <path d="M465,155.03h-16.15l-11.2-34.51-11.33,34.51h-16.15l19.14-47.01-17.58-44.15h16.15l9.77,30.6,9.64-30.6h16.15l-17.58,44.15,19.14,47.01Z"/></g></svg>
+  <!-- PLACEHOLDER COPY, from Ran's words; his to change -->
+  <h1>עובדים פה.</h1>
+  <p>הגעתם לעמוד שאינו קיים, או שעדיין עובדים עליו.</p>
+  <button class="btn" id="back" type="button" hidden><span aria-hidden="true">→</span> חזרה לעמוד הקודם</button>
+</main>
+<script>
+// Back to where the visitor came from. Shown only when there is somewhere to go back to.
+const back = document.getElementById('back');
+if (history.length > 1) { back.hidden = false; back.addEventListener('click', () => history.back()); }
+</script>
+</body>
+</html>
