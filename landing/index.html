@@ -3,52 +3,237 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The bare address of the campaigns subdomain, and (at deploy) the page for any address that does not exist.
-     On purpose it always says "we are working here": the landing pages live in folders (/door-oct/ ...). No form, no tags. -->
 <meta name="robots" content="noindex">
+<!-- The bare address of the campaigns subdomain: "we are working here". (An address that does not exist shows 404.html,
+     the lift.) The logo's four tiles are the panes of a window, misted over; behind them stands a real lobby of a
+     building StruX manages. The visitor passes the squeegee over the glass (the pointer on a desktop, a finger on a
+     phone) and sees through where it passed. When most of the glass is clean the rest clears, the words change, and the
+     way back comes on. Left alone for eight seconds, the window is cleaned for him. Without JS the glass is clean.
+     No form, no tags, nothing is sent. Every address starts with a slash, like the other pages of this folder. -->
 <title>StruX | עובדים פה</title>
+<script>document.documentElement.classList.add('js')</script>
 <link rel="preload" href="/fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
 @font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
 @font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
 @font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
-:root{--c-base:#0E1A44;--c-brand:#1F3A93;--c-accent:#6F93F0;--c-light:#F4F6FB;--c-ink:#0B0B0C;--c-muted:#5B6478;--ease:cubic-bezier(.65,.05,.25,1)}
+
+:root{
+  --c-base:#0E1A44; --c-brand:#1F3A93; --c-accent:#6F93F0; --c-light:#F4F6FB;
+  --c-ink:#0B0B0C; --c-muted:#5B6478; --c-muted-dark:#AEB8D6;
+  --f-head:'Heebo Variable',system-ui,sans-serif; --f-body:'Assistant Variable',system-ui,sans-serif;
+  --shadow:0 2px 6px rgb(0 0 0/.06),0 12px 24px rgb(0 0 0/.08),0 32px 64px rgb(0 0 0/.08);
+  --ease:cubic-bezier(.65,.05,.25,1);
+}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{min-height:100svh;display:grid;place-items:center;padding:32px 24px;background:var(--c-light);color:var(--c-ink);
-  font-family:'Assistant Variable',system-ui,sans-serif;text-align:center;-webkit-font-smoothing:antialiased}
-.logo{display:block;width:clamp(220px,34vw,360px);margin:0 auto clamp(32px,6svh,56px);overflow:visible}
-h1{font:800 clamp(40px,7vw,84px)/1.05 'Heebo Variable',system-ui,sans-serif;letter-spacing:-.02em;margin:0}
-p{font-size:clamp(18px,1.7vw,22px);line-height:1.6;color:var(--c-muted);margin:16px auto 0;max-width:24em}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 32px;margin-top:32px;border:0;border-radius:6px;
-  background:var(--c-brand);color:#fff;font:700 19px 'Assistant Variable',system-ui,sans-serif;cursor:pointer;transition:background .3s,gap .3s;scale:1}
-.btn:hover{background:var(--c-base);gap:14px}
+body{font-family:var(--f-body);color:var(--c-ink);background:var(--c-light);-webkit-font-smoothing:antialiased}
+:focus-visible{outline:3px solid var(--c-accent);outline-offset:3px}
+
+.pg{min-height:100svh;display:grid;align-items:center;padding:clamp(32px,6svh,72px) clamp(24px,5vw,64px)}
+.pg__in{width:100%;max-width:1160px;margin-inline:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(32px,6vw,96px)}
+.eyebrow{font:600 14px/1 var(--f-body);letter-spacing:.12em;color:var(--c-brand);margin:0 0 20px}
+h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;margin:0;text-wrap:balance}
+.sub{font:400 clamp(17px,1.45vw,21px)/1.6 var(--f-body);color:var(--c-muted);margin:22px 0 0;max-width:32em}
+.acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 30px;border:0;border-radius:6px;cursor:pointer;
+  font:700 18px var(--f-body);text-decoration:none;transition:background .3s,box-shadow .3s;scale:1}
+/* the arrow moves on hover; the button keeps its width, so a row of buttons never re-wraps under the pointer */
+.btn span[aria-hidden]{transition:translate .3s var(--ease)}
+.btn:hover span[aria-hidden]{translate:-6px 0}
 .btn:active{scale:.97}
-:focus-visible{outline:3px solid var(--c-accent);outline-offset:2px}
-/* The logo at work: its four tiles are set in place one after the other, and then, for as long as the page is open,
-   one tile at a time is lifted a little and set down again (a 9s round: calm, and far from a 5s cycle). */
-.tile,.tile__in{transform-box:fill-box;transform-origin:50% 50%}
-@media (prefers-reduced-motion:no-preference){
-  .tile{animation:set .8s var(--ease) both;animation-delay:calc(var(--i)*.14s + .2s)}
-  .tile__in{animation:lift 9s var(--ease) infinite;animation-delay:calc(var(--i)*2.25s + 1.8s)}
+.btn--main{background:var(--c-brand);color:#fff}
+.btn--main:hover{background:var(--c-base)}
+.btn--ghost{background:none;color:var(--c-brand);box-shadow:inset 0 0 0 1.5px var(--c-brand)}
+.btn--ghost:hover{background:#fff}
+
+/* a navy page: text light, the main button light, as on the site */
+.dark{background:var(--c-base);color:var(--c-light)}
+.dark .eyebrow{color:var(--c-accent)}
+.dark .sub{color:var(--c-muted-dark)}
+
+
+@media (max-width:860px){
+  .pg__in{grid-template-columns:1fr}
+  .btn{width:100%}
 }
-@keyframes set{from{opacity:0;transform:translateY(-46%)}}
-@keyframes lift{0%,16%,100%{transform:none}8%{transform:translateY(-9%)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* text, the object, the button: side by side on a desktop (the button under the text), one under the other on phones,
+   where the button comes last, after the object the visitor acts on */
+.pg__in{grid-template-areas:"txt obj" "acts obj";grid-template-rows:1fr 1fr;row-gap:0}
+.txt{grid-area:txt;align-self:end}
+.obj{grid-area:obj;justify-self:center;width:100%;display:grid;justify-items:center}
+.acts{grid-area:acts;align-self:start}
+.sub{min-height:4.8em} /* three lines' room, so the page does not shift when the text changes */
+.hint{margin:16px 0 0;text-align:center;font:600 15px var(--f-body);color:var(--c-muted);transition:opacity .4s}
+#back span[aria-hidden]{order:-1}
+#back:hover span[aria-hidden]{translate:6px 0}
+
+/* the three states of the words: before, after the visitor did it, after it was done for him */
+.after,.helped{display:none}
+.is-done .before{display:none}
+.is-done .after{display:inline}
+.is-helped .after{display:none}
+.is-helped .helped{display:inline}
+.is-done .hint{opacity:0}
+/* the button: not seen until the story ends; its room is kept */
+.js .acts{opacity:0;visibility:hidden;translate:0 12px;transition:opacity .6s var(--ease) .5s,translate .6s var(--ease) .5s,visibility 0s .5s}
+.js .is-done .acts{opacity:1;visibility:visible;translate:0 0}
+
+@media (max-width:860px){
+  .pg__in{grid-template-areas:"txt" "obj" "acts";grid-template-rows:auto;row-gap:26px}
+  .sub{min-height:0}
+  .acts{margin-top:0}
+}
+
+[hidden]{display:none!important} /* the button has a display of its own, which would beat the attribute */
+.win{width:min(100%,430px)}
+.win svg{display:block;width:100%;overflow:visible;touch-action:none;outline:0;filter:drop-shadow(0 18px 26px rgb(14 26 68/.2))}
+.frame{fill:none;stroke:var(--c-brand);stroke-width:2.6;stroke-linejoin:round}
+.fog{opacity:0;transition:opacity 1s var(--ease)}
+.js .fog{opacity:1}
+.js .is-done .fog{opacity:0}
+/* the squeegee: it lies on the glass at first, and on a desktop it is the pointer, over the whole page, until the
+   window is clean (so there is no pointer of the system's until then) */
+.blade{position:fixed;left:0;top:0;z-index:6;width:0;height:0;pointer-events:none;opacity:0;transition:opacity .4s}
+.blade svg{position:absolute;overflow:visible;fill:#0E1A44;filter:drop-shadow(0 3px 4px rgb(14 26 68/.3))}
+.js .blade{opacity:1}
+.js .is-done .blade{opacity:0}
+@media (hover:hover) and (pointer:fine){.js body:not(.is-done),.js body:not(.is-done) *{cursor:none}}
+.win svg:focus-visible .frame{stroke:var(--c-accent)}
 </style>
 </head>
 <body>
-<main>
-  <svg class="logo" viewBox="35 49.75 430 150.5" role="img" aria-label="StruX"><g fill="#1F3A93"><g class="tile" style="--i:0"><g class="tile__in"><path d="M35,49.75v71.67h71.67V49.75H35ZM63.67,78.42h-14.33v-14.33h14.33v14.33Z"/></g></g><g class="tile" style="--i:1"><g class="tile__in"><path d="M178.33,49.75c-39.58,0-71.67,32.09-71.67,71.67h0s43,0,43,0v-28.67h14.33v28.67h14.33V49.75h0Z"/></g></g><g class="tile" style="--i:2"><g class="tile__in"><path d="M100,128.58h6.67v71.67H35v-6.67c0-35.87,29.13-65,65-65Z" transform="translate(141.67 328.83) rotate(180)"/></g></g><g class="tile" style="--i:3"><g class="tile__in"><rect x="106.67" y="128.58" width="71.67" height="71.67"/></g></g></g><g fill="#0B0B0C"><path d="M212.28,124.03h13.54c-1.3,15.76,3.13,21.23,10.29,21.23,6.77,0,10.16-3.78,10.03-11.2-.26-7.94-2.6-12.24-11.98-18.62-15.76-9.51-21.36-17.06-21.36-29.82,0-13.41,7.55-22.53,23.44-22.53,16.93,0,24.22,9.64,23.7,30.21h-13.15c.52-14.46-3.52-19.27-10.55-19.27-6.51,0-8.99,4.3-8.99,10.94,0,7.16,3.91,11.85,12.37,17.71,16.02,9.9,20.84,17.45,20.97,30.86.13,14.72-8.33,22.66-24.48,22.66s-25.65-7.29-23.83-32.17Z"/> <path d="M299.94,144.48v10.55h-6.51c-13.28,0-17.84-4.17-17.84-17.06v-44.8h-6.38v-9.77h6.38v-19.53h14.06v19.53h9.38v9.77h-9.38v43.75c0,5.86,1.43,7.55,6.51,7.55h3.78Z"/> <path d="M310.9,155.03v-71.62h13.41v16.02c2.21-9.38,6.64-16.02,17.32-16.02h1.3v13.28h-1.3c-10.55,0-16.67,5.86-16.67,23.44l.13,34.9h-14.19Z"/> <path d="M386.71,83.4h14.19v71.62h-14.19v-5.6c-3,4.04-7.42,6.38-13.67,6.38-12.76,0-19.14-7.29-19.14-26.18v-46.23h14.06v46.62c0,10.68,3.12,14.98,9.38,14.98,6.64,0,9.38-4.69,9.38-15.37v-46.23Z"/> <path d="M465,155.03h-16.15l-11.2-34.51-11.33,34.51h-16.15l19.14-47.01-17.58-44.15h16.15l9.77,30.6,9.64-30.6h16.15l-17.58,44.15,19.14,47.01Z"/></g></svg>
-  <!-- PLACEHOLDER COPY, from Ran's words; his to change -->
-  <h1>עובדים פה.</h1>
-  <p>הגעתם לעמוד שאינו קיים, או שעדיין עובדים עליו.</p>
-  <button class="btn" id="back" type="button" hidden><span aria-hidden="true">→</span> חזרה לעמוד הקודם</button>
-</main>
+<main class="pg"><div class="pg__in">
+  <div class="txt">
+    <p class="eyebrow"><span dir="ltr">StruX</span> | ניהול ואחזקת נכסים</p>
+    <h1><span class="before">עובדים פה.</span><span class="after">עכשיו רואים ברור.</span><span class="helped">ניקינו בשבילכם.</span></h1>
+    <p class="sub"><span class="before">העמוד הזה עדיין בעבודה, ובדיוק מנקים לו את החלונות. העבירו את המגב על הזכוכית, ותראו מה מחכה בצד השני.</span><span class="after">ככה נראה בניין שמישהו דואג לו. אצלנו לא מחכים שדייר יתלונן על חלון מלוכלך: יש תוכנית עבודה, והיא מתבצעת.</span><span class="helped">החלון נקי גם בלי שנגעתם בו. ככה זה אצלנו: יש תוכנית עבודה, והיא מתבצעת גם כשאף אחד לא מסתכל.</span></p>
+  </div>
+
+  <div class="obj"><div class="win">
+    <svg id="win" viewBox="25 39.75 163.33 170.5" tabindex="0" role="button" aria-label="חלון בצורת הלוגו של StruX. נקו אותו">
+      <defs>
+        <clipPath id="panes">
+          <path d="M35,49.75v71.67h71.67V49.75H35ZM63.67,78.42h-14.33v-14.33h14.33v14.33Z"/>
+          <path d="M178.33,49.75c-39.58,0-71.67,32.09-71.67,71.67h0s43,0,43,0v-28.67h14.33v28.67h14.33V49.75h0Z"/>
+          <path d="M100,128.58h6.67v71.67H35v-6.67c0-35.87,29.13-65,65-65Z" transform="translate(141.67 328.83) rotate(180)"/>
+          <rect x="106.67" y="128.58" width="71.67" height="71.67"/>
+        </clipPath>
+        <linearGradient id="mist" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#EEF2FA"/><stop offset=".5" stop-color="#D6DEF1"/><stop offset="1" stop-color="#E6EBF7"/>
+        </linearGradient>
+        <!-- what the squeegee passed is drawn black into the mask: the mist is gone there -->
+        <mask id="dirt" maskUnits="userSpaceOnUse" x="25" y="39" width="164" height="172">
+          <rect x="25" y="39" width="164" height="172" fill="#fff"/>
+          <path id="wiped" d="" fill="none" stroke="#000" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
+        </mask>
+      </defs>
+      <g clip-path="url(#panes)">
+        <image href="/media/working-lobby.webp" x="20" y="45" width="174" height="160" preserveAspectRatio="xMidYMid slice"/>
+        <rect class="fog" x="25" y="39" width="164" height="172" fill="url(#mist)" fill-opacity=".95" mask="url(#dirt)"/>
+      </g>
+      <g class="frame" aria-hidden="true">
+        <path d="M35,49.75v71.67h71.67V49.75H35ZM63.67,78.42h-14.33v-14.33h14.33v14.33Z"/>
+        <path d="M178.33,49.75c-39.58,0-71.67,32.09-71.67,71.67h0s43,0,43,0v-28.67h14.33v28.67h14.33V49.75h0Z"/>
+        <path d="M100,128.58h6.67v71.67H35v-6.67c0-35.87,29.13-65,65-65Z" transform="translate(141.67 328.83) rotate(180)"/>
+        <rect x="106.67" y="128.58" width="71.67" height="71.67"/>
+      </g>
+    </svg>
+    <p class="hint">העבירו את המגב על החלון</p>
+  </div></div>
+
+  <div class="acts">
+    <button class="btn btn--main" id="back" type="button" hidden><span aria-hidden="true">→</span> חזרה לעמוד הקודם</button>
+  </div>
+</div></main>
+<!-- the squeegee: a blade and a handle. It follows the pointer with a little lag and leans the way it is pushed. -->
+<div class="blade" id="blade" aria-hidden="true"><svg viewBox="-16 -4 32 24"><rect x="-15" y="-2.4" width="30" height="4.8" rx="1.4"/><rect x="-1.7" y="1.6" width="3.4" height="17" rx="1.5"/></svg></div>
+
 <script>
-// Back to where the visitor came from. Shown only when there is somewhere to go back to.
-const back = document.getElementById('back');
-if (history.length > 1) { back.hidden = false; back.addEventListener('click', () => history.back()); }
+// The end of the story, and the way back.
+// A page calls story.finish() when the visitor did the thing, and story.wait() on every move of his, which starts the
+// wait again. Left alone for eight seconds, the story ends by itself and the page says StruX took care of it, so nobody
+// is left without the button.
+const story = (() => {
+  let timer, over = false;
+  const finish = (bySelf) => {
+    if (over) return;
+    over = true;
+    clearTimeout(timer);
+    document.body.classList.add('is-done');
+    if (bySelf === true) document.body.classList.add('is-helped');
+    document.dispatchEvent(new CustomEvent('story:done', { detail: bySelf === true }));
+  };
+  const wait = () => { if (!over) { clearTimeout(timer); timer = setTimeout(() => finish(true), 8000); } };
+  // The page's one button: back to where the visitor came from. Shown only when there is somewhere to go back to.
+  const back = document.getElementById('back');
+  if (history.length > 1) { back.hidden = false; back.addEventListener('click', () => history.back()); }
+  wait();
+  return { finish, wait, get over() { return over; } };
+})();
+
+// One stroke is wiped before the visitor does anything (about 7% of the glass), and the squeegee rests at its end.
+// On a desktop the squeegee follows the pointer everywhere, with a little lag (weight), and leans with its sideways
+// speed; a finger takes it only on the glass. Where it passes over the window, the mist is wiped: its path is drawn
+// into the mask. The glass is counted in a 6 x 6 grid: when 22 of the 36 squares were passed, the window counts as clean.
+const svg = document.getElementById('win'), wiped = document.getElementById('wiped');
+const blade = document.getElementById('blade'), bladeSvg = blade.firstElementChild;
+const X0 = 35, Y0 = 49.75, W = 143.33, H = 150.5, COLS = 6, ROWS = 6, NEED = 22;
+const START = [[122, 149], [149, 161]]; // the stroke that is already wiped, in the window's own units
+const seen = new Set();
+let d = `M${START[0].join(' ')} L${START[1].join(' ')}`, target = null, pos = null, tilt = -9, raf = 0, onGlass = false;
+const at = (x, y, m) => { const q = new DOMPoint(x, y).matrixTransform(m); return { x: q.x, y: q.y }; };
+const count = (x, y) => {
+  const c = Math.floor((x - X0) / W * COLS), r = Math.floor((y - Y0) / H * ROWS);
+  if (c >= 0 && c < COLS && r >= 0 && r < ROWS) seen.add(c * 10 + r);
+};
+const put = () => { blade.style.transform = `translate(${pos.x.toFixed(1)}px,${pos.y.toFixed(1)}px) rotate(${tilt.toFixed(1)}deg)`; };
+// The squeegee is as large as the window draws it (32 x 24 of its units), and until someone takes it, it lies at the stroke's end.
+const rest = () => {
+  const k = svg.getBoundingClientRect().width / 163.33;
+  bladeSvg.style.cssText = `width:${32 * k}px;height:${24 * k}px;left:${-16 * k}px;top:${-4 * k}px`;
+  if (!target && !story.over) { pos = at(...START[1], svg.getScreenCTM()); put(); }
+};
+const frame = () => {
+  raf = 0;
+  if (!target || story.over) return;
+  const from = pos;
+  pos = { x: pos.x + (target.x - pos.x) * 0.3, y: pos.y + (target.y - pos.y) * 0.3 };
+  tilt += (Math.max(-20, Math.min(20, (pos.x - from.x) * 1.6)) - tilt) * 0.2;
+  put();
+  const b = svg.getBoundingClientRect();
+  const inside = pos.x >= b.left && pos.x <= b.right && pos.y >= b.top && pos.y <= b.bottom;
+  if (inside) {
+    const p = at(pos.x, pos.y, svg.getScreenCTM().inverse());
+    d += (onGlass ? ' L' : ' M') + p.x.toFixed(1) + ' ' + p.y.toFixed(1);
+    wiped.setAttribute('d', d);
+    count(p.x, p.y);
+    if (seen.size >= NEED) return story.finish();
+  }
+  onGlass = inside;
+  if (Math.hypot(target.x - pos.x, target.y - pos.y) > 0.4 || Math.abs(tilt) > 0.3) raf = requestAnimationFrame(frame);
+};
+const take = (e, jump) => {
+  if (story.over) return;
+  target = { x: e.clientX, y: e.clientY };
+  if (jump) { pos = { ...target }; onGlass = false; } // a finger lands where it lands: the squeegee is there at once
+  story.wait();
+  if (!raf) raf = requestAnimationFrame(frame);
+};
+addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') take(e); });
+svg.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') { svg.setPointerCapture(e.pointerId); take(e, true); } });
+svg.addEventListener('pointermove', (e) => { if (e.pointerType !== 'mouse' && e.pressure) take(e); });
+svg.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); story.finish(); } });
+document.addEventListener('story:done', () => svg.removeAttribute('tabindex'));
+addEventListener('resize', rest);
+addEventListener('scroll', rest, { passive: true });
+for (let i = 0; i <= 4; i++) count(START[0][0] + (START[1][0] - START[0][0]) * i / 4, START[0][1] + (START[1][1] - START[0][1]) * i / 4);
+wiped.setAttribute('d', d);
+rest();
+document.fonts.ready.then(rest); // the text above the window may still move it
 </script>
 </body>
 </html>

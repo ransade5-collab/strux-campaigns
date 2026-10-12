@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<!-- DRAFT, kept as a path of its own (Ran, 13.10.2026): a proposal for the "we are working here" page, "the light is not connected yet".
+     The site's bare address shows the proposal he chose, the window. No form, no tags, nothing is sent.
+     All wording is a placeholder. -->
+<title>עובדים פה | StruX</title>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preload" href="/fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
+@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
+@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
+@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
+
+:root{
+  --c-base:#0E1A44; --c-brand:#1F3A93; --c-accent:#6F93F0; --c-light:#F4F6FB;
+  --c-ink:#0B0B0C; --c-muted:#5B6478; --c-muted-dark:#AEB8D6;
+  --f-head:'Heebo Variable',system-ui,sans-serif; --f-body:'Assistant Variable',system-ui,sans-serif;
+  --shadow:0 2px 6px rgb(0 0 0/.06),0 12px 24px rgb(0 0 0/.08),0 32px 64px rgb(0 0 0/.08);
+  --ease:cubic-bezier(.65,.05,.25,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--f-body);color:var(--c-ink);background:var(--c-light);-webkit-font-smoothing:antialiased}
+:focus-visible{outline:3px solid var(--c-accent);outline-offset:3px}
+
+.pg{min-height:100svh;display:grid;align-items:center;padding:clamp(32px,6svh,72px) clamp(24px,5vw,64px)}
+.pg__in{width:100%;max-width:1160px;margin-inline:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(32px,6vw,96px)}
+.eyebrow{font:600 14px/1 var(--f-body);letter-spacing:.12em;color:var(--c-brand);margin:0 0 20px}
+h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;margin:0;text-wrap:balance}
+.sub{font:400 clamp(17px,1.45vw,21px)/1.6 var(--f-body);color:var(--c-muted);margin:22px 0 0;max-width:32em}
+.acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 30px;border:0;border-radius:6px;cursor:pointer;
+  font:700 18px var(--f-body);text-decoration:none;transition:background .3s,box-shadow .3s;scale:1}
+/* the arrow moves on hover; the button keeps its width, so a row of buttons never re-wraps under the pointer */
+.btn span[aria-hidden]{transition:translate .3s var(--ease)}
+.btn:hover span[aria-hidden]{translate:-6px 0}
+.btn:active{scale:.97}
+.btn--main{background:var(--c-brand);color:#fff}
+.btn--main:hover{background:var(--c-base)}
+.btn--ghost{background:none;color:var(--c-brand);box-shadow:inset 0 0 0 1.5px var(--c-brand)}
+.btn--ghost:hover{background:#fff}
+
+/* a navy page: text light, the main button light, as on the site */
+.dark{background:var(--c-base);color:var(--c-light)}
+.dark .eyebrow{color:var(--c-accent)}
+.dark .sub{color:var(--c-muted-dark)}
+
+.draft{position:fixed;top:10px;left:10px;z-index:5;margin:0;padding:6px 10px;border-radius:6px;background:#fff;color:#C62828;font:700 13px/1.2 var(--f-body);box-shadow:var(--shadow)}
+
+@media (max-width:860px){
+  .pg__in{grid-template-columns:1fr}
+  .btn{width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* text, the object, the button: side by side on a desktop (the button under the text), one under the other on phones,
+   where the button comes last, after the object the visitor acts on */
+.pg__in{grid-template-areas:"txt obj" "acts obj";grid-template-rows:1fr 1fr;row-gap:0}
+.txt{grid-area:txt;align-self:end}
+.obj{grid-area:obj;justify-self:center;width:100%;display:grid;justify-items:center}
+.acts{grid-area:acts;align-self:start}
+.sub{min-height:4.8em} /* three lines' room, so the page does not shift when the text changes */
+.hint{margin:16px 0 0;text-align:center;font:600 15px var(--f-body);color:var(--c-muted);transition:opacity .4s}
+#back span[aria-hidden]{order:-1}
+#back:hover span[aria-hidden]{translate:6px 0}
+
+/* the three states of the words: before, after the visitor did it, after it was done for him */
+.after,.helped{display:none}
+.is-done .before{display:none}
+.is-done .after{display:inline}
+.is-helped .after{display:none}
+.is-helped .helped{display:inline}
+.is-done .hint{opacity:0}
+/* the button: not seen until the story ends; its room is kept */
+.js .acts{opacity:0;visibility:hidden;translate:0 12px;transition:opacity .6s var(--ease) .5s,translate .6s var(--ease) .5s,visibility 0s .5s}
+.js .is-done .acts{opacity:1;visibility:visible;translate:0 0}
+
+@media (max-width:860px){
+  .pg__in{grid-template-areas:"txt" "obj" "acts";grid-template-rows:auto;row-gap:26px}
+  .sub{min-height:0}
+  .acts{margin-top:0}
+}
+
+@property --r{syntax:'<length>';inherits:true;initial-value:120px}
+body,.eyebrow,.sub,.hint{transition:background-color 1.1s var(--ease),color 1.1s var(--ease)}
+.dark .hint{color:var(--c-muted-dark)}
+.room{position:relative;width:min(100%,400px);aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--shadow);
+  --x:50%;--y:40%;--r:118px;transition:--r 1.3s var(--ease),box-shadow 1.1s;touch-action:none}
+.dark .room{background:#070D24;box-shadow:inset 0 0 0 1px rgb(111 147 240/.22),0 30px 60px rgb(0 0 0/.35)}
+.room__layer{position:absolute;inset:0;display:grid;place-items:center}
+.room__layer svg{width:60%;translate:0 -9%;overflow:visible}
+.room__dark path,.room__dark rect{fill:#0C1638}
+.room__lit{background:#fff}
+.room__lit path,.room__lit rect{fill:var(--c-brand)}
+/* the torch: the lit room is seen only inside its beam */
+.js .room__lit{-webkit-mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),#000 0,#000 40%,transparent 100%);
+  mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),#000 0,#000 40%,transparent 100%)}
+.js .is-done .room{--r:1100px}
+
+/* the switch: a plate, a rocker that leans, and a locator lamp that goes out when the light is on */
+.switch{position:absolute;left:11%;bottom:8%;width:54px;height:80px;padding:0;border:0;border-radius:8px;cursor:pointer;display:grid;place-items:center;
+  perspective:260px;background:#E9EDF7;box-shadow:inset 0 0 0 1px rgb(14 26 68/.16);transition:background-color 1s,box-shadow 1s}
+.switch i{display:block;width:26px;height:44px;border-radius:5px;background:linear-gradient(#fff,#EDF0F8);box-shadow:inset 0 0 0 1px rgb(14 26 68/.2);
+  transform:rotateX(-16deg);transition:transform .16s ease-out,background 1s,box-shadow 1s}
+.switch::after{content:"";position:absolute;top:9px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--c-accent);
+  box-shadow:0 0 10px 2px rgb(111 147 240/.85);opacity:0;transition:opacity .5s}
+.dark .switch{background:#0C1535;box-shadow:inset 0 0 0 1px rgb(174 184 214/.28)}
+.dark .switch i{background:linear-gradient(#1B2858,#101A40);box-shadow:inset 0 0 0 1px rgb(174 184 214/.34);transform:rotateX(16deg)}
+.dark .switch::after{opacity:1}
+.switch:active i{scale:.97}
+</style>
+</head>
+<body class="dark">
+<p class="draft">טיוטה</p>
+<main class="pg"><div class="pg__in">
+  <div class="txt">
+    <p class="eyebrow"><span dir="ltr">StruX</span> | ניהול ואחזקת נכסים</p>
+    <h1><span class="before">עובדים פה.</span><span class="after">האור חזר.</span><span class="helped">הדלקנו בשבילכם.</span></h1>
+    <p class="sub"><span class="before">העמוד הזה עדיין בעבודה, והתאורה בו עוד לא מחוברת. האירו עם הפנס, מצאו את המתג והדליקו.</span><span class="after">אצלנו נורה שרופה בחדר המדרגות לא מחכה שמישהו ידווח. אנחנו עוברים, רואים ומחליפים.</span><span class="helped">לא מצאתם את המתג? לא נורא. אצלנו אף דייר לא נשאר בחושך: אנחנו עוברים, רואים ומחליפים.</span></p>
+  </div>
+
+  <div class="obj">
+    <div class="room" id="room">
+      <div class="room__layer room__dark" aria-hidden="true">
+        <svg viewBox="35 49.75 143.33 150.5"><path d="M35,49.75v71.67h71.67V49.75H35ZM63.67,78.42h-14.33v-14.33h14.33v14.33Z"/><path d="M178.33,49.75c-39.58,0-71.67,32.09-71.67,71.67h0s43,0,43,0v-28.67h14.33v28.67h14.33V49.75h0Z"/><path d="M100,128.58h6.67v71.67H35v-6.67c0-35.87,29.13-65,65-65Z" transform="translate(141.67 328.83) rotate(180)"/><rect x="106.67" y="128.58" width="71.67" height="71.67"/></svg>
+      </div>
+      <div class="room__layer room__lit" aria-hidden="true">
+        <svg viewBox="35 49.75 143.33 150.5"><path d="M35,49.75v71.67h71.67V49.75H35ZM63.67,78.42h-14.33v-14.33h14.33v14.33Z"/><path d="M178.33,49.75c-39.58,0-71.67,32.09-71.67,71.67h0s43,0,43,0v-28.67h14.33v28.67h14.33V49.75h0Z"/><path d="M100,128.58h6.67v71.67H35v-6.67c0-35.87,29.13-65,65-65Z" transform="translate(141.67 328.83) rotate(180)"/><rect x="106.67" y="128.58" width="71.67" height="71.67"/></svg>
+      </div>
+      <button class="switch" id="switch" type="button" role="switch" aria-checked="false" aria-label="מתג האור"><i></i></button>
+    </div>
+    <p class="hint">הזיזו את הפנס, ולחצו על המתג</p>
+  </div>
+
+  <div class="acts">
+    <button class="btn btn--main" id="back" type="button"><span aria-hidden="true">→</span> חזרה לעמוד הקודם</button>
+  </div>
+</div></main>
+
+<script>
+// Shared by the three drafts: the end of the story, and the way back.
+// A page calls story.finish() when the visitor did the thing, and story.wait() on every move of his, which starts the
+// wait again. Left alone for eight seconds, the story ends by itself and the page says StruX took care of it, so nobody
+// is left without the button (as on the 404 draft "a piece is missing"; Ran, 12.10.2026).
+// Each page listens to "story:done" and plays its own ending.
+const story = (() => {
+  let timer, over = false;
+  const finish = (bySelf) => {
+    if (over) return;
+    over = true;
+    clearTimeout(timer);
+    document.body.classList.add('is-done');
+    if (bySelf === true) document.body.classList.add('is-helped');
+    document.dispatchEvent(new CustomEvent('story:done', { detail: bySelf === true }));
+  };
+  const wait = () => { if (!over) { clearTimeout(timer); timer = setTimeout(() => finish(true), 8000); } };
+  // The page's one button, as on the live page: back to where the visitor came from.
+  document.getElementById('back').addEventListener('click', () => { if (history.length > 1) history.back(); });
+  wait();
+  return { finish, wait, get over() { return over; } };
+})();
+
+// The beam follows the pointer inside the room with a little lag, and goes back to rest on the logo when the pointer
+// leaves. The switch ends the story: the beam's radius grows (a registered custom property, so it can move) until the
+// whole room is lit, and the page leaves its dark colours.
+const room = document.getElementById('room'), sw = document.getElementById('switch');
+let target = null, pos = null, raf = 0;
+const rest = () => ({ x: room.clientWidth * 0.5, y: room.clientHeight * 0.4 });
+const frame = () => {
+  raf = 0;
+  if (story.over) return;
+  const to = target || rest();
+  pos = pos || rest();
+  pos = { x: pos.x + (to.x - pos.x) * 0.2, y: pos.y + (to.y - pos.y) * 0.2 };
+  room.style.setProperty('--x', pos.x.toFixed(1) + 'px');
+  room.style.setProperty('--y', pos.y.toFixed(1) + 'px');
+  if (Math.hypot(to.x - pos.x, to.y - pos.y) > 0.4) raf = requestAnimationFrame(frame);
+};
+const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
+room.addEventListener('pointermove', (e) => {
+  const b = room.getBoundingClientRect();
+  target = { x: e.clientX - b.left, y: e.clientY - b.top };
+  story.wait();
+  kick();
+});
+room.addEventListener('pointerleave', () => { target = null; kick(); });
+sw.addEventListener('click', () => story.finish());
+document.addEventListener('story:done', () => {
+  sw.setAttribute('aria-checked', 'true');
+  document.body.classList.remove('dark');
+});
+</script>
+</body>
+</html>
