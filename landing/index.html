@@ -8,7 +8,9 @@
      the lift.) The logo's four tiles are the panes of a window, misted over; behind them stands a real lobby of a
      building StruX manages. The visitor passes the squeegee over the glass (the pointer on a desktop, a finger on a
      phone) and sees through where it passed. When most of the glass is clean the rest clears, the words change, and the
-     way back comes on. Left alone for eight seconds, the window is cleaned for him. Without JS the glass is clean.
+     way out comes on: back to the page he came from or to the landing page he came through, or on to the WebSite when
+     nothing is known (the lift's rule, 404.html). Left alone for eight seconds, the window is cleaned for him. Without
+     JS the glass is clean and the link to the WebSite is there.
      No form, no tags, nothing is sent. Every address starts with a slash, like the other pages of this folder. -->
 <title>StruX | עובדים פה</title>
 <script>document.documentElement.classList.add('js')</script>
@@ -68,8 +70,8 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
 .acts{grid-area:acts;align-self:start}
 .sub{min-height:4.8em} /* three lines' room, so the page does not shift when the text changes */
 .hint{margin:16px 0 0;text-align:center;font:600 15px var(--f-body);color:var(--c-muted);transition:opacity .4s}
-#back span[aria-hidden]{order:-1}
-#back:hover span[aria-hidden]{translate:6px 0}
+#back.is-back span[aria-hidden]{order:-1}
+#back.is-back:hover span[aria-hidden]{translate:6px 0}
 
 /* the three states of the words: before, after the visitor did it, after it was done for him */
 .after,.helped{display:none}
@@ -88,7 +90,6 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
   .acts{margin-top:0}
 }
 
-[hidden]{display:none!important} /* the button has a display of its own, which would beat the attribute */
 .win{width:min(100%,430px)}
 .win svg{display:block;width:100%;overflow:visible;touch-action:none;outline:0;filter:drop-shadow(0 18px 26px rgb(14 26 68/.2))}
 .frame{fill:none;stroke:var(--c-brand);stroke-width:2.6;stroke-linejoin:round}
@@ -146,7 +147,7 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
   </div></div>
 
   <div class="acts">
-    <button class="btn btn--main" id="back" type="button" hidden><span aria-hidden="true">→</span> חזרה לעמוד הקודם</button>
+    <a class="btn btn--main" id="back" href="https://strux-web.vercel.app/">למעבר לאתר <span aria-hidden="true">←</span></a>
   </div>
 </div></main>
 <!-- the squeegee: a blade and a handle. It follows the pointer with a little lag and leans the way it is pushed. -->
@@ -168,9 +169,31 @@ const story = (() => {
     document.dispatchEvent(new CustomEvent('story:done', { detail: bySelf === true }));
   };
   const wait = () => { if (!over) { clearTimeout(timer); timer = setTimeout(() => finish(true), 8000); } };
-  // The page's one button: back to where the visitor came from. Shown only when there is somewhere to go back to.
-  const back = document.getElementById('back');
-  if (history.length > 1) { back.hidden = false; back.addEventListener('click', () => history.back()); }
+  // The page's one button, a way out for everybody. Where it leads is the lift's rule (404.html, floor 1; Ran, 14.10.2026):
+  // 1. the visitor came here from a page of this site: back to that page;
+  // 2. this browser remembers the landing page it first came through (the first touch the landing pages store): back
+  //    there, both under the words of the lift for the way back; or nothing is remembered and the address carries a
+  //    campaign (utm_*, a click id): on to the landing page /tailored, under the words of the lift's floor that leads there;
+  // 3. nothing is known: the link stays as written, on to the WebSite's home page.
+  // What the address carries goes along, so a lead is still credited to its campaign.
+  const back = document.getElementById('back'), carried = new URLSearchParams(location.search);
+  const here = location.pathname.replace(/\/$/, '');
+  const own = (url) => {
+    try {
+      const u = new URL(url), p = u.pathname.replace(/\/$/, '');
+      return u.origin === location.origin && p && p !== here ? u : null;
+    } catch (e) { return null; }
+  };
+  let page = own(document.referrer), words = '<span aria-hidden="true">→</span> חזרה לדף שממנו הגעתם';
+  if (!page) { try { page = own(JSON.parse(localStorage.getItem('strux-first-touch')).landing_page); } catch (e) {} }
+  if (!page && ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'wbraid', 'gbraid', 'fbclid'].some((k) => carried.get(k))) {
+    page = new URL('/tailored', location.origin);
+    words = 'מחפשים התאמה אישית? <span aria-hidden="true">←</span>';
+  }
+  if (page) { back.innerHTML = words; back.classList.toggle('is-back', words.includes('חזרה')); }
+  const to = new URL(page || back.href);
+  carried.forEach((v, k) => { if (!to.searchParams.has(k)) to.searchParams.set(k, v); });
+  back.href = to.href;
   wait();
   return { finish, wait, get over() { return over; } };
 })();
