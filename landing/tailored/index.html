@@ -107,6 +107,8 @@ input[type=tel],input[inputmode=numeric]{direction:rtl}
 .consent{display:flex;gap:.6em;align-items:flex-start;margin-top:.7em;font:400 .8em/1.4 var(--f-body);color:var(--c-muted)}
 .consent input{width:1.35em;height:1.35em;margin:.1em 0 0;flex:none;accent-color:var(--c-brand)}
 .err{margin:.5em 0 .4em;text-align:center;font:600 .85em/1.3 var(--f-body);color:var(--c-err);min-height:1.3em}
+/* the way out beside an address error: a text button in the line, with a tall hit area that does not change the line's height */
+.err button{border:0;background:none;padding:.7em .2em;margin:-.7em .3em -.7em 0;font:inherit;color:var(--c-brand);text-decoration:underline;white-space:nowrap;cursor:pointer}
 .btn{display:flex;align-items:center;justify-content:center;gap:.4em;height:2.9em;border:0;border-radius:6px;cursor:pointer;
   font:700 1.1em var(--f-body);text-decoration:none;transition:background .3s,gap .3s;scale:1}
 .btn:active{scale:.97}
@@ -117,7 +119,7 @@ input[type=tel],input[inputmode=numeric]{direction:rtl}
 .btn--ghost:hover{background:var(--c-light);gap:.8em}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:.6em;align-items:center;margin-top:.6em}
 .card__tel{margin:0;text-align:center;font:700 .95em var(--f-body)}
-.card__tel a{text-decoration:none}
+.card__tel a{text-decoration:none;white-space:nowrap} /* the number is never broken: on a phone it takes the second line whole */
 
 .tl__legal{padding:8px clamp(24px,4vw,56px) 12px;font:400 13px/1.4 var(--f-body);color:var(--c-muted);text-align:center}
 .tl__legal a{margin-inline:6px}
@@ -186,7 +188,8 @@ input[type=tel],input[inputmode=numeric]{direction:rtl}
           <div><label class="sr" for="f-phone">טלפון נייד</label>
             <input id="f-phone" name="phone" type="tel" placeholder="טלפון נייד" autocomplete="tel" inputmode="tel" required></div>
           <div><label class="sr" for="f-address">כתובת הבניין</label>
-            <input id="f-address" name="address" type="text" placeholder="כתובת הבניין" autocomplete="street-address" required></div>
+            <input id="f-address" name="address" type="text" placeholder="כתובת הבניין" list="streets" autocomplete="off" required>
+            <datalist id="streets"></datalist></div>
           <div><label class="sr" for="f-units">כמה דירות בבניין?</label>
             <input id="f-units" name="units" type="text" inputmode="numeric" placeholder="כמה דירות?" required></div>
         </div>
@@ -194,7 +197,7 @@ input[type=tel],input[inputmode=numeric]{direction:rtl}
         <div class="sr" aria-hidden="true"><input name="company_website" type="text" tabindex="-1" autocomplete="off"></div>
         <label class="consent"><input type="checkbox" name="terms" required>
           <span>קראתי ואני מסכים/ה ל<a href="https://strux-web.vercel.app/terms" target="_blank" rel="noopener">תקנון</a> ול<a href="https://strux-web.vercel.app/privacy" target="_blank" rel="noopener">מדיניות הפרטיות</a>, ולכך ש-StruX תיצור איתי קשר בנוגע לפנייה.*</span></label>
-        <p class="err" id="err" role="alert"></p>
+        <p class="err" id="err" role="alert"><span></span> <button type="button" hidden>הכתובת לא ברשימה</button></p>
         <button class="btn btn--main" type="submit">תכינו לי הצעה מותאמת <span aria-hidden="true">←</span></button>
         <div class="row">
           <a class="btn btn--ghost" href="https://strux-web.vercel.app/">למעבר לאתר <span aria-hidden="true">←</span></a>
@@ -222,6 +225,19 @@ const phone = (v) => {
   return `${d.slice(0, 3)}-${tail}`;
 };
 const units = (v) => (/^[1-9]\d{0,5}$/.test(String(v).trim()) ? Number(v) : null);
+// The address (decisions 189, 190), the site's rule unchanged: the street and its city come from the government's list of
+// streets, the house number is typed. `flat`: letters and digits only, one space between words and at both ends.
+const flat = (v) => ` ${String(v).replace(/[^\p{L}\p{N}]+/gu, ' ').trim()} `;
+const cut = (text, part) => (text.includes(part) ? text.replace(part, ' ') : null);
+// The words the list is searched by: no house number, no punctuation, no single letter.
+const streetWords = (v) => flat(v).split(' ').filter((w) => w.length > 1 && !/^\d/.test(w));
+// 0: no listed street with its city · 1: a street and its city, no house number · 2: all three. A village listed as its
+// own street needs its name once; a joined city passes by its first name too („תל אביב” for „תל אביב - יפו”).
+const listed = (v, streets) => Math.max(0, ...streets.map(([street, city]) => {
+  let rest = cut(flat(v), flat(street));
+  if (rest !== null && street !== city) rest = cut(rest, flat(city)) ?? cut(rest, flat(city.split('-')[0]));
+  return rest === null ? 0 : /\d/.test(rest) ? 2 : 1;
+}));
 
 // ---------- tracking: the WebSite's helper (site/src/scripts/track.js), without the parts this page has no use for ----------
 // Same event names and parameters; `audience` is always '' here (the form does not ask). No new event names.
@@ -255,12 +271,26 @@ const WA = 'https://wa.me/972557204242';
 const THANKS = 'https://strux-web.vercel.app/thank-you'; // the WebSite's thank-you page
 const ORGANIC = 'אורגני'; // for people (Sheet, WhatsApp) when the visit carried no campaign source; never stored
 const f = document.getElementById('lead'), err = document.getElementById('err'), submit = f.querySelector('[type=submit]');
+const streets = new Map(); // every street the list returned on this visit: "street|city" → [street, city]
+let free = false; // the visitor pressed „הכתובת לא ברשימה”: any text passes, and the lead says so
+let down = false; // the list did not answer: a lead is never blocked on it, and it says that it was not checked
+const level = () => listed(f.address.value, [...streets.values()]);
 const rules = [
   ['name', (v) => v.trim().length >= 2, 'הכניסו שם מלא בבקשה'],
   ['phone', phone, 'הכניסו מספר נייד תקין (05X-XXXXXXX)'],
-  ['address', (v) => v.trim().length >= 3, 'הכניסו את כתובת הבניין'],
+  ['address', (v) => v.trim().length >= 3 && (free || down || level() === 2),
+    () => (f.address.value.trim().length < 3 ? 'הכניסו את כתובת הבניין' : level() === 1 ? 'הוסיפו מספר בית' : 'בחרו כתובת מהרשימה')],
   ['units', units, 'כמה דירות יש בבניין? (מספר)'],
 ];
+// The one error line. Beside an address that the list does not know stands the way out. It must stay one line: the rows
+// under it are placed against the card's shape.
+const wayOut = err.querySelector('button');
+let said = ''; // the field the line speaks of
+const say = (rule) => {
+  said = rule ? rule[0] : '';
+  err.firstElementChild.textContent = rule ? (typeof rule[2] === 'function' ? rule[2]() : rule[2]) : '';
+  wayOut.hidden = !(said === 'address' && f.address.value.trim().length >= 3);
+};
 // The source as people read it (Ran, 11.10.2026): the UTM source; or the ad platform, when only its click id came;
 // or „אורגני”. A campaign lead lists every UTM value it carried. Every lead names the page it was sent from, and the
 // address the visitor first came from, so that leads from this page, from the WebSite and from other landing pages can be told apart.
@@ -283,6 +313,83 @@ const message = (l, touch) => [
 
 let sent = false;
 f.addEventListener('focusin', () => track('strux_web_form_start_v1', 'form'), { once: true });
+
+// The list of streets: data.gov.il, „רשימת רחובות בישראל”, searched by the start of each typed word. No key; the answer is
+// open to any origin. Each word is letters only (streetWords), so nothing of the search syntax passes.
+const STREETS = 'https://data.gov.il/api/3/action/datastore_search?resource_id=9ad3862c-8391-4b2f-84a4-2d4c68625f4b&plain=false&limit=8&q=';
+// The list is slow now and then (about five seconds, a few requests in a hundred): three seconds, one more try, and
+// only then is it taken as down. Only the latest search may say so: a slow old one must not undo a newer answer.
+let asked = 0;
+const lookup = async (text, again = true) => {
+  const words = streetWords(text);
+  if (words.join('').length < 2) return [];
+  const mine = ++asked;
+  try {
+    const res = await fetch(STREETS + encodeURIComponent(words.map((w) => `${w}:*`).join(' & ')), { signal: AbortSignal.timeout(3000) });
+    const found = (await res.json()).result.records.map((r) => [r['שם_רחוב'].trim(), r['שם_ישוב'].trim()]);
+    found.forEach((s) => streets.set(s.join('|'), s));
+    if (mine === asked) down = false;
+    return found;
+  } catch (e) {
+    if (mine !== asked) return [];
+    if (again) return lookup(text, false);
+    down = true;
+    return [];
+  }
+};
+// The address became right, or the list answered: the error line follows, and so does the page's own object (it listens
+// to the form's `change`).
+const settle = () => {
+  if (said === 'address' && rules[2][1](f.address.value)) { say(); f.address.setAttribute('aria-invalid', false); }
+  f.dispatchEvent(new Event('change'));
+};
+const list = document.getElementById('streets');
+let typing;
+f.address.addEventListener('input', (e) => {
+  const text = f.address.value;
+  clearTimeout(typing);
+  // A suggestion taken from the list (typing the same text out by hand is not a pick: the caret stays).
+  const picked = e.inputType !== 'insertText' && [...list.options].find((o) => o.value === text);
+  if (picked) {
+    // A street picked before its number was typed: the caret waits where the number goes.
+    const at = Number(picked.dataset.at);
+    if (at) {
+      f.address.value = `${text.slice(0, at)} ${text.slice(at)}`;
+      f.address.setSelectionRange(at + 1, at + 1);
+    }
+    return settle();
+  }
+  typing = setTimeout(async () => {
+    const found = await lookup(text);
+    if (f.address.value !== text) return; // a later keystroke owns the list
+    // Each suggestion carries the house number already typed, in the visitor's own form (with or without a comma):
+    // the browser shows only the suggestions that contain the typed text.
+    const num = (text.match(/(?:^|\s)(\d[\p{L}\p{N}/]*)/u) || [])[1];
+    const sep = text.includes(',') ? ', ' : ' ';
+    list.replaceChildren(...found.map(([street, city]) => {
+      const option = new Option([street, num].filter(Boolean).join(' ') + (street === city ? '' : sep + city));
+      if (!num) option.dataset.at = street.length;
+      return option;
+    }));
+    settle();
+  }, 200);
+});
+// Leaving the field: the address is checked against the list now, so that the way out is offered before the submit.
+f.address.addEventListener('change', async () => {
+  const text = f.address.value;
+  if (text.trim().length < 3) return;
+  await lookup(text);
+  if (f.address.value !== text) return;
+  const bad = !rules[2][1](text);
+  f.address.setAttribute('aria-invalid', bad);
+  if (bad) say(rules[2]);
+  settle();
+});
+wayOut.addEventListener('click', () => {
+  free = true;
+  f.address.focus();
+  settle();
+});
 f.addEventListener('submit', (e) => {
   e.preventDefault();
   if (sent) return;
@@ -292,7 +399,7 @@ f.addEventListener('submit', (e) => {
     return no;
   });
   if (!f.terms.checked) bad.push(['terms', null, 'יש לאשר את התקנון ואת מדיניות הפרטיות.']);
-  err.textContent = bad[0]?.[2] || '';
+  say(bad[0]);
   if (bad.length) {
     f[bad[0][0]].focus();
     return track('strux_web_form_error_v1', 'form', { error_fields: bad.map(([name]) => name).join(','), form_step: 1 });
@@ -303,7 +410,7 @@ f.addEventListener('submit', (e) => {
 
   // The Sheet's keys, exactly (CLAUDE.md §6). The form has no audience, callback time or notes: they go out empty.
   const lead = {
-    audience: '', name: f.name.value.trim(), phone: phone(f.phone.value), address: f.address.value.trim(),
+    audience: '', name: f.name.value.trim(), phone: phone(f.phone.value), address: f.address.value.trim().replace(/\s+/g, ' ') + (level() === 2 ? '' : free ? ' (לא מהרשימה)' : ' (לא נבדקה)'),
     units: units(f.units.value), callback_time: '', notes: '',
   };
   const touch = firstTouch();
@@ -340,6 +447,7 @@ f.addEventListener('submit', (e) => {
 addEventListener('pageshow', (e) => {
   if (!e.persisted || !sent) return;
   sent = false;
+  free = false;
   submit.disabled = false;
   f.reset();
   typed();
