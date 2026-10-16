@@ -73,9 +73,9 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
 .is-helped .after{display:none}
 .is-helped .helped{display:inline}
 .is-done .hint{opacity:0}
-/* the button: not seen until the story ends; its room is kept */
+/* the button: not seen in the first three seconds, or until the story ends if that comes first; its room is kept */
 .js .acts{opacity:0;visibility:hidden;translate:0 12px;transition:opacity .6s var(--ease) .5s,translate .6s var(--ease) .5s,visibility 0s .5s}
-.js .is-done .acts{opacity:1;visibility:visible;translate:0 0}
+.js .is-done .acts,.js .is-open .acts{opacity:1;visibility:visible;translate:0 0}
 
 @media (max-width:860px){
   .pg__in{grid-template-areas:"txt" "obj" "acts";grid-template-rows:auto;row-gap:26px}
@@ -108,7 +108,7 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
 <main class="pg"><div class="pg__in">
   <div class="txt">
     <p class="eyebrow"><span dir="ltr">StruX</span> | ניהול ואחזקת נכסים</p>
-    <h1><span class="before">העמוד הזה עדיין בעבודה.</span><span class="after">סיימנו. תודה שחיכיתם.</span><span class="helped">הפכנו את השלט בשבילכם.</span></h1>
+    <h1><span class="before">העמוד הזה עדיין בעבודה.</span><span class="after">עד שנסיים, אנחנו כאן.</span><span class="helped">הפכנו את השלט בשבילכם.</span></h1>
     <p class="sub"><span class="before">לפני כל עבודה בבניין אנחנו תולים שלט, כדי שאף דייר לא יופתע. כך גם כאן. הפכו את השלט כשתרצו להמשיך.</span><span class="after">ככה עובדים בבניין שמנוהל כמו שצריך: מודיעים לפני שמתחילים, ומעדכנים כשמסיימים.</span><span class="helped">גם כשאתם לא עוקבים, אצלנו מודיעים לפני שמתחילים ומעדכנים כשמסיימים.</span></p>
   </div>
 
@@ -118,7 +118,7 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
       <svg class="cord" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0 L5 30 M50 0 L95 30"/></svg>
       <button class="sign" id="sign" type="button" aria-label="שלט: עובדים פה. לחצו כדי להפוך אותו">
         <span class="sign__face sign__face--a"><b>עובדים פה</b><small>תודה על הסבלנות</small></span>
-        <span class="sign__face sign__face--b" aria-hidden="true"><b>סיימנו</b><small>אפשר להיכנס</small></span>
+        <span class="sign__face sign__face--b" aria-hidden="true"><b>בינתיים</b><small>דברו איתנו</small></span>
       </button>
     </div></div>
     <p class="hint">לחצו על השלט כדי להפוך אותו</p>
@@ -150,6 +150,8 @@ const story = (() => {
   };
   const wait = () => { if (!over) { clearTimeout(timer); timer = setTimeout(() => finish(true), 8000); } };
   wait();
+  // WhatsApp shows after three seconds even if the sign was not turned (Ran, 16.10.2026); the story keeps its own pace.
+  setTimeout(() => document.body.classList.add('is-open'), 3000);
   return { finish, wait, get over() { return over; } };
 })();
 
@@ -176,7 +178,7 @@ hang.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') pus
 sign.addEventListener('click', () => story.finish());
 document.addEventListener('story:done', () => {
   push(22);
-  sign.setAttribute('aria-label', 'שלט: סיימנו, אפשר להיכנס');
+  sign.setAttribute('aria-label', 'שלט: בינתיים, דברו איתנו');
 });
 push(0);
 </script>
