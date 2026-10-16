@@ -475,5 +475,35 @@ f.addEventListener('input', wake);
 f.addEventListener('change', wake);
 new IntersectionObserver(([entry]) => { seen = entry.isIntersecting; wake(); }).observe(door);
 </script>
+<!-- Cookie notice: the WebSite's own (Cookie.astro), the same words, look and rule: a notice only, shown until "הבנתי"
+     and again a week after it (Ran, 16.10.2026). The same block in door-oct and tailored: change both together. -->
+<div class="cookie" role="region" aria-label="הודעה על שימוש בעוגיות" hidden>
+  <p>האתר משתמש בעוגיות למדידה ולפרסום. הפרטים ב<a href="https://strux-web.vercel.app/privacy" target="_blank" rel="noopener">מדיניות הפרטיות</a>.</p>
+  <button class="cookie__ok" type="button">הבנתי</button>
+</div>
+<style>
+.cookie{position:fixed;z-index:50;left:50%;bottom:24px;translate:-50% 0;display:flex;align-items:center;gap:12px;width:max-content;max-width:min(640px,calc(100% - 48px));padding:8px;padding-inline-start:16px;border-radius:6px;background:#fff;color:var(--c-ink);box-shadow:var(--shadow);font:400 14px/1.45 var(--f-body)}
+.cookie[hidden]{display:none}
+.cookie p{flex:1;margin:0}
+.cookie a{color:var(--c-brand);font-weight:600}
+.cookie__ok{flex:none;min-height:44px;padding:0 16px;border:0;border-radius:6px;cursor:pointer;background:var(--c-brand);color:#fff;font:700 15px/1 var(--f-body);transition:scale .12s ease-out;-webkit-tap-highlight-color:transparent}
+.cookie__ok:active{scale:.97}
+.cookie__ok:focus-visible{outline:2px solid var(--c-brand);outline-offset:2px}
+@media (max-width:767px){.cookie{left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));translate:none;width:auto;max-width:none;padding-inline-start:12px}}
+@media (prefers-reduced-motion:no-preference){.cookie:not([hidden]){animation:cookie-in .3s ease-out}}
+@keyframes cookie-in{from{opacity:0}}
+</style>
+<script>
+(function () {
+  var el = document.querySelector('.cookie'), WEEK = 7 * 24 * 60 * 60 * 1000, at = 0;
+  try { at = Number(localStorage.getItem('strux-cookie-at')) || 0; } catch (e) {}
+  if (Date.now() - at < WEEK) return;
+  el.hidden = false;
+  el.querySelector('.cookie__ok').addEventListener('click', function () {
+    el.hidden = true;
+    try { localStorage.setItem('strux-cookie-at', String(Date.now())); } catch (e) {}
+  });
+})();
+</script>
 </body>
 </html>
