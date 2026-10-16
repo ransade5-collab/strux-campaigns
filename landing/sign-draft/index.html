@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<!-- DRAFT, kept as a path of its own (Ran, 13.10.2026): a proposal for the "we are working here" page, "we hung a sign".
-     The site's bare address shows the proposal he chose, the window. No form, no tags, nothing is sent.
+<!-- The "we are working here" page, "we hung a sign" (Ran, 13.10.2026). Chosen 16.10.2026 to stand on the bought domain
+     while the site is built: no way to the site or anywhere else, only WhatsApp. No form, no tags, nothing is sent.
      All wording is a placeholder. -->
 <title>עובדים פה | StruX</title>
 <script>document.documentElement.classList.add('js')</script>
@@ -50,8 +50,6 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
 .dark .eyebrow{color:var(--c-accent)}
 .dark .sub{color:var(--c-muted-dark)}
 
-.draft{position:fixed;top:10px;left:10px;z-index:5;margin:0;padding:6px 10px;border-radius:6px;background:#fff;color:#C62828;font:700 13px/1.2 var(--f-body);box-shadow:var(--shadow)}
-
 @media (max-width:860px){
   .pg__in{grid-template-columns:1fr}
   .btn{width:100%}
@@ -66,8 +64,7 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
 .acts{grid-area:acts;align-self:start}
 .sub{min-height:4.8em} /* three lines' room, so the page does not shift when the text changes */
 .hint{margin:16px 0 0;text-align:center;font:600 15px var(--f-body);color:var(--c-muted);transition:opacity .4s}
-#back span[aria-hidden]{order:-1}
-#back:hover span[aria-hidden]{translate:6px 0}
+#wa svg{width:24px;height:24px;flex:none}
 
 /* the three states of the words: before, after the visitor did it, after it was done for him */
 .after,.helped{display:none}
@@ -108,7 +105,6 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
 </style>
 </head>
 <body>
-<p class="draft">טיוטה</p>
 <main class="pg"><div class="pg__in">
   <div class="txt">
     <p class="eyebrow"><span dir="ltr">StruX</span> | ניהול ואחזקת נכסים</p>
@@ -129,12 +125,15 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
   </div>
 
   <div class="acts">
-    <button class="btn btn--main" id="back" type="button"><span aria-hidden="true">→</span> חזרה לעמוד הקודם</button>
+    <a class="btn btn--main" id="wa" href="https://wa.me/972557204242" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3zm-2.6 5.2 1 2.2-.9 1a5.5 5.5 0 0 0 3 3l1-.9 2.2 1c0 1.2-1 2-2.2 1.9a7.6 7.6 0 0 1-6-6c-.1-1.2.7-2.2 1.9-2.2z" fill="currentColor" fill-rule="evenodd"/></svg>
+      דברו איתנו בוואטסאפ
+    </a>
   </div>
 </div></main>
 
 <script>
-// Shared by the three drafts: the end of the story, and the way back.
+// Shared by the three drafts: the end of the story.
 // A page calls story.finish() when the visitor did the thing, and story.wait() on every move of his, which starts the
 // wait again. Left alone for eight seconds, the story ends by itself and the page says StruX took care of it, so nobody
 // is left without the button (as on the 404 draft "a piece is missing"; Ran, 12.10.2026).
@@ -150,8 +149,6 @@ const story = (() => {
     document.dispatchEvent(new CustomEvent('story:done', { detail: bySelf === true }));
   };
   const wait = () => { if (!over) { clearTimeout(timer); timer = setTimeout(() => finish(true), 8000); } };
-  // The page's one button, as on the live page: back to where the visitor came from.
-  document.getElementById('back').addEventListener('click', () => { if (history.length > 1) history.back(); });
   wait();
   return { finish, wait, get over() { return over; } };
 })();
