@@ -4,15 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<!-- The bare address of the campaigns subdomain: "we are working here". (An address that does not exist shows 404.html,
-     the lift.) The logo's four tiles are the panes of a window, misted over; behind them stands a real lobby of a
-     building StruX manages. The visitor passes the squeegee over the glass (the pointer on a desktop, a finger on a
-     phone) and sees through where it passed. When most of the glass is clean the rest clears, the words change, and the
-     way out comes on: back to the page he came from or to the landing page he came through, or on to the WebSite when
-     nothing is known (the lift's rule, 404.html). Left alone for eight seconds, the window is cleaned for him. Without
-     JS the glass is clean and the link to the WebSite is there.
-     No form, no tags, nothing is sent. Every address starts with a slash, like the other pages of this folder. -->
-<title>StruX | עובדים פה</title>
+<!-- The "we are working here" page, "we hung a sign" (Ran, 13.10.2026). Chosen 16.10.2026 to stand on the bought domain
+     while the site is built, so it is the bare address now (it was /sign-draft; the window moved to /window): no way to
+     the site or anywhere else, only WhatsApp. No form, no tags, nothing is sent.
+     All wording is a placeholder. -->
+<title>עובדים פה | StruX</title>
 <script>document.documentElement.classList.add('js')</script>
 <link rel="preload" href="/fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -55,7 +51,6 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
 .dark .eyebrow{color:var(--c-accent)}
 .dark .sub{color:var(--c-muted-dark)}
 
-
 @media (max-width:860px){
   .pg__in{grid-template-columns:1fr}
   .btn{width:100%}
@@ -70,8 +65,7 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
 .acts{grid-area:acts;align-self:start}
 .sub{min-height:4.8em} /* three lines' room, so the page does not shift when the text changes */
 .hint{margin:16px 0 0;text-align:center;font:600 15px var(--f-body);color:var(--c-muted);transition:opacity .4s}
-#back.is-back span[aria-hidden]{order:-1}
-#back.is-back:hover span[aria-hidden]{translate:6px 0}
+#wa svg{width:24px;height:24px;flex:none}
 
 /* the three states of the words: before, after the visitor did it, after it was done for him */
 .after,.helped{display:none}
@@ -80,9 +74,9 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
 .is-helped .after{display:none}
 .is-helped .helped{display:inline}
 .is-done .hint{opacity:0}
-/* the button: not seen until the story ends; its room is kept */
+/* the button: not seen in the first three seconds, or until the story ends if that comes first; its room is kept */
 .js .acts{opacity:0;visibility:hidden;translate:0 12px;transition:opacity .6s var(--ease) .5s,translate .6s var(--ease) .5s,visibility 0s .5s}
-.js .is-done .acts{opacity:1;visibility:visible;translate:0 0}
+.js .is-done .acts,.js .is-open .acts{opacity:1;visibility:visible;translate:0 0}
 
 @media (max-width:860px){
   .pg__in{grid-template-areas:"txt" "obj" "acts";grid-template-rows:auto;row-gap:26px}
@@ -90,74 +84,61 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
   .acts{margin-top:0}
 }
 
-.win{width:min(100%,430px)}
-.win svg{display:block;width:100%;overflow:visible;touch-action:none;outline:0;filter:drop-shadow(0 18px 26px rgb(14 26 68/.2))}
-.frame{fill:none;stroke:var(--c-brand);stroke-width:2.6;stroke-linejoin:round}
-.fog{opacity:0;transition:opacity 1s var(--ease)}
-.js .fog{opacity:1}
-.js .is-done .fog{opacity:0}
-/* the squeegee: it lies on the glass at first, and on a desktop it is the pointer, over the whole page, until the
-   window is clean (so there is no pointer of the system's until then) */
-.blade{position:fixed;left:0;top:0;z-index:6;width:0;height:0;pointer-events:none;opacity:0;transition:opacity .4s}
-.blade svg{position:absolute;overflow:visible;fill:#0E1A44;filter:drop-shadow(0 3px 4px rgb(14 26 68/.3))}
-.js .blade{opacity:1}
-.js .is-done .blade{opacity:0}
-@media (hover:hover) and (pointer:fine){.js body:not(.is-done),.js body:not(.is-done) *{cursor:none}}
-.win svg:focus-visible .frame{stroke:var(--c-accent)}
+.door{--S:min(62vw,290px);padding-top:8px;filter:drop-shadow(0 20px 22px rgb(14 26 68/.2))}
+.hang{position:relative;width:var(--S);transform-origin:50% 0;perspective:900px}
+.nail{position:absolute;top:-7px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--c-base);z-index:1}
+.cord{display:block;width:100%;height:calc(var(--S)*.3);overflow:visible}
+.cord path{fill:none;stroke:var(--c-base);stroke-width:1.6;vector-effect:non-scaling-stroke}
+.sign{position:relative;display:block;width:var(--S);height:var(--S);padding:0;border:0;background:none;cursor:pointer;font-size:calc(var(--S)/10);
+  transform-style:preserve-3d;transition:transform 1s var(--ease);color:inherit}
+.sign__face{position:absolute;inset:0;display:grid;align-content:end;gap:.2em;padding:1.1em;text-align:start;
+  -webkit-backface-visibility:hidden;backface-visibility:hidden}
+.sign__face b{font:800 1.52em/1.05 var(--f-head);letter-spacing:-.02em}
+.sign__face small{font:600 .64em/1.3 var(--f-body)}
+/* the logo's tile: a square with a small square window. Seen from behind, the window is on the other side. */
+.sign__face--a{background:var(--c-brand);color:#fff;
+  clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,20% 20%,20% 40%,40% 40%,40% 20%,20% 20%)}
+.sign__face--b{background:#fff;color:var(--c-brand);transform:rotateY(180deg);
+  clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,60% 20%,60% 40%,80% 40%,80% 20%,60% 20%)}
+.sign__face--b small{color:var(--c-muted)}
+.is-done .sign,html:not(.js) .sign{transform:rotateY(180deg)}
+.sign:focus-visible{outline:3px solid var(--c-accent);outline-offset:6px}
 </style>
 </head>
 <body>
 <main class="pg"><div class="pg__in">
   <div class="txt">
     <p class="eyebrow"><span dir="ltr">StruX</span> | ניהול ואחזקת נכסים</p>
-    <h1><span class="before">עובדים פה.</span><span class="after">עכשיו רואים ברור.</span><span class="helped">ניקינו בשבילכם.</span></h1>
-    <p class="sub"><span class="before">העמוד הזה עדיין בעבודה, ובדיוק מנקים לו את החלונות. העבירו את המגב על הזכוכית, ותראו מה מחכה בצד השני.</span><span class="after">ככה נראה בניין שמישהו דואג לו. אצלנו לא מחכים שדייר יתלונן על חלון מלוכלך: יש תוכנית עבודה, והיא מתבצעת.</span><span class="helped">החלון נקי גם בלי שנגעתם בו. ככה זה אצלנו: יש תוכנית עבודה, והיא מתבצעת גם כשאף אחד לא מסתכל.</span></p>
+    <h1><span class="before">העמוד הזה עדיין בעבודה.</span><span class="after">עד שנסיים, אנחנו כאן.</span><span class="helped">הפכנו את השלט בשבילכם.</span></h1>
+    <p class="sub"><span class="before">לפני כל עבודה בבניין אנחנו תולים שלט, כדי שאף דייר לא יופתע. כך גם כאן. הפכו את השלט כשתרצו להמשיך.</span><span class="after">ככה עובדים בבניין שמנוהל כמו שצריך: מודיעים לפני שמתחילים, ומעדכנים כשמסיימים.</span><span class="helped">גם כשאתם לא עוקבים, אצלנו מודיעים לפני שמתחילים ומעדכנים כשמסיימים.</span></p>
   </div>
 
-  <div class="obj"><div class="win">
-    <svg id="win" viewBox="25 39.75 163.33 170.5" tabindex="0" role="button" aria-label="חלון בצורת הלוגו של StruX. נקו אותו">
-      <defs>
-        <clipPath id="panes">
-          <path d="M35,49.75v71.67h71.67V49.75H35ZM63.67,78.42h-14.33v-14.33h14.33v14.33Z"/>
-          <path d="M178.33,49.75c-39.58,0-71.67,32.09-71.67,71.67h0s43,0,43,0v-28.67h14.33v28.67h14.33V49.75h0Z"/>
-          <path d="M100,128.58h6.67v71.67H35v-6.67c0-35.87,29.13-65,65-65Z" transform="translate(141.67 328.83) rotate(180)"/>
-          <rect x="106.67" y="128.58" width="71.67" height="71.67"/>
-        </clipPath>
-        <linearGradient id="mist" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#EEF2FA"/><stop offset=".5" stop-color="#D6DEF1"/><stop offset="1" stop-color="#E6EBF7"/>
-        </linearGradient>
-        <!-- what the squeegee passed is drawn black into the mask: the mist is gone there -->
-        <mask id="dirt" maskUnits="userSpaceOnUse" x="25" y="39" width="164" height="172">
-          <rect x="25" y="39" width="164" height="172" fill="#fff"/>
-          <path id="wiped" d="" fill="none" stroke="#000" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
-        </mask>
-      </defs>
-      <g clip-path="url(#panes)">
-        <image href="/media/working-lobby.webp" x="20" y="45" width="174" height="160" preserveAspectRatio="xMidYMid slice"/>
-        <rect class="fog" x="25" y="39" width="164" height="172" fill="url(#mist)" fill-opacity=".95" mask="url(#dirt)"/>
-      </g>
-      <g class="frame" aria-hidden="true">
-        <path d="M35,49.75v71.67h71.67V49.75H35ZM63.67,78.42h-14.33v-14.33h14.33v14.33Z"/>
-        <path d="M178.33,49.75c-39.58,0-71.67,32.09-71.67,71.67h0s43,0,43,0v-28.67h14.33v28.67h14.33V49.75h0Z"/>
-        <path d="M100,128.58h6.67v71.67H35v-6.67c0-35.87,29.13-65,65-65Z" transform="translate(141.67 328.83) rotate(180)"/>
-        <rect x="106.67" y="128.58" width="71.67" height="71.67"/>
-      </g>
-    </svg>
-    <p class="hint">העבירו את המגב על החלון</p>
-  </div></div>
+  <div class="obj">
+    <div class="door"><div class="hang" id="hang">
+      <i class="nail" aria-hidden="true"></i>
+      <svg class="cord" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0 L5 30 M50 0 L95 30"/></svg>
+      <button class="sign" id="sign" type="button" aria-label="שלט: עובדים פה. לחצו כדי להפוך אותו">
+        <span class="sign__face sign__face--a"><b>עובדים פה</b><small>תודה על הסבלנות</small></span>
+        <span class="sign__face sign__face--b" aria-hidden="true"><b>בינתיים</b><small>דברו איתנו</small></span>
+      </button>
+    </div></div>
+    <p class="hint">לחצו על השלט כדי להפוך אותו</p>
+  </div>
 
   <div class="acts">
-    <a class="btn btn--main" id="back" href="https://strux-web.vercel.app/">למעבר לאתר <span aria-hidden="true">←</span></a>
+    <a class="btn btn--main" id="wa" href="https://wa.me/972557204242" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3zm-2.6 5.2 1 2.2-.9 1a5.5 5.5 0 0 0 3 3l1-.9 2.2 1c0 1.2-1 2-2.2 1.9a7.6 7.6 0 0 1-6-6c-.1-1.2.7-2.2 1.9-2.2z" fill="currentColor" fill-rule="evenodd"/></svg>
+      דברו איתנו בוואטסאפ
+    </a>
   </div>
 </div></main>
-<!-- the squeegee: a blade and a handle. It follows the pointer with a little lag and leans the way it is pushed. -->
-<div class="blade" id="blade" aria-hidden="true"><svg viewBox="-16 -4 32 24"><rect x="-15" y="-2.4" width="30" height="4.8" rx="1.4"/><rect x="-1.7" y="1.6" width="3.4" height="17" rx="1.5"/></svg></div>
 
 <script>
-// The end of the story, and the way back.
+// Shared by the three drafts: the end of the story.
 // A page calls story.finish() when the visitor did the thing, and story.wait() on every move of his, which starts the
 // wait again. Left alone for eight seconds, the story ends by itself and the page says StruX took care of it, so nobody
-// is left without the button.
+// is left without the button (as on the 404 draft "a piece is missing"; Ran, 12.10.2026).
+// Each page listens to "story:done" and plays its own ending.
 const story = (() => {
   let timer, over = false;
   const finish = (bySelf) => {
@@ -169,94 +150,38 @@ const story = (() => {
     document.dispatchEvent(new CustomEvent('story:done', { detail: bySelf === true }));
   };
   const wait = () => { if (!over) { clearTimeout(timer); timer = setTimeout(() => finish(true), 8000); } };
-  // The page's one button, a way out for everybody. Where it leads is the lift's rule (404.html, floor 1; Ran, 14.10.2026):
-  // 1. the visitor came here from a page of this site: back to that page;
-  // 2. this browser remembers the landing page it first came through (the first touch the landing pages store): back
-  //    there, both under the words of the lift for the way back; or nothing is remembered and the address carries a
-  //    campaign (utm_*, a click id): on to the landing page /tailored, under the words of the lift's floor that leads there;
-  // 3. nothing is known: the link stays as written, on to the WebSite's home page.
-  // What the address carries goes along, so a lead is still credited to its campaign.
-  const back = document.getElementById('back'), carried = new URLSearchParams(location.search);
-  const here = location.pathname.replace(/\/$/, '');
-  const own = (url) => {
-    try {
-      const u = new URL(url), p = u.pathname.replace(/\/$/, '');
-      return u.origin === location.origin && p && p !== here ? u : null;
-    } catch (e) { return null; }
-  };
-  let page = own(document.referrer), words = '<span aria-hidden="true">→</span> חזרה לדף שממנו הגעתם';
-  if (!page) { try { page = own(JSON.parse(localStorage.getItem('strux-first-touch')).landing_page); } catch (e) {} }
-  if (!page && ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'wbraid', 'gbraid', 'fbclid'].some((k) => carried.get(k))) {
-    page = new URL('/tailored', location.origin);
-    words = 'מחפשים התאמה אישית? <span aria-hidden="true">←</span>';
-  }
-  if (page) { back.innerHTML = words; back.classList.toggle('is-back', words.includes('חזרה')); }
-  const to = new URL(page || back.href);
-  carried.forEach((v, k) => { if (!to.searchParams.has(k)) to.searchParams.set(k, v); });
-  back.href = to.href;
   wait();
+  // WhatsApp shows after three seconds even if the sign was not turned (Ran, 16.10.2026); the story keeps its own pace.
+  setTimeout(() => document.body.classList.add('is-open'), 3000);
   return { finish, wait, get over() { return over; } };
 })();
 
-// One stroke is wiped before the visitor does anything (about 7% of the glass), and the squeegee rests at its end.
-// On a desktop the squeegee follows the pointer everywhere, with a little lag (weight), and leans with its sideways
-// speed; a finger takes it only on the glass. Where it passes over the window, the mist is wiped: its path is drawn
-// into the mask. The glass is counted in a 6 x 6 grid: when 22 of the 36 squares were passed, the window counts as clean.
-const svg = document.getElementById('win'), wiped = document.getElementById('wiped');
-const blade = document.getElementById('blade'), bladeSvg = blade.firstElementChild;
-const X0 = 35, Y0 = 49.75, W = 143.33, H = 150.5, COLS = 6, ROWS = 6, NEED = 22;
-const START = [[122, 149], [149, 161]]; // the stroke that is already wiped, in the window's own units
-const seen = new Set();
-let d = `M${START[0].join(' ')} L${START[1].join(' ')}`, target = null, pos = null, tilt = -9, raf = 0, onGlass = false;
-const at = (x, y, m) => { const q = new DOMPoint(x, y).matrixTransform(m); return { x: q.x, y: q.y }; };
-const count = (x, y) => {
-  const c = Math.floor((x - X0) / W * COLS), r = Math.floor((y - Y0) / H * ROWS);
-  if (c >= 0 && c < COLS && r >= 0 && r < ROWS) seen.add(c * 10 + r);
+// The sign is a pendulum on its nail: an angle, a speed, a pull back to the middle and friction that stops it after a
+// few swings. It starts a little to one side (it was just hung); the pointer passing over it pushes it by its sideways
+// speed; turning it over gives it one more push. With reduced motion it hangs still.
+const hang = document.getElementById('hang'), sign = document.getElementById('sign');
+const still = matchMedia('(prefers-reduced-motion:reduce)').matches;
+let angle = still ? 0 : 7, speed = 0, raf = 0, before = 0;
+const swing = (now) => {
+  const dt = Math.min(0.032, (now - before) / 1000 || 0.016);
+  before = now;
+  speed += (-26 * angle - 2.1 * speed) * dt;
+  angle += speed * dt;
+  hang.style.transform = `rotate(${angle.toFixed(2)}deg)`;
+  raf = Math.abs(angle) > 0.03 || Math.abs(speed) > 0.03 ? requestAnimationFrame(swing) : 0;
 };
-const put = () => { blade.style.transform = `translate(${pos.x.toFixed(1)}px,${pos.y.toFixed(1)}px) rotate(${tilt.toFixed(1)}deg)`; };
-// The squeegee is as large as the window draws it (32 x 24 of its units), and until someone takes it, it lies at the stroke's end.
-const rest = () => {
-  const k = svg.getBoundingClientRect().width / 163.33;
-  bladeSvg.style.cssText = `width:${32 * k}px;height:${24 * k}px;left:${-16 * k}px;top:${-4 * k}px`;
-  if (!target && !story.over) { pos = at(...START[1], svg.getScreenCTM()); put(); }
+const push = (by) => {
+  if (still) return;
+  speed = Math.max(-60, Math.min(60, speed + by));
+  if (!raf) { before = performance.now(); raf = requestAnimationFrame(swing); }
 };
-const frame = () => {
-  raf = 0;
-  if (!target || story.over) return;
-  const from = pos;
-  pos = { x: pos.x + (target.x - pos.x) * 0.3, y: pos.y + (target.y - pos.y) * 0.3 };
-  tilt += (Math.max(-20, Math.min(20, (pos.x - from.x) * 1.6)) - tilt) * 0.2;
-  put();
-  const b = svg.getBoundingClientRect();
-  const inside = pos.x >= b.left && pos.x <= b.right && pos.y >= b.top && pos.y <= b.bottom;
-  if (inside) {
-    const p = at(pos.x, pos.y, svg.getScreenCTM().inverse());
-    d += (onGlass ? ' L' : ' M') + p.x.toFixed(1) + ' ' + p.y.toFixed(1);
-    wiped.setAttribute('d', d);
-    count(p.x, p.y);
-    if (seen.size >= NEED) return story.finish();
-  }
-  onGlass = inside;
-  if (Math.hypot(target.x - pos.x, target.y - pos.y) > 0.4 || Math.abs(tilt) > 0.3) raf = requestAnimationFrame(frame);
-};
-const take = (e, jump) => {
-  if (story.over) return;
-  target = { x: e.clientX, y: e.clientY };
-  if (jump) { pos = { ...target }; onGlass = false; } // a finger lands where it lands: the squeegee is there at once
-  story.wait();
-  if (!raf) raf = requestAnimationFrame(frame);
-};
-addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') take(e); });
-svg.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') { svg.setPointerCapture(e.pointerId); take(e, true); } });
-svg.addEventListener('pointermove', (e) => { if (e.pointerType !== 'mouse' && e.pressure) take(e); });
-svg.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); story.finish(); } });
-document.addEventListener('story:done', () => svg.removeAttribute('tabindex'));
-addEventListener('resize', rest);
-addEventListener('scroll', rest, { passive: true });
-for (let i = 0; i <= 4; i++) count(START[0][0] + (START[1][0] - START[0][0]) * i / 4, START[0][1] + (START[1][1] - START[0][1]) * i / 4);
-wiped.setAttribute('d', d);
-rest();
-document.fonts.ready.then(rest); // the text above the window may still move it
+hang.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') push(e.movementX * 0.5); story.wait(); });
+sign.addEventListener('click', () => story.finish());
+document.addEventListener('story:done', () => {
+  push(22);
+  sign.setAttribute('aria-label', 'שלט: בינתיים, דברו איתנו');
+});
+push(0);
 </script>
 </body>
 </html>
