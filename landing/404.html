@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
 <!-- "Floor 404": what an address that does not exist on this site shows (the rewrite in vercel.json). The visitor rode
      the lift to a floor the building does not have; the lift's buttons are the ways on. A pressed button lights, the
      display rides down from 404, and then the page goes there.
@@ -16,12 +15,14 @@
 <style>
 @font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
 @font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
+/* Bamberger Sharp Bold for the headings (decision 267): loaded from the WebSite, its license's domain; never a copy in this repo */
+@font-face{font-family:'Bamberger Sharp';font-weight:700;font-display:swap;src:url(https://www.struxisrael.co.il/fonts/bamberger-sharp-bold.woff2) format('woff2')}
 @font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
 @font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
 
 :root{
   --c-base:#0E1A44; --c-accent:#6F93F0; --c-light:#F4F6FB; --c-muted-dark:#AEB8D6;
-  --f-head:'Heebo Variable',system-ui,sans-serif; --f-body:'Assistant Variable',system-ui,sans-serif;
+  --f-head:'Bamberger Sharp','Heebo Variable',system-ui,sans-serif; --f-body:'Assistant Variable',system-ui,sans-serif;
   --ease:cubic-bezier(.65,.05,.25,1);
 }
 *{box-sizing:border-box}
@@ -71,7 +72,7 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
       <li><a class="floor floor--main" href="/tailored" data-floor="3"><span class="floor__key">3</span>מחפשים התאמה אישית?</a></li>
       <!-- The two questions are Ran's wording (12.10.2026). -->
       <li><a class="floor" href="/door-oct" data-floor="2"><span class="floor__key">2</span>רציתם לספר לנו משהו?</a></li>
-      <li><a class="floor" id="back" href="https://strux-web.vercel.app/" data-floor="1"><span class="floor__key">1</span>חזרה לדף שממנו הגעתם</a></li>
+      <li><a class="floor" id="back" href="https://www.struxisrael.co.il/" data-floor="1"><span class="floor__key">1</span>חזרה לדף שממנו הגעתם</a></li>
     </ul>
   </nav>
 </div></main>

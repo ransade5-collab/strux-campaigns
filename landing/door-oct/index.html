@@ -14,19 +14,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-WPWMK3CL');</script>
 <!-- End Google Tag Manager -->
-<meta name="robots" content="noindex">
 <title>StruX | ניהול ואחזקת נכסים</title>
 <link rel="preload" href="/fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
 @font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
+/* Bamberger Sharp Bold for the headings (decision 267): loaded from the WebSite, its license's domain; never a copy in this repo */
+@font-face{font-family:'Bamberger Sharp';font-weight:700;font-display:swap;src:url(https://www.struxisrael.co.il/fonts/bamberger-sharp-bold.woff2) format('woff2')}
 @font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
 @font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
 
 :root{
   --c-base:#0E1A44; --c-brand:#1F3A93; --c-accent:#6F93F0; --c-light:#F4F6FB;
   --c-ink:#0B0B0C; --c-muted:#5B6478; --c-err:#C62828;
-  --f-head:'Heebo Variable',system-ui,sans-serif; --f-body:'Assistant Variable',system-ui,sans-serif;
+  --f-head:'Bamberger Sharp','Heebo Variable',system-ui,sans-serif; --f-body:'Assistant Variable',system-ui,sans-serif;
   --shadow:0 2px 6px rgb(0 0 0/.06),0 12px 24px rgb(0 0 0/.08),0 32px 64px rgb(0 0 0/.08);
   --ease:cubic-bezier(.65,.05,.25,1);
 }
@@ -174,11 +175,11 @@ input[type=tel],input[inputmode=numeric]{direction:rtl}
         <!-- the honeypot is clipped in place (never left:-9999px in RTL) -->
         <div class="sr" aria-hidden="true"><input name="company_website" type="text" tabindex="-1" autocomplete="off"></div>
         <label class="consent"><input type="checkbox" name="terms" required>
-          <span>קראתי ואני מסכים/ה ל<a href="https://strux-web.vercel.app/terms" target="_blank" rel="noopener">תקנון</a> ול<a href="https://strux-web.vercel.app/privacy" target="_blank" rel="noopener">מדיניות הפרטיות</a>, ולכך ש-StruX תיצור איתי קשר בנוגע לפנייה.*</span></label>
+          <span>קראתי ואני מסכים/ה ל<a href="https://www.struxisrael.co.il/terms" target="_blank" rel="noopener">תקנון</a> ול<a href="https://www.struxisrael.co.il/privacy" target="_blank" rel="noopener">מדיניות הפרטיות</a>, ולכך ש-StruX תיצור איתי קשר בנוגע לפנייה.*</span></label>
         <p class="err" id="err" role="alert"><span><noscript>לשליחת הטופס יש להפעיל JavaScript בדפדפן. אפשר גם לפנות אלינו בוואטסאפ או בטלפון <bdi dir="ltr" style="white-space:nowrap">055-7204242</bdi>.</noscript></span> <button type="button" hidden>הכתובת לא ברשימה</button></p>
         <div class="btns">
           <button class="btn btn--main" type="submit">תכינו לי הצעה <span aria-hidden="true">←</span></button>
-          <a class="btn btn--ghost" href="https://strux-web.vercel.app/">למעבר לאתר <span aria-hidden="true">←</span></a>
+          <a class="btn btn--ghost" href="https://www.struxisrael.co.il/">למעבר לאתר <span aria-hidden="true">←</span></a>
         </div>
       </form>
       <p class="card__tel">או התקשרו: <a href="tel:+972557204242" dir="ltr">055-7204242</a></p>
@@ -189,7 +190,7 @@ input[type=tel],input[inputmode=numeric]{direction:rtl}
 
   <footer class="lp__legal">
     © StruX
-    <a href="https://strux-web.vercel.app/terms">תקנון</a>·<a href="https://strux-web.vercel.app/privacy">מדיניות פרטיות</a>·<a href="https://strux-web.vercel.app/accessibility">הצהרת נגישות</a>
+    <a href="https://www.struxisrael.co.il/terms">תקנון</a>·<a href="https://www.struxisrael.co.il/privacy">מדיניות פרטיות</a>·<a href="https://www.struxisrael.co.il/accessibility">הצהרת נגישות</a>
   </footer>
 </main>
 
@@ -256,7 +257,7 @@ document.addEventListener('click', (e) => { if (e.target.closest?.('a[href^="tel
 // ---------- the form and the lead flow: the WebSite's (LeadForm.astro), with four fields ----------
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxqZvrlHOTzjhoNxzAoYUBDkkzgLbDnAxDW23Ppl0-sPs7O_1i0E8RWS39Z1LX1gmy8/exec';
 const WA = 'https://wa.me/972557204242';
-const THANKS = 'https://strux-web.vercel.app/thank-you'; // the WebSite's thank-you page
+const THANKS = 'https://www.struxisrael.co.il/thank-you'; // the WebSite's thank-you page
 const ORGANIC = 'אורגני'; // for people (Sheet, WhatsApp) when the visit carried no campaign source; never stored
 const f = document.getElementById('lead'), err = document.getElementById('err'), submit = f.querySelector('[type=submit]');
 const streets = new Map(); // every street the list returned on this visit: "street|city" → [street, city]
@@ -478,7 +479,7 @@ new IntersectionObserver(([entry]) => { seen = entry.isIntersecting; wake(); }).
 <!-- Cookie notice: the WebSite's own (Cookie.astro), the same words, look and rule: a notice only, shown until "הבנתי"
      and again a week after it (Ran, 16.10.2026). The same block in door-oct and tailored: change both together. -->
 <div class="cookie" role="region" aria-label="הודעה על שימוש בעוגיות" hidden>
-  <p>האתר משתמש בעוגיות למדידה ולפרסום. הפרטים ב<a href="https://strux-web.vercel.app/privacy" target="_blank" rel="noopener">מדיניות הפרטיות</a>.</p>
+  <p>האתר משתמש בעוגיות למדידה ולפרסום. הפרטים ב<a href="https://www.struxisrael.co.il/privacy" target="_blank" rel="noopener">מדיניות הפרטיות</a>.</p>
   <button class="cookie__ok" type="button">הבנתי</button>
 </div>
 <style>
