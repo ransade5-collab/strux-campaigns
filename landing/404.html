@@ -3,59 +3,224 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- "Floor 404": what an address that does not exist on this site shows (the rewrite in vercel.json). The visitor rode
-     the lift to a floor the building does not have; the lift's buttons are the ways on. A pressed button lights, the
-     display rides down from 404, and then the page goes there.
-     A landing-page site must not leak its visitors to the WebSite or to the tour (Ran, 12.10.2026). Three floors, his:
-     3 leads to the landing page /tailored, 2 to the landing page /door-oct, and 1 is "back to the page you came from":
-     the page of this site the visitor came through, and only when none is known (or without JS) the WebSite's home page.
-     No tags, no form, nothing is sent. Every address starts with a slash, like the other pages of this folder. -->
 <title>קומה 404 | StruX</title>
 <link rel="preload" href="/fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
-@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
-/* Bamberger Sharp Bold for the headings (decision 267): loaded from the WebSite, its license's domain; never a copy in this repo */
-@font-face{font-family:'Bamberger Sharp';font-weight:700;font-display:swap;src:url(https://www.struxisrael.co.il/fonts/bamberger-sharp-bold.woff2) format('woff2')}
-@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
-@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
-
-:root{
-  --c-base:#0E1A44; --c-accent:#6F93F0; --c-light:#F4F6FB; --c-muted-dark:#AEB8D6;
-  --f-head:'Bamberger Sharp','Heebo Variable',system-ui,sans-serif; --f-body:'Assistant Variable',system-ui,sans-serif;
+@font-face {
+  font-family: "Heebo Variable";
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/fonts/heebo-hebrew-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0307-0308,
+    U+0590-05FF,
+    U+200C-2010,
+    U+20AA,
+    U+25CC,
+    U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Heebo Variable";
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/fonts/heebo-latin-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0000-00FF,
+    U+2000-206F,
+    U+20AC,
+    U+2122;
+}
+@font-face {
+  font-family: "Bamberger Sharp";
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://www.struxisrael.co.il/fonts/bamberger-sharp-bold.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Assistant Variable";
+  font-weight: 200 800;
+  font-display: swap;
+  src: url(/fonts/assistant-hebrew-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0307-0308,
+    U+0590-05FF,
+    U+200C-2010,
+    U+20AA,
+    U+25CC,
+    U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Assistant Variable";
+  font-weight: 200 800;
+  font-display: swap;
+  src: url(/fonts/assistant-latin-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0000-00FF,
+    U+2000-206F,
+    U+20AC,
+    U+2122;
+}
+:root {
+  --c-base:#0E1A44;
+  --c-accent:#6F93F0;
+  --c-light:#F4F6FB;
+  --c-muted-dark:#AEB8D6;
+  --f-head:"Bamberger Sharp","Heebo Variable",system-ui,sans-serif;
+  --f-body:"Assistant Variable",system-ui,sans-serif;
   --ease:cubic-bezier(.65,.05,.25,1);
 }
-*{box-sizing:border-box}
-html,body{margin:0}
-body{font-family:var(--f-body);color:var(--c-light);background:var(--c-base);-webkit-font-smoothing:antialiased}
-:focus-visible{outline:3px solid var(--c-accent);outline-offset:3px}
-
-.pg{min-height:100svh;display:grid;align-items:center;padding:clamp(32px,6svh,72px) clamp(24px,5vw,64px)}
-.pg__in{width:100%;max-width:1160px;margin-inline:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(32px,6vw,96px)}
-.eyebrow{font:600 14px/1 var(--f-body);letter-spacing:.12em;color:var(--c-accent);margin:0 0 20px}
-h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;margin:0;text-wrap:balance}
-.sub{font:400 clamp(17px,1.45vw,21px)/1.6 var(--f-body);color:var(--c-muted-dark);margin:22px 0 0;max-width:32em}
-
-/* the lift's panel: a plate with a display and the floor buttons */
-.lift{justify-self:center;width:min(100%,340px);padding:26px 26px 30px;border-radius:14px;
-  background:linear-gradient(160deg,#1B2B63,#111E4D);box-shadow:inset 0 0 0 1px rgb(111 147 240/.28),0 30px 60px rgb(0 0 0/.35)}
-.lift__screen{display:flex;align-items:center;justify-content:center;gap:14px;height:108px;border-radius:8px;background:#070D24;
-  box-shadow:inset 0 0 0 1px rgb(111 147 240/.25);color:var(--c-accent);direction:ltr}
-.lift__arrow{width:0;height:0;border:11px solid transparent;border-bottom-color:currentColor;border-top-width:0;transition:rotate .5s var(--ease)}
-.is-riding .lift__arrow{rotate:180deg}
-.lift__num{font:800 64px/1 var(--f-head);font-variant-numeric:tabular-nums;letter-spacing:.02em;min-width:3ch;text-align:center}
-.lift__floors{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:12px}
-.floor{display:flex;align-items:center;gap:16px;width:100%;padding:6px;border-radius:40px;color:var(--c-light);text-decoration:none;
-  font:600 18px var(--f-body);transition:background .3s}
-.floor:hover{background:rgb(111 147 240/.12)}
-.floor__key{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#0B1433;
-  box-shadow:inset 0 0 0 2px rgb(174 184 214/.55);font:800 20px var(--f-head);transition:box-shadow .3s,color .3s,scale .15s}
-.floor:active .floor__key{scale:.94}
-.floor.is-on .floor__key{color:var(--c-accent);box-shadow:inset 0 0 0 2px var(--c-accent),0 0 18px rgb(111 147 240/.75)}
-.floor--main .floor__key{background:var(--c-light);color:var(--c-base);box-shadow:none}
-
-@media (max-width:860px){.pg__in{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+}
+body {
+  font-family: var(--f-body);
+  color: var(--c-light);
+  background: var(--c-base);
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible {
+  outline: 3px solid var(--c-accent);
+  outline-offset: 3px;
+}
+.pg {
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding: clamp(32px, 6svh, 72px) clamp(24px, 5vw, 64px);
+}
+.pg__in {
+  width: 100%;
+  max-width: 1160px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  align-items: center;
+  gap: clamp(32px, 6vw, 96px);
+}
+.eyebrow {
+  font: 600 14px/1 var(--f-body);
+  letter-spacing: .12em;
+  color: var(--c-accent);
+  margin: 0 0 20px;
+}
+h1 {
+  font: 800 clamp(36px, 4.6vw, 66px)/1.06 var(--f-head);
+  letter-spacing: -.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+.sub {
+  font: 400 clamp(17px, 1.45vw, 21px)/1.6 var(--f-body);
+  color: var(--c-muted-dark);
+  margin: 22px 0 0;
+  max-width: 32em;
+}
+.lift {
+  justify-self: center;
+  width: min(100%, 340px);
+  padding: 26px 26px 30px;
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      160deg,
+      #1B2B63,
+      #111E4D);
+  box-shadow: inset 0 0 0 1px rgb(111 147 240/.28), 0 30px 60px rgb(0 0 0/.35);
+}
+.lift__screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  height: 108px;
+  border-radius: 8px;
+  background: #070D24;
+  box-shadow: inset 0 0 0 1px rgb(111 147 240/.25);
+  color: var(--c-accent);
+  direction: ltr;
+}
+.lift__arrow {
+  width: 0;
+  height: 0;
+  border: 11px solid transparent;
+  border-bottom-color: currentColor;
+  border-top-width: 0;
+  transition: rotate .5s var(--ease);
+}
+.is-riding .lift__arrow {
+  rotate: 180deg;
+}
+.lift__num {
+  font: 800 64px/1 var(--f-head);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+  min-width: 3ch;
+  text-align: center;
+}
+.lift__floors {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.floor {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 6px;
+  border-radius: 40px;
+  color: var(--c-light);
+  text-decoration: none;
+  font: 600 18px var(--f-body);
+  transition: background .3s;
+}
+.floor:hover {
+  background: rgb(111 147 240/.12);
+}
+.floor__key {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #0B1433;
+  box-shadow: inset 0 0 0 2px rgb(174 184 214/.55);
+  font: 800 20px var(--f-head);
+  transition:
+    box-shadow .3s,
+    color .3s,
+    scale .15s;
+}
+.floor:active .floor__key {
+  scale: .94;
+}
+.floor.is-on .floor__key {
+  color: var(--c-accent);
+  box-shadow: inset 0 0 0 2px var(--c-accent), 0 0 18px rgb(111 147 240/.75);
+}
+.floor--main .floor__key {
+  background: var(--c-light);
+  color: var(--c-base);
+  box-shadow: none;
+}
+@media (max-width: 860px) {
+  .pg__in {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -70,51 +235,61 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
     <div class="lift__screen" aria-hidden="true"><i class="lift__arrow"></i><span class="lift__num">404</span></div>
     <ul class="lift__floors">
       <li><a class="floor floor--main" href="/tailored" data-floor="3"><span class="floor__key">3</span>מחפשים התאמה אישית?</a></li>
-      <!-- The two questions are Ran's wording (12.10.2026). -->
-      <li><a class="floor" href="/door-oct" data-floor="2"><span class="floor__key">2</span>רציתם לספר לנו משהו?</a></li>
+            <li><a class="floor" href="/door-oct" data-floor="2"><span class="floor__key">2</span>רציתם לספר לנו משהו?</a></li>
       <li><a class="floor" id="back" href="https://www.struxisrael.co.il/" data-floor="1"><span class="floor__key">1</span>חזרה לדף שממנו הגעתם</a></li>
     </ul>
   </nav>
 </div></main>
 
 <script>
-// Where floor 1, the way back, leads, in this order:
-// 1. the visitor came here from a page of this site: to that page;
-// 2. this browser remembers the landing page it first came through (the first touch that /door-oct stores): there;
-// 3. nothing is known: the link stays as written, the WebSite's home page.
-// The site's own root ("עובדים פה", no form) and this very address are not places to send anyone back to.
-// What the address carries (utm_*, click ids) goes along, so a lead is still credited to its campaign.
-const here = location.pathname.replace(/\/$/, '');
+const here = location.pathname.replace(/\/$/, "");
 const own = (url) => {
   try {
-    const u = new URL(url), p = u.pathname.replace(/\/$/, '');
+    const u = new URL(url), p = u.pathname.replace(/\/$/, "");
     return u.origin === location.origin && p && p !== here ? u : null;
-  } catch (e) { return null; }
+  } catch (e) {
+    return null;
+  }
 };
-const carry = (u) => { new URLSearchParams(location.search).forEach((v, k) => { if (!u.searchParams.has(k)) u.searchParams.set(k, v); }); return u.href; };
+const carry = (u) => {
+  new URLSearchParams(location.search).forEach((v, k) => {
+    if (!u.searchParams.has(k)) u.searchParams.set(k, v);
+  });
+  return u.href;
+};
 let page = own(document.referrer);
-if (!page) { try { page = own(JSON.parse(localStorage.getItem('strux-first-touch')).landing_page); } catch (e) {} }
-document.querySelectorAll('.floor').forEach((a) => { a.href = carry(new URL(a.id === 'back' && page ? page : a.href)); });
-
-// A pressed button lights, the display rides down from 404 to that floor (about a second, slowing at the end), and only
-// then the page leaves. With reduced motion, or a second press, the link simply works. The panel goes back to rest when
-// the visitor comes back to it.
-const lift = document.querySelector('.lift'), num = document.querySelector('.lift__num');
-const still = matchMedia('(prefers-reduced-motion:reduce)');
-const rest = () => { lift.classList.remove('is-riding'); document.querySelectorAll('.floor.is-on').forEach((a) => a.classList.remove('is-on')); num.textContent = '404'; };
-addEventListener('pageshow', rest);
-document.querySelectorAll('.floor').forEach((a) => a.addEventListener('click', (e) => {
-  if (still.matches || lift.classList.contains('is-riding') || e.metaKey || e.ctrlKey) return;
+if (!page) {
+  try {
+    page = own(JSON.parse(localStorage.getItem("strux-first-touch")).landing_page);
+  } catch (e) {
+  }
+}
+document.querySelectorAll(".floor").forEach((a) => {
+  a.href = carry(new URL(a.id === "back" && page ? page : a.href));
+});
+const lift = document.querySelector(".lift"), num = document.querySelector(".lift__num");
+const still = matchMedia("(prefers-reduced-motion:reduce)");
+const rest = () => {
+  lift.classList.remove("is-riding");
+  document.querySelectorAll(".floor.is-on").forEach((a) => a.classList.remove("is-on"));
+  num.textContent = "404";
+};
+addEventListener("pageshow", rest);
+document.querySelectorAll(".floor").forEach((a) => a.addEventListener("click", (e) => {
+  if (still.matches || lift.classList.contains("is-riding") || e.metaKey || e.ctrlKey) return;
   e.preventDefault();
-  a.classList.add('is-on');
-  lift.classList.add('is-riding');
+  a.classList.add("is-on");
+  lift.classList.add("is-riding");
   const to = +a.dataset.floor, t0 = performance.now(), ride = 1100;
   const step = (now) => {
     const p = Math.min(1, (now - t0) / ride), eased = 1 - (1 - p) ** 3;
     const at = Math.round(404 - (404 - to) * eased);
     num.textContent = at;
     if (p < 1) requestAnimationFrame(step);
-    else setTimeout(() => { location.href = a.href; setTimeout(rest, 1500); }, 250);
+    else setTimeout(() => {
+      location.href = a.href;
+      setTimeout(rest, 1500);
+    }, 250);
   };
   requestAnimationFrame(step);
 }));

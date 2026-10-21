@@ -3,108 +3,339 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The bare address of the campaigns subdomain: "we are working here". (An address that does not exist shows 404.html,
-     the lift.) The logo's four tiles are the panes of a window, misted over; behind them stands a real lobby of a
-     building StruX manages. The visitor passes the squeegee over the glass (the pointer on a desktop, a finger on a
-     phone) and sees through where it passed. When most of the glass is clean the rest clears, the words change, and the
-     way out comes on: back to the page he came from or to the landing page he came through, or on to the WebSite when
-     nothing is known (the lift's rule, 404.html). Left alone for eight seconds, the window is cleaned for him. Without
-     JS the glass is clean and the link to the WebSite is there.
-     No form, no tags, nothing is sent. Every address starts with a slash, like the other pages of this folder. -->
 <title>StruX | עובדים פה</title>
-<script>document.documentElement.classList.add('js')</script>
+<script>
+document.documentElement.classList.add("js");
+</script>
 <link rel="preload" href="/fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
-@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
-/* Bamberger Sharp Bold for the headings (decision 267): loaded from the WebSite, its license's domain; never a copy in this repo */
-@font-face{font-family:'Bamberger Sharp';font-weight:700;font-display:swap;src:url(https://www.struxisrael.co.il/fonts/bamberger-sharp-bold.woff2) format('woff2')}
-@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
-@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
-
-:root{
-  --c-base:#0E1A44; --c-brand:#1F3A93; --c-accent:#6F93F0; --c-light:#F4F6FB;
-  --c-ink:#0B0B0C; --c-muted:#5B6478; --c-muted-dark:#AEB8D6;
-  --f-head:'Bamberger Sharp','Heebo Variable',system-ui,sans-serif; --f-body:'Assistant Variable',system-ui,sans-serif;
+@font-face {
+  font-family: "Heebo Variable";
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/fonts/heebo-hebrew-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0307-0308,
+    U+0590-05FF,
+    U+200C-2010,
+    U+20AA,
+    U+25CC,
+    U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Heebo Variable";
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/fonts/heebo-latin-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0000-00FF,
+    U+2000-206F,
+    U+20AC,
+    U+2122;
+}
+@font-face {
+  font-family: "Bamberger Sharp";
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://www.struxisrael.co.il/fonts/bamberger-sharp-bold.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Assistant Variable";
+  font-weight: 200 800;
+  font-display: swap;
+  src: url(/fonts/assistant-hebrew-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0307-0308,
+    U+0590-05FF,
+    U+200C-2010,
+    U+20AA,
+    U+25CC,
+    U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Assistant Variable";
+  font-weight: 200 800;
+  font-display: swap;
+  src: url(/fonts/assistant-latin-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0000-00FF,
+    U+2000-206F,
+    U+20AC,
+    U+2122;
+}
+:root {
+  --c-base:#0E1A44;
+  --c-brand:#1F3A93;
+  --c-accent:#6F93F0;
+  --c-light:#F4F6FB;
+  --c-ink:#0B0B0C;
+  --c-muted:#5B6478;
+  --c-muted-dark:#AEB8D6;
+  --f-head:"Bamberger Sharp","Heebo Variable",system-ui,sans-serif;
+  --f-body:"Assistant Variable",system-ui,sans-serif;
   --shadow:0 2px 6px rgb(0 0 0/.06),0 12px 24px rgb(0 0 0/.08),0 32px 64px rgb(0 0 0/.08);
   --ease:cubic-bezier(.65,.05,.25,1);
 }
-*{box-sizing:border-box}
-html,body{margin:0}
-body{font-family:var(--f-body);color:var(--c-ink);background:var(--c-light);-webkit-font-smoothing:antialiased}
-:focus-visible{outline:3px solid var(--c-accent);outline-offset:3px}
-
-.pg{min-height:100svh;display:grid;align-items:center;padding:clamp(32px,6svh,72px) clamp(24px,5vw,64px)}
-.pg__in{width:100%;max-width:1160px;margin-inline:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(32px,6vw,96px)}
-.eyebrow{font:600 14px/1 var(--f-body);letter-spacing:.12em;color:var(--c-brand);margin:0 0 20px}
-h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;margin:0;text-wrap:balance}
-.sub{font:400 clamp(17px,1.45vw,21px)/1.6 var(--f-body);color:var(--c-muted);margin:22px 0 0;max-width:32em}
-.acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 30px;border:0;border-radius:6px;cursor:pointer;
-  font:700 18px var(--f-body);text-decoration:none;transition:background .3s,box-shadow .3s;scale:1}
-/* the arrow moves on hover; the button keeps its width, so a row of buttons never re-wraps under the pointer */
-.btn span[aria-hidden]{transition:translate .3s var(--ease)}
-.btn:hover span[aria-hidden]{translate:-6px 0}
-.btn:active{scale:.97}
-.btn--main{background:var(--c-brand);color:#fff}
-.btn--main:hover{background:var(--c-base)}
-.btn--ghost{background:none;color:var(--c-brand);box-shadow:inset 0 0 0 1.5px var(--c-brand)}
-.btn--ghost:hover{background:#fff}
-
-/* a navy page: text light, the main button light, as on the site */
-.dark{background:var(--c-base);color:var(--c-light)}
-.dark .eyebrow{color:var(--c-accent)}
-.dark .sub{color:var(--c-muted-dark)}
-
-
-@media (max-width:860px){
-  .pg__in{grid-template-columns:1fr}
-  .btn{width:100%}
+* {
+  box-sizing: border-box;
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-
-/* text, the object, the button: side by side on a desktop (the button under the text), one under the other on phones,
-   where the button comes last, after the object the visitor acts on */
-.pg__in{grid-template-areas:"txt obj" "acts obj";grid-template-rows:1fr 1fr;row-gap:0}
-.txt{grid-area:txt;align-self:end}
-.obj{grid-area:obj;justify-self:center;width:100%;display:grid;justify-items:center}
-.acts{grid-area:acts;align-self:start}
-.sub{min-height:4.8em} /* three lines' room, so the page does not shift when the text changes */
-.hint{margin:16px 0 0;text-align:center;font:600 15px var(--f-body);color:var(--c-muted);transition:opacity .4s}
-#back.is-back span[aria-hidden]{order:-1}
-#back.is-back:hover span[aria-hidden]{translate:6px 0}
-
-/* the three states of the words: before, after the visitor did it, after it was done for him */
-.after,.helped{display:none}
-.is-done .before{display:none}
-.is-done .after{display:inline}
-.is-helped .after{display:none}
-.is-helped .helped{display:inline}
-.is-done .hint{opacity:0}
-/* the button: not seen until the story ends; its room is kept */
-.js .acts{opacity:0;visibility:hidden;translate:0 12px;transition:opacity .6s var(--ease) .5s,translate .6s var(--ease) .5s,visibility 0s .5s}
-.js .is-done .acts{opacity:1;visibility:visible;translate:0 0}
-
-@media (max-width:860px){
-  .pg__in{grid-template-areas:"txt" "obj" "acts";grid-template-rows:auto;row-gap:26px}
-  .sub{min-height:0}
-  .acts{margin-top:0}
+html,
+body {
+  margin: 0;
 }
-
-.win{width:min(100%,430px)}
-.win svg{display:block;width:100%;overflow:visible;touch-action:none;outline:0;filter:drop-shadow(0 18px 26px rgb(14 26 68/.2))}
-.frame{fill:none;stroke:var(--c-brand);stroke-width:2.6;stroke-linejoin:round}
-.fog{opacity:0;transition:opacity 1s var(--ease)}
-.js .fog{opacity:1}
-.js .is-done .fog{opacity:0}
-/* the squeegee: it lies on the glass at first, and on a desktop it is the pointer, over the whole page, until the
-   window is clean (so there is no pointer of the system's until then) */
-.blade{position:fixed;left:0;top:0;z-index:6;width:0;height:0;pointer-events:none;opacity:0;transition:opacity .4s}
-.blade svg{position:absolute;overflow:visible;fill:#0E1A44;filter:drop-shadow(0 3px 4px rgb(14 26 68/.3))}
-.js .blade{opacity:1}
-.js .is-done .blade{opacity:0}
-@media (hover:hover) and (pointer:fine){.js body:not(.is-done),.js body:not(.is-done) *{cursor:none}}
-.win svg:focus-visible .frame{stroke:var(--c-accent)}
+body {
+  font-family: var(--f-body);
+  color: var(--c-ink);
+  background: var(--c-light);
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible {
+  outline: 3px solid var(--c-accent);
+  outline-offset: 3px;
+}
+.pg {
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding: clamp(32px, 6svh, 72px) clamp(24px, 5vw, 64px);
+}
+.pg__in {
+  width: 100%;
+  max-width: 1160px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  align-items: center;
+  gap: clamp(32px, 6vw, 96px);
+}
+.eyebrow {
+  font: 600 14px/1 var(--f-body);
+  letter-spacing: .12em;
+  color: var(--c-brand);
+  margin: 0 0 20px;
+}
+h1 {
+  font: 800 clamp(36px, 4.6vw, 66px)/1.06 var(--f-head);
+  letter-spacing: -.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+.sub {
+  font: 400 clamp(17px, 1.45vw, 21px)/1.6 var(--f-body);
+  color: var(--c-muted);
+  margin: 22px 0 0;
+  max-width: 32em;
+}
+.acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 56px;
+  padding: 0 30px;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font: 700 18px var(--f-body);
+  text-decoration: none;
+  transition: background .3s, box-shadow .3s;
+  scale: 1;
+}
+.btn span[aria-hidden] {
+  transition: translate .3s var(--ease);
+}
+.btn:hover span[aria-hidden] {
+  translate: -6px 0;
+}
+.btn:active {
+  scale: .97;
+}
+.btn--main {
+  background: var(--c-brand);
+  color: #fff;
+}
+.btn--main:hover {
+  background: var(--c-base);
+}
+.btn--ghost {
+  background: none;
+  color: var(--c-brand);
+  box-shadow: inset 0 0 0 1.5px var(--c-brand);
+}
+.btn--ghost:hover {
+  background: #fff;
+}
+.dark {
+  background: var(--c-base);
+  color: var(--c-light);
+}
+.dark .eyebrow {
+  color: var(--c-accent);
+}
+.dark .sub {
+  color: var(--c-muted-dark);
+}
+@media (max-width: 860px) {
+  .pg__in {
+    grid-template-columns: 1fr;
+  }
+  .btn {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+.pg__in {
+  grid-template-areas: "txt obj" "acts obj";
+  grid-template-rows: 1fr 1fr;
+  row-gap: 0;
+}
+.txt {
+  grid-area: txt;
+  align-self: end;
+}
+.obj {
+  grid-area: obj;
+  justify-self: center;
+  width: 100%;
+  display: grid;
+  justify-items: center;
+}
+.acts {
+  grid-area: acts;
+  align-self: start;
+}
+.sub {
+  min-height: 4.8em;
+}
+.hint {
+  margin: 16px 0 0;
+  text-align: center;
+  font: 600 15px var(--f-body);
+  color: var(--c-muted);
+  transition: opacity .4s;
+}
+#back.is-back span[aria-hidden] {
+  order: -1;
+}
+#back.is-back:hover span[aria-hidden] {
+  translate: 6px 0;
+}
+.after,
+.helped {
+  display: none;
+}
+.is-done .before {
+  display: none;
+}
+.is-done .after {
+  display: inline;
+}
+.is-helped .after {
+  display: none;
+}
+.is-helped .helped {
+  display: inline;
+}
+.is-done .hint {
+  opacity: 0;
+}
+.js .acts {
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 12px;
+  transition:
+    opacity .6s var(--ease) .5s,
+    translate .6s var(--ease) .5s,
+    visibility 0s .5s;
+}
+.js .is-done .acts {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+}
+@media (max-width: 860px) {
+  .pg__in {
+    grid-template-areas: "txt" "obj" "acts";
+    grid-template-rows: auto;
+    row-gap: 26px;
+  }
+  .sub {
+    min-height: 0;
+  }
+  .acts {
+    margin-top: 0;
+  }
+}
+.win {
+  width: min(100%, 430px);
+}
+.win svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  touch-action: none;
+  outline: 0;
+  filter: drop-shadow(0 18px 26px rgb(14 26 68/.2));
+}
+.frame {
+  fill: none;
+  stroke: var(--c-brand);
+  stroke-width: 2.6;
+  stroke-linejoin: round;
+}
+.fog {
+  opacity: 0;
+  transition: opacity 1s var(--ease);
+}
+.js .fog {
+  opacity: 1;
+}
+.js .is-done .fog {
+  opacity: 0;
+}
+.blade {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 6;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s;
+}
+.blade svg {
+  position: absolute;
+  overflow: visible;
+  fill: #0E1A44;
+  filter: drop-shadow(0 3px 4px rgb(14 26 68/.3));
+}
+.js .blade {
+  opacity: 1;
+}
+.js .is-done .blade {
+  opacity: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .js body:not(.is-done),
+  .js body:not(.is-done) * {
+    cursor: none;
+  }
+}
+.win svg:focus-visible .frame {
+  stroke: var(--c-accent);
+}
 </style>
 </head>
 <body>
@@ -127,8 +358,7 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
         <linearGradient id="mist" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stop-color="#EEF2FA"/><stop offset=".5" stop-color="#D6DEF1"/><stop offset="1" stop-color="#E6EBF7"/>
         </linearGradient>
-        <!-- what the squeegee passed is drawn black into the mask: the mist is gone there -->
-        <mask id="dirt" maskUnits="userSpaceOnUse" x="25" y="39" width="164" height="172">
+                <mask id="dirt" maskUnits="userSpaceOnUse" x="25" y="39" width="164" height="172">
           <rect x="25" y="39" width="164" height="172" fill="#fff"/>
           <path id="wiped" d="" fill="none" stroke="#000" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
         </mask>
@@ -151,75 +381,84 @@ h1{font:800 clamp(36px,4.6vw,66px)/1.06 var(--f-head);letter-spacing:-.02em;marg
     <a class="btn btn--main" id="back" href="https://www.struxisrael.co.il/">למעבר לאתר <span aria-hidden="true">←</span></a>
   </div>
 </div></main>
-<!-- the squeegee: a blade and a handle. It follows the pointer with a little lag and leans the way it is pushed. -->
 <div class="blade" id="blade" aria-hidden="true"><svg viewBox="-16 -4 32 24"><rect x="-15" y="-2.4" width="30" height="4.8" rx="1.4"/><rect x="-1.7" y="1.6" width="3.4" height="17" rx="1.5"/></svg></div>
 
 <script>
-// The end of the story, and the way back.
-// A page calls story.finish() when the visitor did the thing, and story.wait() on every move of his, which starts the
-// wait again. Left alone for eight seconds, the story ends by itself and the page says StruX took care of it, so nobody
-// is left without the button.
 const story = (() => {
   let timer, over = false;
   const finish = (bySelf) => {
     if (over) return;
     over = true;
     clearTimeout(timer);
-    document.body.classList.add('is-done');
-    if (bySelf === true) document.body.classList.add('is-helped');
-    document.dispatchEvent(new CustomEvent('story:done', { detail: bySelf === true }));
+    document.body.classList.add("is-done");
+    if (bySelf === true) document.body.classList.add("is-helped");
+    document.dispatchEvent(new CustomEvent("story:done", { detail: bySelf === true }));
   };
-  const wait = () => { if (!over) { clearTimeout(timer); timer = setTimeout(() => finish(true), 8000); } };
-  // The page's one button, a way out for everybody. Where it leads is the lift's rule (404.html, floor 1; Ran, 14.10.2026):
-  // 1. the visitor came here from a page of this site: back to that page;
-  // 2. this browser remembers the landing page it first came through (the first touch the landing pages store): back
-  //    there, both under the words of the lift for the way back; or nothing is remembered and the address carries a
-  //    campaign (utm_*, a click id): on to the landing page /tailored, under the words of the lift's floor that leads there;
-  // 3. nothing is known: the link stays as written, on to the WebSite's home page.
-  // What the address carries goes along, so a lead is still credited to its campaign.
-  const back = document.getElementById('back'), carried = new URLSearchParams(location.search);
-  const here = location.pathname.replace(/\/$/, '');
+  const wait = () => {
+    if (!over) {
+      clearTimeout(timer);
+      timer = setTimeout(() => finish(true), 8e3);
+    }
+  };
+  const back = document.getElementById("back"), carried = new URLSearchParams(location.search);
+  const here = location.pathname.replace(/\/$/, "");
   const own = (url) => {
     try {
-      const u = new URL(url), p = u.pathname.replace(/\/$/, '');
+      const u = new URL(url), p = u.pathname.replace(/\/$/, "");
       return u.origin === location.origin && p && p !== here ? u : null;
-    } catch (e) { return null; }
+    } catch (e) {
+      return null;
+    }
   };
   let page = own(document.referrer), words = '<span aria-hidden="true">→</span> חזרה לדף שממנו הגעתם';
-  if (!page) { try { page = own(JSON.parse(localStorage.getItem('strux-first-touch')).landing_page); } catch (e) {} }
-  if (!page && ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'wbraid', 'gbraid', 'fbclid'].some((k) => carried.get(k))) {
-    page = new URL('/tailored', location.origin);
+  if (!page) {
+    try {
+      page = own(JSON.parse(localStorage.getItem("strux-first-touch")).landing_page);
+    } catch (e) {
+    }
+  }
+  if (!page && ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid", "wbraid", "gbraid", "fbclid"].some((k) => carried.get(k))) {
+    page = new URL("/tailored", location.origin);
     words = 'מחפשים התאמה אישית? <span aria-hidden="true">←</span>';
   }
-  if (page) { back.innerHTML = words; back.classList.toggle('is-back', words.includes('חזרה')); }
+  if (page) {
+    back.innerHTML = words;
+    back.classList.toggle("is-back", words.includes("חזרה"));
+  }
   const to = new URL(page || back.href);
-  carried.forEach((v, k) => { if (!to.searchParams.has(k)) to.searchParams.set(k, v); });
+  carried.forEach((v, k) => {
+    if (!to.searchParams.has(k)) to.searchParams.set(k, v);
+  });
   back.href = to.href;
   wait();
-  return { finish, wait, get over() { return over; } };
+  return { finish, wait, get over() {
+    return over;
+  } };
 })();
-
-// One stroke is wiped before the visitor does anything (about 7% of the glass), and the squeegee rests at its end.
-// On a desktop the squeegee follows the pointer everywhere, with a little lag (weight), and leans with its sideways
-// speed; a finger takes it only on the glass. Where it passes over the window, the mist is wiped: its path is drawn
-// into the mask. The glass is counted in a 6 x 6 grid: when 22 of the 36 squares were passed, the window counts as clean.
-const svg = document.getElementById('win'), wiped = document.getElementById('wiped');
-const blade = document.getElementById('blade'), bladeSvg = blade.firstElementChild;
+const svg = document.getElementById("win"), wiped = document.getElementById("wiped");
+const blade = document.getElementById("blade"), bladeSvg = blade.firstElementChild;
 const X0 = 35, Y0 = 49.75, W = 143.33, H = 150.5, COLS = 6, ROWS = 6, NEED = 22;
-const START = [[122, 149], [149, 161]]; // the stroke that is already wiped, in the window's own units
+const START = [[122, 149], [149, 161]];
 const seen = new Set();
-let d = `M${START[0].join(' ')} L${START[1].join(' ')}`, target = null, pos = null, tilt = -9, raf = 0, onGlass = false;
-const at = (x, y, m) => { const q = new DOMPoint(x, y).matrixTransform(m); return { x: q.x, y: q.y }; };
+let d = `M${START[0].join(" ")} L${START[1].join(" ")}`, target = null, pos = null, tilt = -9, raf = 0, onGlass = false;
+const at = (x, y, m) => {
+  const q = new DOMPoint(x, y).matrixTransform(m);
+  return { x: q.x, y: q.y };
+};
 const count = (x, y) => {
   const c = Math.floor((x - X0) / W * COLS), r = Math.floor((y - Y0) / H * ROWS);
   if (c >= 0 && c < COLS && r >= 0 && r < ROWS) seen.add(c * 10 + r);
 };
-const put = () => { blade.style.transform = `translate(${pos.x.toFixed(1)}px,${pos.y.toFixed(1)}px) rotate(${tilt.toFixed(1)}deg)`; };
-// The squeegee is as large as the window draws it (32 x 24 of its units), and until someone takes it, it lies at the stroke's end.
+const put = () => {
+  blade.style.transform = `translate(${pos.x.toFixed(1)}px,${pos.y.toFixed(1)}px) rotate(${tilt.toFixed(1)}deg)`;
+};
 const rest = () => {
   const k = svg.getBoundingClientRect().width / 163.33;
   bladeSvg.style.cssText = `width:${32 * k}px;height:${24 * k}px;left:${-16 * k}px;top:${-4 * k}px`;
-  if (!target && !story.over) { pos = at(...START[1], svg.getScreenCTM()); put(); }
+  if (!target && !story.over) {
+    pos = at(...START[1], svg.getScreenCTM());
+    put();
+  }
 };
 const frame = () => {
   raf = 0;
@@ -232,8 +471,8 @@ const frame = () => {
   const inside = pos.x >= b.left && pos.x <= b.right && pos.y >= b.top && pos.y <= b.bottom;
   if (inside) {
     const p = at(pos.x, pos.y, svg.getScreenCTM().inverse());
-    d += (onGlass ? ' L' : ' M') + p.x.toFixed(1) + ' ' + p.y.toFixed(1);
-    wiped.setAttribute('d', d);
+    d += (onGlass ? " L" : " M") + p.x.toFixed(1) + " " + p.y.toFixed(1);
+    wiped.setAttribute("d", d);
     count(p.x, p.y);
     if (seen.size >= NEED) return story.finish();
   }
@@ -243,21 +482,38 @@ const frame = () => {
 const take = (e, jump) => {
   if (story.over) return;
   target = { x: e.clientX, y: e.clientY };
-  if (jump) { pos = { ...target }; onGlass = false; } // a finger lands where it lands: the squeegee is there at once
+  if (jump) {
+    pos = { ...target };
+    onGlass = false;
+  }
   story.wait();
   if (!raf) raf = requestAnimationFrame(frame);
 };
-addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') take(e); });
-svg.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') { svg.setPointerCapture(e.pointerId); take(e, true); } });
-svg.addEventListener('pointermove', (e) => { if (e.pointerType !== 'mouse' && e.pressure) take(e); });
-svg.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); story.finish(); } });
-document.addEventListener('story:done', () => svg.removeAttribute('tabindex'));
-addEventListener('resize', rest);
-addEventListener('scroll', rest, { passive: true });
+addEventListener("pointermove", (e) => {
+  if (e.pointerType === "mouse") take(e);
+});
+svg.addEventListener("pointerdown", (e) => {
+  if (e.pointerType !== "mouse") {
+    svg.setPointerCapture(e.pointerId);
+    take(e, true);
+  }
+});
+svg.addEventListener("pointermove", (e) => {
+  if (e.pointerType !== "mouse" && e.pressure) take(e);
+});
+svg.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    story.finish();
+  }
+});
+document.addEventListener("story:done", () => svg.removeAttribute("tabindex"));
+addEventListener("resize", rest);
+addEventListener("scroll", rest, { passive: true });
 for (let i = 0; i <= 4; i++) count(START[0][0] + (START[1][0] - START[0][0]) * i / 4, START[0][1] + (START[1][1] - START[0][1]) * i / 4);
-wiped.setAttribute('d', d);
+wiped.setAttribute("d", d);
 rest();
-document.fonts.ready.then(rest); // the text above the window may still move it
+document.fonts.ready.then(rest);
 </script>
 </body>
 </html>

@@ -3,137 +3,507 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- One landing page per campaign, each in a folder of its own (this one: /door-oct/); fonts and media are shared
-     from the root, so every address in the page starts with a slash. -->
-<!-- Not deployed yet (11.10.2026); `noindex` stays until it goes live. The form IS live, on localhost too:
-     a submit writes a real row to the Google Sheet and fires the real tags. GTM is the only tag in code. -->
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WPWMK3CL');</script>
+<script>
+(function(w, d, s, l, i) {
+  w[l] = w[l] || [];
+  w[l].push({ "gtm.start": (new Date()).getTime(), event: "gtm.js" });
+  var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != "dataLayer" ? "&l=" + l : "";
+  j.async = true;
+  j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+  f.parentNode.insertBefore(j, f);
+})(window, document, "script", "dataLayer", "GTM-WPWMK3CL");
+</script>
 <!-- End Google Tag Manager -->
 <title>StruX | ניהול ואחזקת נכסים</title>
 <link rel="preload" href="/fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
-@font-face{font-family:'Heebo Variable';font-weight:100 900;font-display:swap;src:url(/fonts/heebo-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
-/* Bamberger Sharp Bold for the headings (decision 267): loaded from the WebSite, its license's domain; never a copy in this repo */
-@font-face{font-family:'Bamberger Sharp';font-weight:700;font-display:swap;src:url(https://www.struxisrael.co.il/fonts/bamberger-sharp-bold.woff2) format('woff2')}
-@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-hebrew-wght-normal.woff2) format('woff2-variations');unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
-@font-face{font-family:'Assistant Variable';font-weight:200 800;font-display:swap;src:url(/fonts/assistant-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
-
-:root{
-  --c-base:#0E1A44; --c-brand:#1F3A93; --c-accent:#6F93F0; --c-light:#F4F6FB;
-  --c-ink:#0B0B0C; --c-muted:#5B6478; --c-err:#C62828;
-  --f-head:'Bamberger Sharp','Heebo Variable',system-ui,sans-serif; --f-body:'Assistant Variable',system-ui,sans-serif;
+@font-face {
+  font-family: "Heebo Variable";
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/fonts/heebo-hebrew-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0307-0308,
+    U+0590-05FF,
+    U+200C-2010,
+    U+20AA,
+    U+25CC,
+    U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Heebo Variable";
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/fonts/heebo-latin-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0000-00FF,
+    U+2000-206F,
+    U+20AC,
+    U+2122;
+}
+@font-face {
+  font-family: "Bamberger Sharp";
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://www.struxisrael.co.il/fonts/bamberger-sharp-bold.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Assistant Variable";
+  font-weight: 200 800;
+  font-display: swap;
+  src: url(/fonts/assistant-hebrew-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0307-0308,
+    U+0590-05FF,
+    U+200C-2010,
+    U+20AA,
+    U+25CC,
+    U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Assistant Variable";
+  font-weight: 200 800;
+  font-display: swap;
+  src: url(/fonts/assistant-latin-wght-normal.woff2) format("woff2-variations");
+  unicode-range:
+    U+0000-00FF,
+    U+2000-206F,
+    U+20AC,
+    U+2122;
+}
+:root {
+  --c-base:#0E1A44;
+  --c-brand:#1F3A93;
+  --c-accent:#6F93F0;
+  --c-light:#F4F6FB;
+  --c-ink:#0B0B0C;
+  --c-muted:#5B6478;
+  --c-err:#C62828;
+  --f-head:"Bamberger Sharp","Heebo Variable",system-ui,sans-serif;
+  --f-body:"Assistant Variable",system-ui,sans-serif;
   --shadow:0 2px 6px rgb(0 0 0/.06),0 12px 24px rgb(0 0 0/.08),0 32px 64px rgb(0 0 0/.08);
   --ease:cubic-bezier(.65,.05,.25,1);
 }
-*{box-sizing:border-box}
-html,body{margin:0}
-body{font-family:var(--f-body);color:var(--c-ink);background:var(--c-base);-webkit-font-smoothing:antialiased}
-a{color:inherit}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-:focus-visible{outline:3px solid var(--c-accent);outline-offset:2px}
-
-/* ---------- the one screen ---------- */
-.lp{position:relative;min-height:100svh;display:grid;grid-template-rows:1fr auto;isolation:isolate}
-.lp__bg{position:absolute;inset:0;z-index:-1;overflow:hidden;background:var(--c-base)}
-.lp__bg img,.lp__bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.lp__bg picture{display:contents}
-/* darker on the text side (the right, in RTL) so the white headline keeps its contrast */
-.lp__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(270deg,rgb(14 26 68/.82) 0%,rgb(14 26 68/.5) 48%,rgb(14 26 68/.18) 100%)}
-
-.lp__main{display:grid;align-items:center;gap:clamp(24px,4vw,72px);grid-template-columns:1fr auto;
-  width:100%;max-width:1320px;margin-inline:auto;padding:clamp(20px,4svh,48px) clamp(24px,5vw,64px)}
-
-.lp__text{color:var(--c-light);max-width:34em}
-.lp__eyebrow{font:600 14px/1 var(--f-body);letter-spacing:.12em;margin:0 0 20px;color:#fff}
-.lp__h1{font:800 clamp(38px,5.2vw,84px)/1.05 var(--f-head);letter-spacing:-.02em;margin:0;text-wrap:balance}
-.lp__sub{font:400 clamp(18px,1.6vw,24px)/1.5 var(--f-body);margin:24px 0 0;max-width:26em}
-
-/* ---------- the card: the logo's top-right tile, in its real proportions ----------
-   A quarter disc (its centre is the bottom-right corner) with the door notch: 20% of the side wide, 40% tall, 20% in from
-   the right. The rows above the notch end a little before the arc (the left side); the buttons stand to the notch's left.
-   --S is the tile's side and everything inside is sized in em, so the card scales as one piece:
-   from 1024px a square, 1em = S/35; below it as wide as the screen and as tall as the form needs. */
-.card{--S:clamp(500px,min(100svh - 130px,46vw),580px);position:relative;width:var(--S);font-size:calc(var(--S)/35);filter:drop-shadow(0 .8em 1.6em rgb(0 0 0/.22))}
-.card__shape{height:var(--S);background:#fff;padding:2.2em 2.2em 0;display:flex;flex-direction:column;border-radius:var(--S) 0 0 0;
-  clip-path:polygon(0 0,100% 0,100% 100%,80% 100%,80% calc(100% - var(--S)*.4),60% calc(100% - var(--S)*.4),60% 100%,0 100%)}
-.card__top{display:flex;flex-direction:column;justify-content:center;gap:.7em}
-.card__logo{display:block;width:9em}
-.card__title{font:700 1.65em/1.2 var(--f-head);margin:0;color:var(--c-brand)}
-.card__title span{display:block;color:var(--c-ink);font-weight:500}
-form{display:flex;flex-direction:column;margin-top:.9em}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:.6em;margin-inline-end:8.2em}
-input[type=text],input[type=tel]{width:100%;height:2.85em;padding:0 .8em;border:1.5px solid #C9D0E0;border-radius:6px;
-  font:400 1.05em var(--f-body);color:var(--c-ink);background:#fff;transition:border-color .3s}
-input::placeholder{color:var(--c-muted)}
-input:focus{border-color:var(--c-brand);outline:0}
-input[aria-invalid=true]{border-color:var(--c-err)}
-input[type=tel],input[inputmode=numeric]{direction:rtl}
-.consent{display:flex;gap:.6em;align-items:flex-start;margin-top:.6em;margin-inline-end:4.6em;font:400 .8em/1.4 var(--f-body);color:var(--c-muted)}
-.consent input{width:1.35em;height:1.35em;margin:.1em 0 0;flex:none;accent-color:var(--c-brand)}
-.err{width:19em;margin-block:1.2em .3em;margin-inline:auto 1.4em;text-align:center;font:600 .85em/1.3 var(--f-body);color:var(--c-err);min-height:1.3em}
-/* the way out beside an address error: a text button in the line, with a tall hit area that does not change the line's height */
-.err button{border:0;background:none;padding:.7em .2em;margin:-.7em .3em -.7em 0;font:inherit;color:var(--c-brand);text-decoration:underline;white-space:nowrap;cursor:pointer}
-.btns{display:grid;gap:.6em;width:16.2em;margin-inline:auto 1.2em}
-.btn{display:flex;align-items:center;justify-content:center;gap:.4em;height:2.9em;border:0;border-radius:6px;cursor:pointer;
-  font:700 1.1em var(--f-body);text-decoration:none;transition:background .3s,gap .3s;scale:1}
-.btn:active{scale:.97}
-.btn:disabled{opacity:.6;cursor:default}
-.btn--main{background:var(--c-brand);color:#fff}
-.btn--main:hover{background:var(--c-base);gap:.8em}
-.btn--ghost{background:transparent;color:var(--c-brand);box-shadow:inset 0 0 0 1.5px var(--c-brand)}
-.btn--ghost:hover{background:var(--c-light);gap:.8em}
-.card__tel{width:16.2em;margin-block:.7em 0;margin-inline:auto 1.2em;text-align:center;font:700 1em var(--f-body)}
-.card__tel a{text-decoration:none}
-/* The door in the notch (Ran's idea): a blue wooden leaf, hinged on the right and swung toward the visitor, so the opening
-   still shows on its left. Drawn in CSS, in the logo's blue; sized from --S, so it follows the notch at every width.
-   The script at the end of the page turns it through --a. It is a sibling of the clipped shape, or the clip would cut it. */
-.door{position:absolute;left:calc(var(--S)*.6);bottom:0;width:calc(var(--S)*.2);height:calc(var(--S)*.4);
-  perspective:calc(var(--S)*2.2);perspective-origin:50% 45%}
-.door__leaf{position:absolute;inset:0;transform-origin:100% 50%;transform:rotateY(var(--a,42deg));
-  background:linear-gradient(270deg,rgb(0 0 0/.34),rgb(0 0 0/0) 75%),
-    repeating-linear-gradient(90deg,rgb(255 255 255/.08) 0 1px,rgb(255 255 255/0) 1px 25%),var(--c-brand)}
-.door__leaf::before,.door__leaf::after{content:"";position:absolute;left:16%;right:16%;border:1.5px solid rgb(255 255 255/.24);border-radius:2px}
-.door__leaf::before{top:7%;height:38%}
-.door__leaf::after{top:52%;height:40%}
-.door__knob{position:absolute;left:7%;top:49%;width:9%;aspect-ratio:1;border-radius:50%;background:var(--c-light);box-shadow:0 1px 2px rgb(0 0 0/.45)}
-
-.lp__legal{padding:10px clamp(24px,5vw,64px) 14px;font:400 13px/1.4 var(--f-body);color:#D7DDF0;text-align:center}
-.lp__legal a{margin-inline:6px}
-
-/* ---------- phones and tablets: the photo on top, the card under it ---------- */
-@media (max-width:1023px){
-  .lp{display:block;background:var(--c-light)}
-  .lp__bg{position:absolute;inset:0 0 auto 0;height:58svh}
-  .lp__bg::after{background:linear-gradient(180deg,rgb(14 26 68/.35) 0%,rgb(14 26 68/.55) 55%,rgb(14 26 68/.9) 100%)}
-  .lp__main{display:block;padding:0 16px}
-  .lp__text{min-height:calc(58svh - 40px);display:flex;flex-direction:column;justify-content:flex-end;padding:72px 4px 28px;max-width:none}
-  .lp__sub{margin-top:14px}
-  /* Every size inside the card is in em of --S here too (16px on a 375px screen): the rows were placed against the arc and
-     the notch once, and a size in px would let the arc cut the fields on a wider phone (it did, at 440px). */
-  .card{--S:min(100vw - 32px,480px);margin-inline:auto;font-size:calc(var(--S)/21.44)}
-  .card__shape{height:auto;padding:2.5em 1.375em 3em} /* the bottom padding keeps the notch's top under the main button */
-  .card__logo{width:8.125em}
-  .card__title{font-size:1.4em}
-  .grid{gap:.625em;margin-inline-end:0}
-  .grid>:nth-child(-n+2){grid-column:1/-1} /* name and phone take a full row each... */
-  .grid>:first-child{margin-inline-end:2.125em} /* ...and still end before the arc */
-  .grid>:nth-child(2){margin-inline-end:.5em}
-  input[type=text],input[type=tel]{height:2.94em;font-size:1.0625em}
-  .consent{margin-inline-end:0}
-  .err{width:auto;margin-inline:0}
-  .btns{width:auto;margin-inline:0;gap:1.375em}
-  .btn{height:2.84em;font-size:1.1875em}
-  .btn--ghost{width:calc(var(--S)*.6 - 1.895em);justify-self:end;margin-inline:auto 0} /* beside the notch */
-  .card__tel{width:calc(var(--S)*.6 - 2.25em);margin-inline:auto 0}
-  .lp__legal{color:var(--c-muted);padding:18px 16px 28px}
+* {
+  box-sizing: border-box;
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+html,
+body {
+  margin: 0;
+}
+body {
+  font-family: var(--f-body);
+  color: var(--c-ink);
+  background: var(--c-base);
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: inherit;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+:focus-visible {
+  outline: 3px solid var(--c-accent);
+  outline-offset: 2px;
+}
+.lp {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  isolation: isolate;
+}
+.lp__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--c-base);
+}
+.lp__bg img,
+.lp__bg video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.lp__bg picture {
+  display: contents;
+}
+.lp__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      270deg,
+      rgb(14 26 68/.82) 0%,
+      rgb(14 26 68/.5) 48%,
+      rgb(14 26 68/.18) 100%);
+}
+.lp__main {
+  display: grid;
+  align-items: center;
+  gap: clamp(24px, 4vw, 72px);
+  grid-template-columns: 1fr auto;
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding: clamp(20px, 4svh, 48px) clamp(24px, 5vw, 64px);
+}
+.lp__text {
+  color: var(--c-light);
+  max-width: 34em;
+}
+.lp__eyebrow {
+  font: 600 14px/1 var(--f-body);
+  letter-spacing: .12em;
+  margin: 0 0 20px;
+  color: #fff;
+}
+.lp__h1 {
+  font: 800 clamp(38px, 5.2vw, 84px)/1.05 var(--f-head);
+  letter-spacing: -.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+.lp__sub {
+  font: 400 clamp(18px, 1.6vw, 24px)/1.5 var(--f-body);
+  margin: 24px 0 0;
+  max-width: 26em;
+}
+.card {
+  --S:clamp(500px,min(100svh - 130px,46vw),580px);
+  position: relative;
+  width: var(--S);
+  font-size: calc(var(--S)/35);
+  filter: drop-shadow(0 .8em 1.6em rgb(0 0 0/.22));
+}
+.card__shape {
+  height: var(--S);
+  background: #fff;
+  padding: 2.2em 2.2em 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--S) 0 0 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 80% 100%, 80% calc(100% - var(--S)*.4), 60% calc(100% - var(--S)*.4), 60% 100%, 0 100%);
+}
+.card__top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .7em;
+}
+.card__logo {
+  display: block;
+  width: 9em;
+}
+.card__title {
+  font: 700 1.65em/1.2 var(--f-head);
+  margin: 0;
+  color: var(--c-brand);
+}
+.card__title span {
+  display: block;
+  color: var(--c-ink);
+  font-weight: 500;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  margin-top: .9em;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .6em;
+  margin-inline-end: 8.2em;
+}
+input[type=text],
+input[type=tel] {
+  width: 100%;
+  height: 2.85em;
+  padding: 0 .8em;
+  border: 1.5px solid #C9D0E0;
+  border-radius: 6px;
+  font: 400 1.05em var(--f-body);
+  color: var(--c-ink);
+  background: #fff;
+  transition: border-color .3s;
+}
+input::placeholder {
+  color: var(--c-muted);
+}
+input:focus {
+  border-color: var(--c-brand);
+  outline: 0;
+}
+input[aria-invalid=true] {
+  border-color: var(--c-err);
+}
+input[type=tel],
+input[inputmode=numeric] {
+  direction: rtl;
+}
+.consent {
+  display: flex;
+  gap: .6em;
+  align-items: flex-start;
+  margin-top: .6em;
+  margin-inline-end: 4.6em;
+  font: 400 .8em/1.4 var(--f-body);
+  color: var(--c-muted);
+}
+.consent input {
+  width: 1.35em;
+  height: 1.35em;
+  margin: .1em 0 0;
+  flex: none;
+  accent-color: var(--c-brand);
+}
+.err {
+  width: 19em;
+  margin-block: 1.2em .3em;
+  margin-inline: auto 1.4em;
+  text-align: center;
+  font: 600 .85em/1.3 var(--f-body);
+  color: var(--c-err);
+  min-height: 1.3em;
+}
+.err button {
+  border: 0;
+  background: none;
+  padding: .7em .2em;
+  margin: -.7em .3em -.7em 0;
+  font: inherit;
+  color: var(--c-brand);
+  text-decoration: underline;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btns {
+  display: grid;
+  gap: .6em;
+  width: 16.2em;
+  margin-inline: auto 1.2em;
+}
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4em;
+  height: 2.9em;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font: 700 1.1em var(--f-body);
+  text-decoration: none;
+  transition: background .3s, gap .3s;
+  scale: 1;
+}
+.btn:active {
+  scale: .97;
+}
+.btn:disabled {
+  opacity: .6;
+  cursor: default;
+}
+.btn--main {
+  background: var(--c-brand);
+  color: #fff;
+}
+.btn--main:hover {
+  background: var(--c-base);
+  gap: .8em;
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--c-brand);
+  box-shadow: inset 0 0 0 1.5px var(--c-brand);
+}
+.btn--ghost:hover {
+  background: var(--c-light);
+  gap: .8em;
+}
+.card__tel {
+  width: 16.2em;
+  margin-block: .7em 0;
+  margin-inline: auto 1.2em;
+  text-align: center;
+  font: 700 1em var(--f-body);
+}
+.card__tel a {
+  text-decoration: none;
+}
+.door {
+  position: absolute;
+  left: calc(var(--S)*.6);
+  bottom: 0;
+  width: calc(var(--S)*.2);
+  height: calc(var(--S)*.4);
+  perspective: calc(var(--S)*2.2);
+  perspective-origin: 50% 45%;
+}
+.door__leaf {
+  position: absolute;
+  inset: 0;
+  transform-origin: 100% 50%;
+  transform: rotateY(var(--a,42deg));
+  background:
+    linear-gradient(
+      270deg,
+      rgb(0 0 0/.34),
+      rgb(0 0 0/0) 75%),
+    repeating-linear-gradient(
+      90deg,
+      rgb(255 255 255/.08) 0 1px,
+      rgb(255 255 255/0) 1px 25%),
+    var(--c-brand);
+}
+.door__leaf::before,
+.door__leaf::after {
+  content: "";
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  border: 1.5px solid rgb(255 255 255/.24);
+  border-radius: 2px;
+}
+.door__leaf::before {
+  top: 7%;
+  height: 38%;
+}
+.door__leaf::after {
+  top: 52%;
+  height: 40%;
+}
+.door__knob {
+  position: absolute;
+  left: 7%;
+  top: 49%;
+  width: 9%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--c-light);
+  box-shadow: 0 1px 2px rgb(0 0 0/.45);
+}
+.lp__legal {
+  padding: 10px clamp(24px, 5vw, 64px) 14px;
+  font: 400 13px/1.4 var(--f-body);
+  color: #D7DDF0;
+  text-align: center;
+}
+.lp__legal a {
+  margin-inline: 6px;
+}
+@media (max-width: 1023px) {
+  .lp {
+    display: block;
+    background: var(--c-light);
+  }
+  .lp__bg {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 58svh;
+  }
+  .lp__bg::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgb(14 26 68/.35) 0%,
+        rgb(14 26 68/.55) 55%,
+        rgb(14 26 68/.9) 100%);
+  }
+  .lp__main {
+    display: block;
+    padding: 0 16px;
+  }
+  .lp__text {
+    min-height: calc(58svh - 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 72px 4px 28px;
+    max-width: none;
+  }
+  .lp__sub {
+    margin-top: 14px;
+  }
+  .card {
+    --S:min(100vw - 32px,480px);
+    margin-inline: auto;
+    font-size: calc(var(--S)/21.44);
+  }
+  .card__shape {
+    height: auto;
+    padding: 2.5em 1.375em 3em;
+  }
+  .card__logo {
+    width: 8.125em;
+  }
+  .card__title {
+    font-size: 1.4em;
+  }
+  .grid {
+    gap: .625em;
+    margin-inline-end: 0;
+  }
+  .grid > :nth-child(-n+2) {
+    grid-column: 1/-1;
+  }
+  .grid > :first-child {
+    margin-inline-end: 2.125em;
+  }
+  .grid > :nth-child(2) {
+    margin-inline-end: .5em;
+  }
+  input[type=text],
+  input[type=tel] {
+    height: 2.94em;
+    font-size: 1.0625em;
+  }
+  .consent {
+    margin-inline-end: 0;
+  }
+  .err {
+    width: auto;
+    margin-inline: 0;
+  }
+  .btns {
+    width: auto;
+    margin-inline: 0;
+    gap: 1.375em;
+  }
+  .btn {
+    height: 2.84em;
+    font-size: 1.1875em;
+  }
+  .btn--ghost {
+    width: calc(var(--S)*.6 - 1.895em);
+    justify-self: end;
+    margin-inline: auto 0;
+  }
+  .card__tel {
+    width: calc(var(--S)*.6 - 2.25em);
+    margin-inline: auto 0;
+  }
+  .lp__legal {
+    color: var(--c-muted);
+    padding: 18px 16px 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -144,14 +514,12 @@ input[type=tel],input[inputmode=numeric]{direction:rtl}
       <source media="(max-width:767px)" srcset="/media/hero_mobile_poster.webp">
       <img src="/media/hero_desktop_poster.webp" alt="" fetchpriority="high">
     </picture>
-    <!-- the video is attached by the script: desktop only, never with reduced motion -->
-  </div>
+      </div>
 
   <div class="lp__main">
     <div class="lp__text">
       <p class="lp__eyebrow"><span dir="ltr">StruX</span> | ניהול ואחזקת נכסים</p>
-      <!-- PLACEHOLDER COPY: Ran writes the campaign headline -->
-      <h1 class="lp__h1">יש בניינים שנכנסים אליהם, ומרגישים שמישהו דואג.</h1>
+            <h1 class="lp__h1">יש בניינים שנכנסים אליהם, ומרגישים שמישהו דואג.</h1>
       <p class="lp__sub">ספרו לנו על הבניין שלכם, ונחזור אליכם עם הצעה שנתפרה בדיוק בשבילו.</p>
     </div>
 
@@ -172,8 +540,7 @@ input[type=tel],input[inputmode=numeric]{direction:rtl}
           <div><label class="sr" for="f-units">כמה דירות בבניין?</label>
             <input id="f-units" name="units" type="text" inputmode="numeric" placeholder="כמה דירות?" required></div>
         </div>
-        <!-- the honeypot is clipped in place (never left:-9999px in RTL) -->
-        <div class="sr" aria-hidden="true"><input name="company_website" type="text" tabindex="-1" autocomplete="off"></div>
+                <div class="sr" aria-hidden="true"><input name="company_website" type="text" tabindex="-1" autocomplete="off"></div>
         <label class="consent"><input type="checkbox" name="terms" required>
           <span>קראתי ואני מסכים/ה ל<a href="https://www.struxisrael.co.il/terms" target="_blank" rel="noopener">תקנון</a> ול<a href="https://www.struxisrael.co.il/privacy" target="_blank" rel="noopener">מדיניות הפרטיות</a>, ולכך ש-StruX תיצור איתי קשר בנוגע לפנייה.*</span></label>
         <p class="err" id="err" role="alert"><span><noscript>לשליחת הטופס יש להפעיל JavaScript בדפדפן. אפשר גם לפנות אלינו בוואטסאפ או בטלפון <bdi dir="ltr" style="white-space:nowrap">055-7204242</bdi>.</noscript></span> <button type="button" hidden>הכתובת לא ברשימה</button></p>
@@ -195,17 +562,14 @@ input[type=tel],input[inputmode=numeric]{direction:rtl}
 </main>
 
 <script>
-// Background video: desktop only, and never with reduced motion. It plays once and holds its last frame
-// (the clip does not end where it starts, so it is not looped).
-if (matchMedia('(min-width:1024px) and (prefers-reduced-motion:no-preference)').matches) {
-  const v = Object.assign(document.createElement('video'), { muted: true, playsInline: true, autoplay: true, preload: 'auto', src: '/media/hero_desktop.mp4' });
-  v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
-  v.addEventListener('canplay', () => document.querySelector('.lp__bg').append(v), { once: true });
+if (matchMedia("(min-width:1024px) and (prefers-reduced-motion:no-preference)").matches) {
+  const v = Object.assign(document.createElement("video"), { muted: true, playsInline: true, autoplay: true, preload: "auto", src: "/media/hero_desktop.mp4" });
+  v.setAttribute("muted", "");
+  v.setAttribute("playsinline", "");
+  v.addEventListener("canplay", () => document.querySelector(".lp__bg").append(v), { once: true });
 }
-
-// The site's validators (site/src/scripts/validate.js), unchanged: Israeli mobile only; units a positive integer.
 const phone = (v) => {
-  const d = String(v).replace(/[\s\-().]/g, '').replace(/^\+?972/, '0');
+  const d = String(v).replace(/[\s\-().]/g, "").replace(/^\+?972/, "0");
   if (!/^05\d{8}$/.test(d)) return null;
   const tail = d.slice(3);
   const steps = [...tail].slice(1).map((c, i) => c - tail[i]);
@@ -213,80 +577,81 @@ const phone = (v) => {
   if (steps.every((s) => s === 1) || steps.every((s) => s === -1)) return null;
   return `${d.slice(0, 3)}-${tail}`;
 };
-const units = (v) => (/^[1-9]\d{0,5}$/.test(String(v).trim()) ? Number(v) : null);
-// The address (decisions 189, 190), the site's rule unchanged: the street and its city come from the government's list of
-// streets, the house number is typed. `flat`: letters and digits only, one space between words and at both ends.
-const flat = (v) => ` ${String(v).replace(/[^\p{L}\p{N}]+/gu, ' ').trim()} `;
-const cut = (text, part) => (text.includes(part) ? text.replace(part, ' ') : null);
-// The words the list is searched by: no house number, no punctuation, no single letter.
-const streetWords = (v) => flat(v).split(' ').filter((w) => w.length > 1 && !/^\d/.test(w));
-// 0: no listed street with its city · 1: a street and its city, no house number · 2: all three. A village listed as its
-// own street needs its name once; a joined city passes by its first name too („תל אביב” for „תל אביב - יפו”).
-const listed = (v, streets) => Math.max(0, ...streets.map(([street, city]) => {
+const units = (v) => /^[1-9]\d{0,5}$/.test(String(v).trim()) ? Number(v) : null;
+const flat = (v) => ` ${String(v).replace(/[^\p{L}\p{N}]+/gu, " ").trim()} `;
+const cut = (text, part) => text.includes(part) ? text.replace(part, " ") : null;
+const streetWords = (v) => flat(v).split(" ").filter((w) => w.length > 1 && !/^\d/.test(w));
+const listed = (v, streets2) => Math.max(0, ...streets2.map(([street, city]) => {
   let rest = cut(flat(v), flat(street));
-  if (rest !== null && street !== city) rest = cut(rest, flat(city)) ?? cut(rest, flat(city.split('-')[0]));
+  if (rest !== null && street !== city) rest = cut(rest, flat(city)) ?? cut(rest, flat(city.split("-")[0]));
   return rest === null ? 0 : /\d/.test(rest) ? 2 : 1;
 }));
-
-// ---------- tracking: the WebSite's helper (site/src/scripts/track.js), without the parts this page has no use for ----------
-// Same event names and parameters; `audience` is always '' here (the form does not ask). No new event names.
-const read = (store, key) => { try { return store.getItem(key); } catch (e) { return null; } };
-const write = (store, key, value) => { try { store.setItem(key, value); } catch (e) {} };
-const track = (event, button_location, extra = {}) => {
-  (window.dataLayer = window.dataLayer || []).push({ event, audience: '', button_location, ...extra });
+const read = (store, key) => {
+  try {
+    return store.getItem(key);
+  } catch (e) {
+    return null;
+  }
 };
-// First touch, sent with the lead. A campaign touch (any UTM or click id) is kept forever; an organic one only until a
-// visit arrives with campaign parameters. Only raw URL values are stored, never a fallback label.
-const KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'wbraid', 'gbraid', 'fbclid'];
+const write = (store, key, value) => {
+  try {
+    store.setItem(key, value);
+  } catch (e) {
+  }
+};
+const track = (event, button_location, extra = {}) => {
+  (window.dataLayer = window.dataLayer || []).push({ event, audience: "", button_location, ...extra });
+};
+const KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid", "wbraid", "gbraid", "fbclid"];
 const isCampaign = (touch) => KEYS.some((k) => touch[k]);
 const firstTouch = () => {
   let saved = null;
-  try { saved = JSON.parse(read(localStorage, 'strux-first-touch')); } catch (e) {}
+  try {
+    saved = JSON.parse(read(localStorage, "strux-first-touch"));
+  } catch (e) {
+  }
   if (saved && isCampaign(saved)) return saved;
   const q = new URLSearchParams(location.search);
-  const now = Object.fromEntries(KEYS.map((k) => [k, q.get(k) || '']));
-  if (saved && !isCampaign(now)) return saved; // organic stays as first seen
+  const now = Object.fromEntries(KEYS.map((k) => [k, q.get(k) || ""]));
+  if (saved && !isCampaign(now)) return saved;
   now.referrer = document.referrer;
   now.landing_page = location.origin + location.pathname;
-  write(localStorage, 'strux-first-touch', JSON.stringify(now));
+  write(localStorage, "strux-first-touch", JSON.stringify(now));
   return now;
 };
 firstTouch();
-document.addEventListener('click', (e) => { if (e.target.closest?.('a[href^="tel:"]')) track('strux_web_phone_click_v1', 'form'); });
-
-// ---------- the form and the lead flow: the WebSite's (LeadForm.astro), with four fields ----------
-const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxqZvrlHOTzjhoNxzAoYUBDkkzgLbDnAxDW23Ppl0-sPs7O_1i0E8RWS39Z1LX1gmy8/exec';
-const WA = 'https://wa.me/972557204242';
-const THANKS = 'https://www.struxisrael.co.il/thank-you'; // the WebSite's thank-you page
-const ORGANIC = 'אורגני'; // for people (Sheet, WhatsApp) when the visit carried no campaign source; never stored
-const f = document.getElementById('lead'), err = document.getElementById('err'), submit = f.querySelector('[type=submit]');
-const streets = new Map(); // every street the list returned on this visit: "street|city" → [street, city]
-let free = false; // the visitor pressed „הכתובת לא ברשימה”: any text passes, and the lead says so
-let down = false; // the list did not answer: a lead is never blocked on it, and it says that it was not checked
+document.addEventListener("click", (e) => {
+  if (e.target.closest?.('a[href^="tel:"]')) track("strux_web_phone_click_v1", "form");
+});
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbxqZvrlHOTzjhoNxzAoYUBDkkzgLbDnAxDW23Ppl0-sPs7O_1i0E8RWS39Z1LX1gmy8/exec";
+const WA = "https://wa.me/972557204242";
+const THANKS = "https://www.struxisrael.co.il/thank-you";
+const ORGANIC = "אורגני";
+const f = document.getElementById("lead"), err = document.getElementById("err"), submit = f.querySelector("[type=submit]");
+const streets = new Map();
+let free = false;
+let down = false;
 const level = () => listed(f.address.value, [...streets.values()]);
 const rules = [
-  ['name', (v) => v.trim().length >= 2, 'הכניסו שם מלא בבקשה'],
-  ['phone', phone, 'הכניסו מספר נייד תקין (05X-XXXXXXX)'],
-  ['address', (v) => v.trim().length >= 3 && (free || down || level() === 2),
-    () => (f.address.value.trim().length < 3 ? 'הכניסו את כתובת הבניין' : level() === 1 ? 'הוסיפו מספר בית' : 'בחרו כתובת מהרשימה')],
-  ['units', units, 'כמה דירות יש בבניין? (מספר)'],
+  ["name", (v) => v.trim().length >= 2, "הכניסו שם מלא בבקשה"],
+  ["phone", phone, "הכניסו מספר נייד תקין (05X-XXXXXXX)"],
+  [
+    "address",
+    (v) => v.trim().length >= 3 && (free || down || level() === 2),
+    () => f.address.value.trim().length < 3 ? "הכניסו את כתובת הבניין" : level() === 1 ? "הוסיפו מספר בית" : "בחרו כתובת מהרשימה"
+  ],
+  ["units", units, "כמה דירות יש בבניין? (מספר)"]
 ];
-// The one error line. Beside an address that the list does not know stands the way out. It must stay one line: the rows
-// under it are placed against the card's shape.
-const wayOut = err.querySelector('button');
-let said = ''; // the field the line speaks of
+const wayOut = err.querySelector("button");
+let said = "";
 const say = (rule) => {
-  said = rule ? rule[0] : '';
-  err.firstElementChild.textContent = rule ? (typeof rule[2] === 'function' ? rule[2]() : rule[2]) : '';
-  wayOut.hidden = !(said === 'address' && f.address.value.trim().length >= 3);
+  said = rule ? rule[0] : "";
+  err.firstElementChild.textContent = rule ? typeof rule[2] === "function" ? rule[2]() : rule[2] : "";
+  wayOut.hidden = !(said === "address" && f.address.value.trim().length >= 3);
 };
-// The source as people read it (Ran, 11.10.2026): the UTM source; or the ad platform, when only its click id came;
-// or „אורגני”. A campaign lead lists every UTM value it carried. Every lead names the page it was sent from, and the
-// address the visitor first came from, so that leads from this page, from the WebSite and from other landing pages can be told apart.
-const sourceName = (touch) => touch.utm_source
-  || (touch.gclid || touch.wbraid || touch.gbraid ? 'google ads' : touch.fbclid ? 'facebook' : ORGANIC);
+const sourceName = (touch) => touch.utm_source || (touch.gclid || touch.wbraid || touch.gbraid ? "google ads" : touch.fbclid ? "facebook" : ORGANIC);
 const message = (l, touch) => [
-  'שלום StruX, אשמח לקבל הצעה מותאמת לבניין.',
+  "שלום StruX, אשמח לקבל הצעה מותאמת לבניין.",
   `שם מלא: ${l.name}`,
   `טלפון: ${l.phone}`,
   `כתובת הנכס: ${l.address}`,
@@ -297,26 +662,20 @@ const message = (l, touch) => [
   touch.utm_content && `תוכן: ${touch.utm_content}`,
   touch.utm_term && `מילת חיפוש: ${touch.utm_term}`,
   `עמוד: ${location.origin + location.pathname}`,
-  touch.referrer && `הגיע מ: ${touch.referrer}`,
-].filter(Boolean).join('\n');
-
+  touch.referrer && `הגיע מ: ${touch.referrer}`
+].filter(Boolean).join("\n");
 let sent = false;
-f.addEventListener('focusin', () => track('strux_web_form_start_v1', 'form'), { once: true });
-
-// The list of streets: data.gov.il, „רשימת רחובות בישראל”, searched by the start of each typed word. No key; the answer is
-// open to any origin. Each word is letters only (streetWords), so nothing of the search syntax passes.
-const STREETS = 'https://data.gov.il/api/3/action/datastore_search?resource_id=9ad3862c-8391-4b2f-84a4-2d4c68625f4b&plain=false&limit=8&q=';
-// The list is slow now and then (about five seconds, a few requests in a hundred): three seconds, one more try, and
-// only then is it taken as down. Only the latest search may say so: a slow old one must not undo a newer answer.
+f.addEventListener("focusin", () => track("strux_web_form_start_v1", "form"), { once: true });
+const STREETS = "https://data.gov.il/api/3/action/datastore_search?resource_id=9ad3862c-8391-4b2f-84a4-2d4c68625f4b&plain=false&limit=8&q=";
 let asked = 0;
 const lookup = async (text, again = true) => {
   const words = streetWords(text);
-  if (words.join('').length < 2) return [];
+  if (words.join("").length < 2) return [];
   const mine = ++asked;
   try {
-    const res = await fetch(STREETS + encodeURIComponent(words.map((w) => `${w}:*`).join(' & ')), { signal: AbortSignal.timeout(3000) });
-    const found = (await res.json()).result.records.map((r) => [r['שם_רחוב'].trim(), r['שם_ישוב'].trim()]);
-    found.forEach((s) => streets.set(s.join('|'), s));
+    const res = await fetch(STREETS + encodeURIComponent(words.map((w) => `${w}:*`).join(" & ")), { signal: AbortSignal.timeout(3e3) });
+    const found = (await res.json()).result.records.map((r) => [r["שם_רחוב"].trim(), r["שם_ישוב"].trim()]);
+    found.forEach((s) => streets.set(s.join("|"), s));
     if (mine === asked) down = false;
     return found;
   } catch (e) {
@@ -326,21 +685,20 @@ const lookup = async (text, again = true) => {
     return [];
   }
 };
-// The address became right, or the list answered: the error line follows, and so does the page's own object (it listens
-// to the form's `change`).
 const settle = () => {
-  if (said === 'address' && rules[2][1](f.address.value)) { say(); f.address.setAttribute('aria-invalid', false); }
-  f.dispatchEvent(new Event('change'));
+  if (said === "address" && rules[2][1](f.address.value)) {
+    say();
+    f.address.setAttribute("aria-invalid", false);
+  }
+  f.dispatchEvent(new Event("change"));
 };
-const list = document.getElementById('streets');
+const list = document.getElementById("streets");
 let typing;
-f.address.addEventListener('input', (e) => {
+f.address.addEventListener("input", (e) => {
   const text = f.address.value;
   clearTimeout(typing);
-  // A suggestion taken from the list (typing the same text out by hand is not a pick: the caret stays).
-  const picked = e.inputType !== 'insertText' && [...list.options].find((o) => o.value === text);
+  const picked = e.inputType !== "insertText" && [...list.options].find((o) => o.value === text);
   if (picked) {
-    // A street picked before its number was typed: the caret waits where the number goes.
     const at = Number(picked.dataset.at);
     if (at) {
       f.address.value = `${text.slice(0, at)} ${text.slice(at)}`;
@@ -350,90 +708,90 @@ f.address.addEventListener('input', (e) => {
   }
   typing = setTimeout(async () => {
     const found = await lookup(text);
-    if (f.address.value !== text) return; // a later keystroke owns the list
-    // Each suggestion carries the house number already typed, in the visitor's own form (with or without a comma):
-    // the browser shows only the suggestions that contain the typed text.
+    if (f.address.value !== text) return;
     const num = (text.match(/(?:^|\s)(\d[\p{L}\p{N}/]*)/u) || [])[1];
-    const sep = text.includes(',') ? ', ' : ' ';
+    const sep = text.includes(",") ? ", " : " ";
     list.replaceChildren(...found.map(([street, city]) => {
-      const option = new Option([street, num].filter(Boolean).join(' ') + (street === city ? '' : sep + city));
+      const option = new Option([street, num].filter(Boolean).join(" ") + (street === city ? "" : sep + city));
       if (!num) option.dataset.at = street.length;
       return option;
     }));
     settle();
   }, 200);
 });
-// Leaving the field: the address is checked against the list now, so that the way out is offered before the submit.
-f.address.addEventListener('change', async () => {
+f.address.addEventListener("change", async () => {
   const text = f.address.value;
   if (text.trim().length < 3) return;
   await lookup(text);
   if (f.address.value !== text) return;
   const bad = !rules[2][1](text);
-  f.address.setAttribute('aria-invalid', bad);
+  f.address.setAttribute("aria-invalid", bad);
   if (bad) say(rules[2]);
   settle();
 });
-wayOut.addEventListener('click', () => {
+wayOut.addEventListener("click", () => {
   free = true;
   f.address.focus();
   settle();
 });
-f.addEventListener('submit', (e) => {
+f.addEventListener("submit", (e) => {
   e.preventDefault();
   if (sent) return;
   const bad = rules.filter(([name, ok]) => {
     const no = !ok(f[name].value);
-    f[name].setAttribute('aria-invalid', no);
+    f[name].setAttribute("aria-invalid", no);
     return no;
   });
-  if (!f.terms.checked) bad.push(['terms', null, 'יש לאשר את התקנון ואת מדיניות הפרטיות.']);
+  if (!f.terms.checked) bad.push(["terms", null, "יש לאשר את התקנון ואת מדיניות הפרטיות."]);
   say(bad[0]);
   if (bad.length) {
     f[bad[0][0]].focus();
-    return track('strux_web_form_error_v1', 'form', { error_fields: bad.map(([name]) => name).join(','), form_step: 1 });
+    return track("strux_web_form_error_v1", "form", { error_fields: bad.map(([name]) => name).join(","), form_step: 1 });
   }
-  if (f.company_website.value) return; // honeypot
+  if (f.company_website.value) return;
   sent = true;
-  submit.disabled = true; // no double lead, no double event
-
-  // The Sheet's keys, exactly (CLAUDE.md §6). The form has no audience, callback time or notes: they go out empty.
+  submit.disabled = true;
   const lead = {
-    audience: '', name: f.name.value.trim(), phone: phone(f.phone.value), address: f.address.value.trim().replace(/\s+/g, ' ') + (level() === 2 ? '' : free ? ' (לא מהרשימה)' : ' (לא נבדקה)'),
-    units: units(f.units.value), callback_time: '', notes: '',
+    audience: "",
+    name: f.name.value.trim(),
+    phone: phone(f.phone.value),
+    address: f.address.value.trim().replace(/\s+/g, " ") + (level() === 2 ? "" : free ? " (לא מהרשימה)" : " (לא נבדקה)"),
+    units: units(f.units.value),
+    callback_time: "",
+    notes: ""
   };
   const touch = firstTouch();
   const waUrl = `${WA}?text=${encodeURIComponent(message(lead, touch))}`;
   const event_id = crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-
-  // Desktop: the new tab must open synchronously, inside this handler, or the browser blocks it.
-  const mobile = matchMedia('(max-width: 767px), (pointer: coarse)').matches;
-  const tab = mobile ? null : window.open(waUrl, '_blank');
+  const mobile = matchMedia("(max-width: 767px), (pointer: coarse)").matches;
+  const tab = mobile ? null : window.open(waUrl, "_blank");
   if (tab) tab.opener = null;
-
-  // The Sheet: fire and forget. text/plain = no CORS preflight; a failure never blocks WhatsApp.
   fetch(ENDPOINT, {
-    method: 'POST', mode: 'no-cors', keepalive: true,
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    method: "POST",
+    mode: "no-cors",
+    keepalive: true,
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify({
-      ...lead, terms_consent: 'כן', marketing_consent: 'לא',
-      ...touch, utm_source: sourceName(touch), event_id, company_website: '',
-    }),
-  }).catch(() => {});
-
-  // The one lead event. Leave once GTM has handled it, or after 0.8s if GTM is blocked or slow.
-  // Mobile, or a blocked desktop tab: this page goes to WhatsApp. Desktop: this page goes to the thank-you page.
+      ...lead,
+      terms_consent: "כן",
+      marketing_consent: "לא",
+      ...touch,
+      utm_source: sourceName(touch),
+      event_id,
+      company_website: ""
+    })
+  }).catch(() => {
+  });
   let left = false;
   const leave = () => {
     if (left) return;
     left = true;
     location.href = tab ? THANKS : waUrl;
   };
-  track('strux_web_lead_v1', 'form', { units: lead.units, event_id, ...touch, eventCallback: leave, eventTimeout: 2000 });
+  track("strux_web_lead_v1", "form", { units: lead.units, event_id, ...touch, eventCallback: leave, eventTimeout: 2e3 });
   setTimeout(leave, 800);
 });
-// Back from WhatsApp (mobile): a clean form with a working button, and the door ajar again.
-addEventListener('pageshow', (e) => {
+addEventListener("pageshow", (e) => {
   if (!e.persisted || !sent) return;
   sent = false;
   free = false;
@@ -441,70 +799,156 @@ addEventListener('pageshow', (e) => {
   f.reset();
   wake();
 });
-
-// The door. It behaves like the logo's tiles on the WebSite (HeroLight.astro): with a mouse it leans by the pointer's place
-// in the whole window, and opens more while the pointer is on it; on a touch screen it sways slowly by itself (a 9s cycle).
-// Each frame it closes part of the distance to its target, which gives it weight. Once the four fields are valid and the
-// consent is ticked it opens all the way. With reduced motion it only jumps between ajar and open.
-const leaf = document.querySelector('.door__leaf'), door = leaf.parentElement;
-const AJAR = 42, LEAN = 20, OVER = 16, FULL = 104, SWAY = 6; // degrees
-const still = matchMedia('(prefers-reduced-motion:reduce)'), touchOnly = matchMedia('(hover:none)');
+const leaf = document.querySelector(".door__leaf"), door = leaf.parentElement;
+const AJAR = 42, LEAN = 20, OVER = 16, FULL = 104, SWAY = 6;
+const still = matchMedia("(prefers-reduced-motion:reduce)"), touchOnly = matchMedia("(hover:none)");
 const complete = () => rules.every(([name, ok]) => ok(f[name].value)) && f.terms.checked;
 let lean = 0, over = false, angle = AJAR, last = 0, raf = 0, seen = true;
 const frame = (now) => {
   raf = 0;
   const open = complete();
-  const move = touchOnly.matches ? Math.sin(now / 9000 * 2 * Math.PI) * SWAY : lean + (over ? OVER : 0);
+  const move = touchOnly.matches ? Math.sin(now / 9e3 * 2 * Math.PI) * SWAY : lean + (over ? OVER : 0);
   const to = (open ? FULL : AJAR) + move * (open ? 0.4 : 1);
-  angle += (to - angle) * Math.min(1, Math.min(40, now - last) * 0.009);
+  angle += (to - angle) * Math.min(1, Math.min(40, now - last) * 9e-3);
   last = now;
-  leaf.style.setProperty('--a', angle.toFixed(2) + 'deg');
-  if (seen && (touchOnly.matches || Math.abs(to - angle) > 0.05)) raf = requestAnimationFrame(frame); // rests when it has arrived or is off screen
+  leaf.style.setProperty("--a", angle.toFixed(2) + "deg");
+  if (seen && (touchOnly.matches || Math.abs(to - angle) > 0.05)) raf = requestAnimationFrame(frame);
 };
 const wake = () => {
-  if (still.matches) leaf.style.setProperty('--a', (complete() ? FULL : AJAR) + 'deg');
+  if (still.matches) leaf.style.setProperty("--a", (complete() ? FULL : AJAR) + "deg");
   else if (!raf) raf = requestAnimationFrame(frame);
 };
-addEventListener('pointermove', (e) => {
-  if (e.pointerType === 'touch') return; // a finger scrolls and taps, it doesn't move the door
-  lean = (0.5 - e.clientX / innerWidth) * 2 * LEAN; // toward the form's side of the screen it opens more
+addEventListener("pointermove", (e) => {
+  if (e.pointerType === "touch") return;
+  lean = (0.5 - e.clientX / innerWidth) * 2 * LEAN;
   over = door.contains(e.target);
   wake();
 });
-document.documentElement.addEventListener('pointerleave', () => { lean = 0; over = false; wake(); });
-f.addEventListener('input', wake);
-f.addEventListener('change', wake);
-new IntersectionObserver(([entry]) => { seen = entry.isIntersecting; wake(); }).observe(door);
+document.documentElement.addEventListener("pointerleave", () => {
+  lean = 0;
+  over = false;
+  wake();
+});
+f.addEventListener("input", wake);
+f.addEventListener("change", wake);
+new IntersectionObserver(([entry]) => {
+  seen = entry.isIntersecting;
+  wake();
+}).observe(door);
 </script>
-<!-- Cookie notice: the WebSite's own (Cookie.astro), the same words, look and rule: a notice only, shown until "הבנתי"
-     and again a week after it (Ran, 16.10.2026). The same block in door-oct and tailored: change both together. -->
 <div class="cookie" role="region" aria-label="הודעה על שימוש בעוגיות" hidden>
   <p>האתר משתמש בעוגיות למדידה ולפרסום. הפרטים ב<a href="https://www.struxisrael.co.il/privacy" target="_blank" rel="noopener">מדיניות הפרטיות</a>.</p>
   <button class="cookie__ok" type="button">הבנתי</button>
 </div>
 <style>
-.cookie{position:fixed;z-index:50;left:50%;bottom:24px;translate:-50% 0;display:flex;align-items:center;gap:12px;width:max-content;max-width:min(640px,calc(100% - 48px));padding:8px;padding-inline-start:16px;border-radius:6px;background:#fff;color:var(--c-ink);box-shadow:var(--shadow);font:400 14px/1.45 var(--f-body)}
-.cookie[hidden]{display:none}
-.cookie p{flex:1;margin:0}
-.cookie a{color:var(--c-brand);font-weight:600}
-.cookie__ok{flex:none;min-height:44px;padding:0 16px;border:0;border-radius:6px;cursor:pointer;background:var(--c-brand);color:#fff;font:700 15px/1 var(--f-body);transition:scale .12s ease-out;-webkit-tap-highlight-color:transparent}
-.cookie__ok:active{scale:.97}
-.cookie__ok:focus-visible{outline:2px solid var(--c-brand);outline-offset:2px}
-@media (max-width:767px){.cookie{left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));translate:none;width:auto;max-width:none;padding-inline-start:12px}}
-@media (prefers-reduced-motion:no-preference){.cookie:not([hidden]){animation:cookie-in .3s ease-out}}
-@keyframes cookie-in{from{opacity:0}}
+.cookie {
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  bottom: 24px;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: min(640px, calc(100% - 48px));
+  padding: 8px;
+  padding-inline-start: 16px;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--c-ink);
+  box-shadow: var(--shadow);
+  font: 400 14px/1.45 var(--f-body);
+}
+.cookie[hidden] {
+  display: none;
+}
+.cookie p {
+  flex: 1;
+  margin: 0;
+}
+.cookie a {
+  color: var(--c-brand);
+  font-weight: 600;
+}
+.cookie__ok {
+  flex: none;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--c-brand);
+  color: #fff;
+  font: 700 15px/1 var(--f-body);
+  transition: scale .12s ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+.cookie__ok:active {
+  scale: .97;
+}
+.cookie__ok:focus-visible {
+  outline: 2px solid var(--c-brand);
+  outline-offset: 2px;
+}
+@media (max-width: 767px) {
+  .cookie {
+    left: 16px;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    translate: none;
+    width: auto;
+    max-width: none;
+    padding-inline-start: 12px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cookie:not([hidden]) {
+    animation: cookie-in .3s ease-out;
+  }
+}
+@keyframes cookie-in {
+  from {
+    opacity: 0;
+  }
+}
 </style>
 <script>
-(function () {
-  var el = document.querySelector('.cookie'), WEEK = 7 * 24 * 60 * 60 * 1000, at = 0;
-  try { at = Number(localStorage.getItem('strux-cookie-at')) || 0; } catch (e) {}
+(function() {
+  var el = document.querySelector(".cookie"), WEEK = 7 * 24 * 60 * 60 * 1e3, at = 0;
+  try {
+    at = Number(localStorage.getItem("strux-cookie-at")) || 0;
+  } catch (e) {
+  }
   if (Date.now() - at < WEEK) return;
   el.hidden = false;
-  el.querySelector('.cookie__ok').addEventListener('click', function () {
+  el.querySelector(".cookie__ok").addEventListener("click", function() {
     el.hidden = true;
-    try { localStorage.setItem('strux-cookie-at', String(Date.now())); } catch (e) {}
+    try {
+      localStorage.setItem("strux-cookie-at", String(Date.now()));
+    } catch (e) {
+    }
   });
 })();
+</script>
+<script>
+{
+const carried = new URLSearchParams();
+const params = new URLSearchParams(location.search);
+["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid", "wbraid", "gbraid", "fbclid"].forEach((k) => {
+  if (params.get(k)) carried.set(k, params.get(k));
+});
+if (carried.toString()) document.addEventListener("click", (e) => {
+  const a = e.target.closest && e.target.closest("a[href]");
+  if (!a) return;
+  const u = new URL(a.href, location.href);
+  if (u.hostname !== "www.struxisrael.co.il" && u.origin !== location.origin) return;
+  carried.forEach((v, k) => {
+    if (!u.searchParams.has(k)) u.searchParams.set(k, v);
+  });
+  a.href = u.href;
+}, true);
+}
 </script>
 </body>
 </html>
